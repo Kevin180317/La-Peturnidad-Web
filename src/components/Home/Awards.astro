@@ -1,0 +1,73 @@
+---
+const awards = [
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection1.webp",
+    alt: "CES",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection2.webp",
+    alt: "Superzoo",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection3.webp",
+    alt: "IF Design Awards",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection4.webp",
+    alt: "Interzoo",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection5.webp",
+    alt: "Google for Startups Accelerator",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection6.webp",
+    alt: "MyGlobalVillage",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection7.webp",
+    alt: "BBC",
+  },
+  {
+    image:
+      "https://de23256m8hy18.cloudfront.net/new-homepage/awardsSection8.webp",
+    alt: "Samsung C-Lab Outside",
+  },
+];
+---
+
+<section class="bg-texto">
+  <div
+    class="lg:container mx-auto px-6 lg:px-24 flex flex-col justify-center py-16"
+  >
+    <div class="md:grid md:grid-cols-3 flex flex-col gap-10">
+      <div class="flex flex-col">
+        <h2 class="text-principal font-bold text-2xl">Awards</h2>
+        <p class="text-white font-bold text-5xl md:leading-16">
+          International Acclaims for Petnow's PetBiometrics Technology
+        </p>
+      </div>
+      <div class="md:col-span-2 grid grid-cols-4 gap-6">
+        {
+          awards.map((award) => (
+            <figure class="rounded-2xl w-full h-fit">
+              <img
+                class="w-full h-full"
+                src={award.image}
+                alt={award.alt}
+                style=""
+              />
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
