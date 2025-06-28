@@ -5,6 +5,8 @@ import "@fontsource/pretendard/400.css";
 import "@fontsource/pretendard/500.css";
 import "@fontsource/pretendard/600.css";
 import "@fontsource/pretendard/700.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -16,16 +18,28 @@ import "@fontsource/pretendard/700.css";
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <body class="overflow-x-hidden">
+  <body class="overflow-x-hidden relative">
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>
 
 <style>
-  html,
+  html {
+    scroll-behavior: smooth;
+  }
+  ,
   body {
     margin: 0;
     width: 100%;
     height: 100%;
+  }
+  header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
   }
 </style>
