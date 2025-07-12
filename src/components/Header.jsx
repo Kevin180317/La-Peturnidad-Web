@@ -1,47 +1,48 @@
 import React, { useState } from "react";
 
 function Header() {
-  const [showLanguages, setShowLanguages] = useState(false);
-
-  const toggleLanguagesMenu = () => {
-    setShowLanguages((showLanguages) => !showLanguages);
-  };
-
   return (
-    <section className="sticky top-0 bg-white">
+    <section className="fixed top-0 bg-white w-screen z-50">
       <div className="lg:container mx-auto px-6 lg:px-24">
         <div className="flex justify-between items-center h-20">
-          <figure>
-            <img
-              src="https://www.petnow.io/_next/static/media/logo.23d1613d.svg"
-              alt="Logo"
-            />
-          </figure>
+          <a href="/">
+            <figure>
+              <img
+                src="https://www.petnow.io/_next/static/media/logo.23d1613d.svg"
+                alt="Logo"
+              />
+            </figure>
+          </a>
           <div className="hidden xl:block">
             <div className="flex items-center font-medium justify-center gap-16 text-xl">
-              <div className="relative inline-block">
-                <button className="hover:text-principal hover:block">
+              <div className="relative inline-block group">
+                <button className="group-hover:text-principal pl-4">
                   Petnow App
                 </button>
-                <div className="hidden hover:block min-w-44 absolute top-full z-10 bg-white pt-8 p-4">
-                  <div className="flex flex-col gap-4">
-                    <a href="" className="hover:text-principal">
+                <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-white pt-8 p-4">
+                  <div className="flex flex-col gap-2">
+                    <a href="/about" className="hover:text-principal">
                       About
                     </a>
-                    <a href="" className="hover:text-principal">
+                    <a href="/how-to-use" className="hover:text-principal">
                       How to Use
                     </a>
                   </div>
                 </div>
               </div>
-              <h1>PetWayHome</h1>
-              <h1>Contact</h1>
-              <h1>FAQ</h1>
+              <a href="/petwayhome" className="hover:text-principal">
+                PetWayHome
+              </a>
+              <a href="/contact" className="hover:text-principal">
+                Contact
+              </a>
+              <a href="/faq" className="hover:text-principal">
+                FAQ
+              </a>
 
-              <div className="flex flex-col text-xl relative ml-4">
+              <div className="flex flex-col text-xl relative ml-4 group">
                 <button
                   className="bg-principal rounded-2xl text-white py-3 px-8 flex items-center justify-center gap-3 hover:cursor-pointer"
-                  onClick={toggleLanguagesMenu}
                   type="button"
                 >
                   <p>Idioma</p>
@@ -63,16 +64,19 @@ function Header() {
                     />
                   </svg>
                 </button>
-                {showLanguages && (
-                  <div className="absolute top-full left-0 bg-white rounded-lg shadow-lg mt-2 z-10 flex flex-col min-w-[120px]">
-                    <button className="px-4 py-2 text-left hover:bg-gray-100">
+                <div className="hidden absolute group-hover:block w-40 top-full z-10 bg-white rounded-2xl">
+                  <div className="flex flex-col">
+                    <a
+                      href="/"
+                      className="p-4 pb-[-8px] text-left hover:bg-[#FFEEEA]"
+                    >
                       Español
-                    </button>
-                    <button className="px-4 py-2 text-left hover:bg-gray-100">
-                      Inglés
-                    </button>
+                    </a>
+                    <a href="/en" className="p-4 text-left hover:bg-[#FFEEEA]">
+                      English
+                    </a>
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
@@ -82,33 +86,33 @@ function Header() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 stroke="#CCCCCC"
-                stroke-width="0.8160000000000001"
+                strokeWidth="0.8160000000000001"
               ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
                 <path
                   d="M4 18L20 18"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 ></path>{" "}
                 <path
                   d="M4 12L20 12"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 ></path>{" "}
                 <path
                   d="M4 6L20 6"
                   stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 ></path>{" "}
               </g>
             </svg>
