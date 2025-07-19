@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
 function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  console.log(isMenuOpen);
   return (
     <section className="fixed top-0 bg-white w-screen z-50">
       <div className="lg:container mx-auto px-6 lg:px-24">
@@ -81,42 +84,99 @@ function Header() {
             </div>
           </div>
           <div className="block xl:hidden">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <button
+              className="flex items-end justify-center h-12 w-12 hover:cursor-pointer"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                stroke="#CCCCCC"
-                strokeWidth="0.8160000000000001"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <path
-                  d="M4 18L20 18"
-                  stroke="#000000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                ></path>{" "}
-                <path
-                  d="M4 12L20 12"
-                  stroke="#000000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                ></path>{" "}
-                <path
-                  d="M4 6L20 6"
-                  stroke="#000000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                ></path>{" "}
-              </g>
-            </svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <path
+                    d="M4 6H20M4 12H20M4 18H20"
+                    stroke="#000000"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>{" "}
+                </g>
+              </svg>
+            </button>
           </div>
+          {isMenuOpen && (
+            <div className="absolute top-0 right-0 bg-white shadow-lg h-screen w-96 py-8">
+              <div className="flex flex-col items-center justify-center">
+                <div className="flex items-center justify-between w-full px-4 h-10 mb-8">
+                  <a href="/">
+                    <figure>
+                      <img
+                        src="https://www.petnow.io/_next/static/media/logo.23d1613d.svg"
+                        alt="Logo"
+                      />
+                    </figure>
+                  </a>
+                  <button
+                    className="w-10 h-10 hover:cursor-pointer flex items-center justify-center"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <svg
+                      viewBox="-0.5 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        {" "}
+                        <path
+                          d="M3 21.32L21 3.32001"
+                          stroke="#000000"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>{" "}
+                        <path
+                          d="M3 3.32001L21 21.32"
+                          stroke="#000000"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>{" "}
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+                <a href="/about" className="py-2 px-4 w-full">
+                  About
+                </a>
+                <a href="/how-to-use" className="py-2 px-4 w-full ">
+                  How to Use
+                </a>
+                <a href="/petwayhome" className="py-2 px-4 w-full ">
+                  PetWayHome
+                </a>
+                <a href="/contact" className="py-2 px-4 w-full">
+                  Contact
+                </a>
+                <a href="/faq" className="py-2 px-4 w-full">
+                  FAQ
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
