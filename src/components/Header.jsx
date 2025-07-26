@@ -10,10 +10,7 @@ function Header() {
         <div className="flex justify-between items-center h-20">
           <a href="/">
             <figure>
-              <img
-                src="https://www.petnow.io/_next/static/media/logo.23d1613d.svg"
-                alt="Logo"
-              />
+              <img src="/logo.23d1613d.svg" alt="Logo" />
             </figure>
           </a>
           <div className="hidden xl:block">
