@@ -1,0 +1,79 @@
+---
+
+---
+
+<section
+  class="flex flex-col items-center justify-center my-16 md:my-20 lg:my-26"
+>
+  <div class="max-w-[1232px] w-full mx-auto px-4">
+    <form action="" class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 w-full">
+      <div class="flex flex-col mb-4">
+        <label
+          for="name"
+          class="mb-2 text-sm md:text-2xl font-semibold text-texto w-max"
+          >Name / Position *</label
+        >
+        <input
+          type="text"
+          name="name"
+          class="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
+          required
+        />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label
+          for="comapny"
+          class="mb-2 text-sm md:text-2xl font-semibold text-texto w-max"
+          >Company name *</label
+        >
+        <input
+          type="text"
+          name="company"
+          class="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
+          required
+        />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label
+          for="telephone"
+          class="mb-2 text-sm md:text-2xl font-semibold text-texto w-max"
+          >Telephone Number</label
+        >
+        <input
+          type="tel"
+          name="telephone"
+          pattern="[0-9]{10}"
+          class="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
+        />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label
+          for="email"
+          class="mb-2 text-sm md:text-2xl font-semibold text-texto"
+          >Email Address *</label
+        >
+        <input
+          type="email"
+          name="email"
+          class="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-principal"
+          required
+        />
+      </div>
+      <div class="flex flex-col mb-4 col-span-2">
+        <label
+          for="Textarea"
+          class="mb-2 text-sm md:text-2xl font-semibold text-texto"
+          >Content of Inquiry *</label
+        >
+        <textarea
+          name="Textarea"
+          class="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-principal h-[174px]"
+          required></textarea>
+      </div>
+      <button
+        class="bg-principal md:text-2xl font-semibold col-span-2 text-white rounded-xl p-3 mt-8 onclick:bg-orange-300 transition-opacity duration-300"
+        >Submit</button
+      >
+    </form>
+  </div>
+</section>
