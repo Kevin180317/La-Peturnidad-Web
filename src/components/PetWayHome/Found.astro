@@ -1,0 +1,79 @@
+---
+const steps = [
+  {
+    img: "https://de23256m8hy18.cloudfront.net/new-homepage/petwayhomeSection4.webp",
+    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection6.webp",
+    title: "Automated AI Scan",
+    description:
+      "Take photos of a stray pet and AI automatically extracts breed, color, size and location",
+    arrow: true,
+  },
+  {
+    img: "https://de23256m8hy18.cloudfront.net/new-homepage/petwayhomeSection5.webp",
+    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/petwayhomeSection8.webp",
+    title: "Profile Matches",
+    description:
+      "Find matches between the existing missing reports and new sighting reports",
+    arrow: true,
+  },
+  {
+    img: "https://de23256m8hy18.cloudfront.net/new-homepage/petwayhomeSection6.webp",
+    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection2.webp",
+    title: "Biometric Scan",
+    description:
+      "Make sure that you found the right missing pet by a biometric scan",
+    arrow: true,
+  },
+  {
+    img: "https://de23256m8hy18.cloudfront.net/new-homepage/petwayhomeSection7.webp",
+    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection5.webp",
+    title: "In-App Reunion",
+    description: "Send messages directly to the owner in the app for reunion",
+    arrow: false,
+  },
+];
+---
+
+<section class="flex flex-col items-center justify-center pb-16 z-10">
+  <div
+    class="flex flex-col items-center justify-center gap-2 md:gap-7 mt-26 sm:mt-32 text-center mb-8 text-3xl md:text-4xl lg:text-5xl font-bold max-w-[1232x] mx-auto px-4"
+  >
+    <h1 class="text-texto">Have you</h1>
+    <h2 class="text-principal">found a stray pet?</h2>
+  </div>
+  <div
+    class="flex lg:flex-col flex-col items-center justify-center text-center mb-8 text-5xl font-bold max-w-[1232px] mx-auto px-4 mt-26 sm:mt-32"
+  >
+    {
+      steps.map((step) => (
+        <div class="flex flex-col">
+          <div class="flex flex-row items-center justify-center">
+            <div class="max-w-2/5">
+              <figure class="px-6 md:px-10">
+                <img src={step.img} alt="Img" class="rounded-lg" />
+              </figure>
+            </div>
+            <div class="max-w-3/5 flex flex-col items-start justify-center gap-4 lg:gap-8 font-bold">
+              <figure class="lg:hidden block">
+                <img src={step.icon} alt="Icon" class="rounded-lg h-12" />
+              </figure>
+              <h1 class="text-xl md:text-5xl text-principal">{step.title}</h1>
+              <p class="text-sm md:text-3xl text-texto text-start">
+                {step.description}
+              </p>
+            </div>
+          </div>
+          {step.arrow ? (
+            <figure class="max-w-2/5 my-4 md:my-10">
+              <img
+                class="w-full h-8 md:h-10 lg:h-14 rotate-90"
+                src="arrow.a2230893.svg"
+                alt="Lost Pet About"
+              />
+            </figure>
+          ) : null}
+        </div>
+      ))
+    }
+  </div>
+</section>
