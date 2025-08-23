@@ -8,7 +8,7 @@ function Header() {
     <section className="fixed top-0 bg-white w-screen z-50">
       <div className="lg:container mx-auto px-6 lg:px-24">
         <div className="flex justify-between items-center h-20">
-          <a href="/">
+          <a href="/" title="Petnow Home" aria-label="Go to home page">
             <figure>
               <img src="/logo.23d1613d.svg" alt="Logo" />
             </figure>
@@ -21,22 +21,22 @@ function Header() {
                 </button>
                 <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-white pt-8 p-4">
                   <div className="flex flex-col gap-2">
-                    <a href="/about" className="hover:text-principal">
+                    <a href="/about" title="About Page" aria-label="Learn more about us" className="hover:text-principal">
                       About
                     </a>
-                    <a href="/how-to-use" className="hover:text-principal">
+                    <a href="/how-to-use" title="How To Use Page" aria-label="How to use the app" className="hover:text-principal">
                       How to Use
                     </a>
                   </div>
                 </div>
               </div>
-              <a href="/petwayhome" className="hover:text-principal">
+              <a href="/petwayhome" title="Petwayhome Page" aria-label="Learn more about the app" className="hover:text-principal">
                 PetWayHome
               </a>
-              <a href="/contact" className="hover:text-principal">
+              <a href="/contact" title="Contact Page" aria-label="Contact us" className="hover:text-principal">
                 Contact
               </a>
-              <a href="/faq" className="hover:text-principal">
+              <a href="/faq" title="FAQ Page" aria-label="Frequently Asked Questions" className="hover:text-principal">
                 FAQ
               </a>
 
@@ -68,11 +68,13 @@ function Header() {
                   <div className="flex flex-col">
                     <a
                       href="/"
+                      title="Spanish Page"
+                      aria-label="Go to Spanish version"
                       className="p-4 pb-[-8px] text-left hover:bg-[#FFEEEA]"
                     >
                       Español
                     </a>
-                    <a href="/en" className="p-4 text-left hover:bg-[#FFEEEA]">
+                    <a href="/en" title="English Page" aria-label="Go to English version" className="p-4 text-left hover:bg-[#FFEEEA]">
                       English
                     </a>
                   </div>
@@ -113,7 +115,7 @@ function Header() {
             <div className="absolute top-0 right-0 bg-white shadow-lg h-screen w-96 py-8">
               <div className="flex flex-col items-center justify-center">
                 <div className="flex items-center justify-between w-full px-4 h-10 mb-8">
-                  <a href="/">
+                  <a href="/" title="Petnow Home" aria-label="Go to home page">
                     <figure>
                       <img
                         src="https://www.petnow.io/_next/static/media/logo.23d1613d.svg"
@@ -156,19 +158,19 @@ function Header() {
                     </svg>
                   </button>
                 </div>
-                <a href="/about" className="py-2 px-4 w-full">
+                <a href="/about" title="About page" aria-label="Learn more about us" className="py-2 px-4 w-full">
                   About
                 </a>
-                <a href="/how-to-use" className="py-2 px-4 w-full ">
+                <a href="/how-to-use" title="How To Use Page" aria-label="How to use the app" className="py-2 px-4 w-full ">
                   How to Use
                 </a>
-                <a href="/petwayhome" className="py-2 px-4 w-full ">
+                <a href="/petwayhome" title="PetwayHome Page" aria-label="Learn more about the app" className="py-2 px-4 w-full ">
                   PetWayHome
                 </a>
-                <a href="/contact" className="py-2 px-4 w-full">
+                <a href="/contact" title="Contact Page" aria-label="Contact Us" className="py-2 px-4 w-full">
                   Contact
                 </a>
-                <a href="/faq" className="py-2 px-4 w-full">
+                <a href="/faq" title="FAQ Page" aria-label="Frequently Asked Questions" className="py-2 px-4 w-full">
                   FAQ
                 </a>
               </div>
