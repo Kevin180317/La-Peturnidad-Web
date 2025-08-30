@@ -84,7 +84,7 @@ function Header() {
                     />
                   </svg>
                 </button>
-                <div className="hidden absolute group-hover:block w-40 top-full z-10 bg-white rounded-2xl">
+                <div className="hidden absolute group-hover:block w-40 top-full z-10 bg-fondo rounded-2xl">
                   <div className="flex flex-col">
                     <a
                       href="/"
