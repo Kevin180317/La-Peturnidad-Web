@@ -30,9 +30,9 @@ function Header() {
                   </div>
                 </div>
               </div>
-              <a href="/petwayhome" className="hover:text-principal">
+              {/* <a href="/petwayhome" className="hover:text-principal">
                 PetWayHome
-              </a>
+              </a> */}
               <a href="/contact" className="hover:text-principal">
                 Contact
               </a>
