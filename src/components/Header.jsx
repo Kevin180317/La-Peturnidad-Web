@@ -5,7 +5,7 @@ function Header() {
 
   console.log(isMenuOpen);
   return (
-    <section className="fixed top-0 bg-white w-screen z-50">
+    <section className="fixed top-0 bg-fondo w-screen z-50">
       <div className="lg:container mx-auto px-6 lg:px-24">
         <div className="flex justify-between items-center h-20">
           <a href="/" title="Petnow Home" aria-label="Go to home page">
