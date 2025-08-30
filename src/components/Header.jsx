@@ -19,7 +19,7 @@ function Header() {
                 <button className="group-hover:text-principal pl-4">
                   Petnow App
                 </button>
-                <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-white pt-8 p-4">
+                <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-fondo pt-8 p-4">
                   <div className="flex flex-col gap-2">
                     <a
                       href="/about"
