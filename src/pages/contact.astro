@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Contact/Hero.astro";
-import Form from "../components/Contact/Form.astro";
+import Form from "../components/Contact/Form.jsx";
 ---
 
 <Layout title="Contact" description="Get in touch with us for any inquiries.">
   <Hero />
-  <Form />
+  <Form client:visible />
 </Layout>

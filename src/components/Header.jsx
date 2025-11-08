@@ -5,19 +5,19 @@ function Header() {
 
   console.log(isMenuOpen);
   return (
-    <section className="fixed top-0 bg-fondo w-screen z-50">
-      <div className="lg:container mx-auto px-6 lg:px-24">
+    <section className="fixed top-0 bg-[#F0F3EC] w-full z-50">
+      <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex justify-between items-center h-20">
           <a href="/" title="Petnow Home" aria-label="Go to home page">
             <figure>
-              <img src="/logo.23d1613d.svg" alt="Logo" />
+              <img src="/logo.png" alt="Logo" />
             </figure>
           </a>
           <div className="hidden xl:block">
             <div className="flex items-center font-medium justify-center gap-16 text-xl">
               <div className="relative inline-block group">
                 <button className="group-hover:text-principal pl-4">
-                  Petnow App
+                  FurryFndrApp
                 </button>
                 <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-fondo pt-8 p-4">
                   <div className="flex flex-col gap-2">
