@@ -192,14 +192,6 @@ function Header() {
                 How to Use
               </a>
               <a
-                href="/petwayhome"
-                title="PetwayHome Page"
-                aria-label="Learn more about the app"
-                className="py-2 px-4 w-full "
-              >
-                PetWayHome
-              </a>
-              <a
                 href="/contact"
                 title="Contact Page"
                 aria-label="Contact Us"
