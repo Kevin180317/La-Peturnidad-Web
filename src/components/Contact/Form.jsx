@@ -42,7 +42,7 @@ function Form() {
 
   return (
     <section className="flex flex-col items-center justify-center my-16 md:my-20 lg:my-26">
-      <div className="max-w-[1232px] w-full mx-auto px-4">
+      <div className="max-w-[750px] w-full mx-auto px-4">
         <form
           className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 w-full"
           onSubmit={handleSubmit}
@@ -50,7 +50,7 @@ function Form() {
           <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
             <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
               <label htmlFor="name" className="text-texto w-max">
-                Name / Position
+                Name
               </label>
               <p className="text-principal">*</p>
             </div>
@@ -60,11 +60,12 @@ function Form() {
               id="name"
               value={form.name}
               onChange={handleChange}
-              className="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
+              placeholder="Jane Doe"
+              className="bg-white border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
               required
             />
           </div>
-          <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
+          {/* <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
             <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
               <label htmlFor="company" className="text-texto w-max">
                 Company name
@@ -78,7 +79,7 @@ function Form() {
               onChange={handleChange}
               className="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
             />
-          </div>
+          </div> */}
           <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
             <label
               htmlFor="telephone"
@@ -92,11 +93,12 @@ function Form() {
               id="telephone"
               value={form.telephone}
               onChange={handleChange}
-              pattern="[0-9]{10}"
-              className="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
+              pattern="^\+?[0-9]{1,3}?[- ]?\(?[0-9]{3}\)?[- ]?[0-9]{3}[- ]?[0-9]{4}$"
+              placeholder="+1 (619) 123 4567"
+              className="bg-white border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
             />
           </div>
-          <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
+          <div className="flex flex-col mb-4 col-span-2">
             <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
               <label htmlFor="email" className="text-texto w-max">
                 Email Address
@@ -109,7 +111,8 @@ function Form() {
               id="email"
               value={form.email}
               onChange={handleChange}
-              className="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal"
+              placeholder="janedoe@emaildomain.com"
+              className="bg-white border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal"
               required
             />
           </div>
@@ -125,8 +128,9 @@ function Form() {
               id="message"
               value={form.message}
               onChange={handleChange}
-              className="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal h-[174px]"
+              className="bg-white border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal h-[174px]"
               required
+              placeholder="Enter your question or message here..."
             ></textarea>
           </div>
           <button
