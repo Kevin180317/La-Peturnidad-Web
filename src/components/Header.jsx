@@ -13,7 +13,7 @@ function Header() {
               <img src="/logo.png" alt="Logo" />
             </figure>
           </a>
-          <div className="hidden xl:block">
+          <div className="hidden lg:block">
             <div className="flex items-center font-medium justify-center gap-16 text-xl">
               <div className="relative inline-block group">
                 <button className="group-hover:text-principal pl-4">
@@ -40,9 +40,6 @@ function Header() {
                   </div>
                 </div>
               </div>
-              {/* <a href="/petwayhome" title="Petwayhome Page" aria-label="Learn more about the app" className="hover:text-principal">
-                PetWayHome
-              </a> */}
               <a
                 href="/contact"
                 title="Contact Page"
@@ -107,7 +104,7 @@ function Header() {
               </div>
             </div>
           </div>
-          <div className="block xl:hidden">
+          <div className="block lg:hidden">
             <button
               className="flex items-end justify-center h-12 w-12 hover:cursor-pointer"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -136,96 +133,90 @@ function Header() {
               </svg>
             </button>
           </div>
-          {isMenuOpen && (
-            <div className="absolute top-0 right-0 bg-white shadow-lg h-screen w-96 py-8">
-              <div className="flex flex-col items-center justify-center">
-                <div className="flex items-center justify-between w-full px-4 h-10 mb-8">
-                  <a href="/" title="Petnow Home" aria-label="Go to home page">
-                    <figure>
-                      <img
-                        src="https://www.petnow.io/_next/static/media/logo.23d1613d.svg"
-                        alt="Logo"
-                      />
-                    </figure>
-                  </a>
-                  <button
-                    className="w-10 h-10 hover:cursor-pointer flex items-center justify-center"
-                    onClick={() => setIsMenuOpen(false)}
+          <div
+            className={`
+    fixed top-0 right-0 h-screen bg-fondo shadow-lg py-8 max-w-[500px] w-full px-4
+    transform transition-transform duration-300 ease-in-out
+    ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
+  `}
+          >
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex items-center justify-between w-full px-4 h-5 mb-8">
+                <a href="/" title="Petnow Home" aria-label="Go to home page">
+                  <figure>
+                    <img src="/logo.png" alt="Logo" />
+                  </figure>
+                </a>
+
+                <button
+                  className="w-10 h-10 hover:cursor-pointer flex items-center justify-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <svg
+                    viewBox="-0.5 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      viewBox="-0.5 0 25 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></g>
-                      <g id="SVGRepo_iconCarrier">
-                        {" "}
-                        <path
-                          d="M3 21.32L21 3.32001"
-                          stroke="#000000"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
-                        <path
-                          d="M3 3.32001L21 21.32"
-                          stroke="#000000"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>{" "}
-                      </g>
-                    </svg>
-                  </button>
-                </div>
-                <a
-                  href="/about"
-                  title="About page"
-                  aria-label="Learn more about us"
-                  className="py-2 px-4 w-full"
-                >
-                  About
-                </a>
-                <a
-                  href="/how-to-use"
-                  title="How To Use Page"
-                  aria-label="How to use the app"
-                  className="py-2 px-4 w-full "
-                >
-                  How to Use
-                </a>
-                <a
-                  href="/petwayhome"
-                  title="PetwayHome Page"
-                  aria-label="Learn more about the app"
-                  className="py-2 px-4 w-full "
-                >
-                  PetWayHome
-                </a>
-                <a
-                  href="/contact"
-                  title="Contact Page"
-                  aria-label="Contact Us"
-                  className="py-2 px-4 w-full"
-                >
-                  Contact
-                </a>
-                <a
-                  href="/faq"
-                  title="FAQ Page"
-                  aria-label="Frequently Asked Questions"
-                  className="py-2 px-4 w-full"
-                >
-                  FAQ
-                </a>
+                    <path
+                      d="M3 21.32L21 3.32001"
+                      stroke="#000000"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M3 3.32001L21 21.32"
+                      stroke="#000000"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
               </div>
+
+              <a
+                href="/about"
+                title="About page"
+                aria-label="Learn more about us"
+                className="py-2 px-4 w-full"
+              >
+                About
+              </a>
+              <a
+                href="/how-to-use"
+                title="How To Use Page"
+                aria-label="How to use the app"
+                className="py-2 px-4 w-full "
+              >
+                How to Use
+              </a>
+              <a
+                href="/petwayhome"
+                title="PetwayHome Page"
+                aria-label="Learn more about the app"
+                className="py-2 px-4 w-full "
+              >
+                PetWayHome
+              </a>
+              <a
+                href="/contact"
+                title="Contact Page"
+                aria-label="Contact Us"
+                className="py-2 px-4 w-full"
+              >
+                Contact
+              </a>
+              <a
+                href="/faq"
+                title="FAQ Page"
+                aria-label="Frequently Asked Questions"
+                className="py-2 px-4 w-full"
+              >
+                FAQ
+              </a>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>
