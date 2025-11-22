@@ -1,5 +1,5 @@
 ---
-
+const year = new Date().getFullYear();
 ---
 
 <footer class="bg-[#F0F3EC]">
@@ -15,6 +15,7 @@
           FurryFndr.
         </h1>
       </div>
+
       <a
         href="#"
         title="Scroll to Top"
@@ -22,12 +23,9 @@
         class="hover:scale-110 transition-transform"
       >
         <svg
-          class="w-14
-        h-14"
+          class="w-14 h-14"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="none"
           viewBox="0 0 24 24"
         >
@@ -40,7 +38,9 @@
         </svg>
       </a>
     </div>
+
     <hr class="text-neutral-400 my-10" />
+
     <div
       class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-y-10"
     >
@@ -48,14 +48,15 @@
         href="/"
         title="Petnow Logo"
         aria-label="Go to the home page"
-        class="hover:scale-110 transition-transform"
+        class="hover:scale-110 transition-transform max-w-[121px]"
       >
         <figure>
           <img src="/logo.png" alt="Logo" />
         </figure>
       </a>
+
       <div
-        class="flex flex-wrap max-w-lg text-lg gap-x-18 gap-y-4 text-neutral-600 font-normal"
+        class="flex flex-wrap max-w-lg text-lg gap-x-8 gap-y-4 text-neutral-600 font-normal"
       >
         <a
           href="/about"
@@ -67,7 +68,6 @@
           aria-label="How to use the app"
           class="hover:text-principal">How to Use</a
         >
-        <!-- <a href="/petwayhome" aria-label="Learn more about the app" class="hover:text-principal">PetWayHome</a> -->
         <a href="/contact" aria-label="Contact us" class="hover:text-principal"
           >Contact</a
         >
@@ -78,62 +78,64 @@
         >
       </div>
     </div>
+
     <div
       class="flex flex-col gap-4 text-neutral-400 font-normal text-sm mt-24 max-w-sm"
     >
-      <h1 class="text-texto font-bold">Prometheus R&D</h1>
+      <h2 class="text-texto font-bold">Prometheus R&D</h2>
       <p>
-        Fresnos 19, Ramirez, 22115 Tijuana, B.C. contact@prometheustij.com |
-        &copy; {new Date().getFullYear()} Petnow
+        Fresnos 19, Ramirez, 22115 Tijuana, B.C.
+        <a
+          href="mailto:contact@prometheustij.com"
+          class="text-neutral-500 hover:text-principal"
+          >contact@prometheustij.com</a
+        >
+        &nbsp;|&nbsp; &copy; {year} Petnow
       </p>
-      <p class="mb-2 text-neutral-500">Terms and Conditions Privacy Policy</p>
-      <div class="flex items-center justify-between">
-        <div class="flex gap-4">
+
+      <p class="mb-2 text-neutral-500">
+        <a href="/terms" class="hover:underline">Terms and Conditions</a>
+        <span class="mx-2">•</span>
+        <a href="/privacy" class="hover:underline">Privacy Policy</a>
+      </p>
+
+      <div class="flex items-center">
+        <div class="flex gap-3">
           <a
             href="https://www.facebook.com/petnowofficial"
-            title="Facebook Link"
-            aria-label="Visit our Facebook page"
             target="_blank"
             rel="noopener noreferrer"
-            class="rounded-full border-3 border-texto p-1 flex items-center justify-center"
+            class="text-neutral-600 hover:text-principal"
+            aria-label="Facebook"
           >
             <svg
-              class="w-6 h-6 text-gray-800"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              class="w-8 h-8"
               fill="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
                 d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
-                clip-rule="evenodd"></path>
+              ></path>
             </svg>
           </a>
+
           <a
             href="https://www.instagram.com/petnow_official/"
-            title="Instagram Link"
-            aria-label="Visit our Instagram Page"
             target="_blank"
             rel="noopener noreferrer"
-            class="rounded-full border-3 border-texto p-1 flex items-center justify-center"
+            class="text-neutral-600 hover:text-principal"
+            aria-label="Instagram"
           >
             <svg
-              class="w-6 h-6 text-gray-800"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
+              class="w-8 h-8"
+              fill="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill="currentColor"
-                fill-rule="evenodd"
-                d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
-                clip-rule="evenodd"></path>
+                d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+              ></path>
             </svg>
           </a>
         </div>

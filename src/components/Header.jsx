@@ -4,6 +4,8 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
+  const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
+
   return (
     <section className="fixed top-0 bg-[#F0F3EC] w-full z-50">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -143,80 +145,193 @@ function Header() {
               </svg>
             </button>
           </div>
+
+          {/* overlay que oscurece el fondo cuando el menu mobile está abierto */}
+          <div
+            aria-hidden={!isMenuOpen}
+            onClick={() => setIsMenuOpen(false)}
+            className={`fixed inset-0 bg-black/50 lg:hidden transition-opacity duration-300 ${
+              isMenuOpen
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            } z-40`}
+          />
+
           <div
             className={`
-              fixed top-0 right-0 h-screen bg-fondo shadow-lg py-8 max-w-[500px] w-full px-4
-              transform transition-transform duration-500 ease-in-out
-              ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
-            `}
+    fixed top-0 right-0 h-screen bg-fondo shadow-lg py-8 max-w-[500px] w-full px-4
+    transform transition-transform duration-300 ease-in-out
+    ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
+    z-50
+  `}
           >
-            <div className="flex flex-col items-center justify-center">
-              <div className="flex items-center justify-between w-full px-4 h-5 mb-12">
-                <a href="/" title="Petnow Home" aria-label="Go to home page">
-                  <figure>
-                    <img src="/logo.png" alt="Logo" />
-                  </figure>
-                </a>
+            <div className="flex flex-col h-full text-texto">
+              <div className="flex-1 flex flex-col items-center justify-start pt-6">
+                <div className="flex items-center justify-between w-full px-4 h-5 mb-12">
+                  <a href="/" title="Petnow Home" aria-label="Go to home page">
+                    <figure>
+                      <img src="/logo.png" alt="Logo" />
+                    </figure>
+                  </a>
 
-                <button
-                  className="w-10 h-10 hover:cursor-pointer flex items-center justify-center"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <svg
-                    viewBox="-0.5 0 25 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <button
+                    className="w-10 h-10 hover:cursor-pointer flex items-center justify-center"
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    <path
-                      d="M3 21.32L21 3.32001"
-                      stroke="#000000"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M3 3.32001L21 21.32"
-                      stroke="#000000"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      viewBox="-0.5 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 21.32L21 3.32001"
+                        stroke="#000000"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M3 3.32001L21 21.32"
+                        stroke="#000000"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* dropdown de idioma dentro del menú móvil */}
+                <div className="w-full px-2 mb-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileLanguageOpen((s) => !s)}
+                    aria-expanded={isMobileLanguageOpen}
+                    className="w-full text-left py-2 px-2 flex items-center justify-between hover:cursor-pointer"
+                  >
+                    <span className="text-base text-principal">Idioma</span>
+                    <svg
+                      className={`w-5 h-5 transition-transform duration-200 ${
+                        isMobileLanguageOpen ? "rotate-180" : ""
+                      }`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6 9l6 6 6-6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <div
+                    className={`overflow-hidden transition-all duration-200 ${
+                      isMobileLanguageOpen
+                        ? "max-h-40 opacity-100"
+                        : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <a
+                      href="/"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsMobileLanguageOpen(false);
+                      }}
+                      className="block py-2 px-4 hover:text-principal"
+                    >
+                      Español
+                    </a>
+                    <a
+                      href="/en"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsMobileLanguageOpen(false);
+                      }}
+                      className="block py-2 px-4 hover:text-principal"
+                    >
+                      English
+                    </a>
+                  </div>
+                </div>
+
+                <a
+                  href="/about"
+                  title="About page"
+                  aria-label="Learn more about us"
+                  className="py-2 px-4 w-full hover:text-principal"
+                >
+                  About
+                </a>
+                <a
+                  href="/how-to-use"
+                  title="How To Use Page"
+                  aria-label="How to use the app"
+                  className="py-2 px-4 w-full hover:text-principal"
+                >
+                  How to Use
+                </a>
+                <a
+                  href="/contact"
+                  title="Contact Page"
+                  aria-label="Contact Us"
+                  className="py-2 px-4 w-full hover:text-principal"
+                >
+                  Contact
+                </a>
+                <a
+                  href="/faq"
+                  title="FAQ Page"
+                  aria-label="Frequently Asked Questions"
+                  className="py-2 px-4 w-full hover:text-principal"
+                >
+                  FAQ
+                </a>
               </div>
 
-              <a
-                href="/about"
-                title="About page"
-                aria-label="Learn more about us"
-                className="py-2 px-4 w-full"
-              >
-                About
-              </a>
-              <a
-                href="/how-to-use"
-                title="How To Use Page"
-                aria-label="How to use the app"
-                className="py-2 px-4 w-full "
-              >
-                How to Use
-              </a>
-              <a
-                href="/contact"
-                title="Contact Page"
-                aria-label="Contact Us"
-                className="py-2 px-4 w-full"
-              >
-                Contact
-              </a>
-              <a
-                href="/faq"
-                title="FAQ Page"
-                aria-label="Frequently Asked Questions"
-                className="py-2 px-4 w-full"
-              >
-                FAQ
-              </a>
+              {/* footer dentro del menú móvil */}
+              <div className="border-t border-neutral-200 p-4 bg-[#F7F8F6]">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-neutral-600">
+                    Prometheus R&D | © 2025 Petnow
+                  </div>
+                  <div className="flex gap-3">
+                    <a
+                      href="https://www.facebook.com/petnowofficial"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-neutral-600 hover:text-principal"
+                      aria-label="Facebook"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" />
+                      </svg>
+                    </a>
+                    <a
+                      href="https://www.instagram.com/petnow_official/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-neutral-600 hover:text-principal"
+                      aria-label="Instagram"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
