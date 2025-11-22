@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
-  console.log(isMenuOpen);
   return (
     <section className="fixed top-0 bg-[#F0F3EC] w-full z-50">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -57,10 +57,13 @@ function Header() {
                 FAQ
               </a>
 
-              <div className="flex flex-col text-xl relative ml-4 group">
+              <div className="flex flex-col text-xl relative ml-4">
                 <button
                   className="bg-principal rounded-2xl text-white py-3 px-8 flex items-center justify-center gap-3 hover:cursor-pointer"
                   type="button"
+                  aria-haspopup="menu"
+                  aria-expanded={isLanguageOpen}
+                  onClick={() => setIsLanguageOpen((s) => !s)}
                 >
                   <p>Idioma</p>
                   <svg
@@ -81,13 +84,19 @@ function Header() {
                     />
                   </svg>
                 </button>
-                <div className="hidden absolute group-hover:block w-40 top-full z-10 bg-fondo rounded-2xl">
+
+                <div
+                  className={`absolute w-40 top-full z-10 bg-fondo mt-2 transition-opacity duration-150 ${
+                    isLanguageOpen ? "opacity-100 block" : "opacity-0 hidden"
+                  }`}
+                >
                   <div className="flex flex-col">
                     <a
                       href="/"
                       title="Spanish Page"
                       aria-label="Go to Spanish version"
-                      className="p-4 pb-[-8px] text-left hover:bg-[#FFEEEA]"
+                      className="p-4 text-left hover:bg-[#FFEEEA] block"
+                      onClick={() => setIsLanguageOpen(false)}
                     >
                       Español
                     </a>
@@ -95,7 +104,8 @@ function Header() {
                       href="/en"
                       title="English Page"
                       aria-label="Go to English version"
-                      className="p-4 text-left hover:bg-[#FFEEEA]"
+                      className="p-4 text-left hover:bg-[#FFEEEA] block"
+                      onClick={() => setIsLanguageOpen(false)}
                     >
                       English
                     </a>
@@ -135,13 +145,13 @@ function Header() {
           </div>
           <div
             className={`
-    fixed top-0 right-0 h-screen bg-fondo shadow-lg py-8 max-w-[500px] w-full px-4
-    transform transition-transform duration-300 ease-in-out
-    ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
-  `}
+              fixed top-0 right-0 h-screen bg-fondo shadow-lg py-8 max-w-[500px] w-full px-4
+              transform transition-transform duration-500 ease-in-out
+              ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
+            `}
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="flex items-center justify-between w-full px-4 h-5 mb-8">
+              <div className="flex items-center justify-between w-full px-4 h-5 mb-12">
                 <a href="/" title="Petnow Home" aria-label="Go to home page">
                   <figure>
                     <img src="/logo.png" alt="Logo" />

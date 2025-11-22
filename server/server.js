@@ -38,7 +38,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post("/send-email", async (req, res) => {
-  const { name, company, telephone, email, message } = req.body;
+  const { name, telephone, email, message } = req.body;
 
   if (
     !name ||
@@ -62,8 +62,8 @@ app.post("/send-email", async (req, res) => {
   try {
     const connection = await mysql2.createConnection(dbConfig);
     await connection.execute(
-      "INSERT INTO mensajes (name, company, telephone, email, message) VALUES (?, ?, ?, ?, ?)",
-      [name, company || "", telephone || "", email, message]
+      "INSERT INTO mensajes (name, telephone, email, message) VALUES (?, ?, ?, ?)",
+      [name, telephone || "", email, message]
     );
     await connection.end();
   } catch (dbError) {
@@ -78,7 +78,6 @@ app.post("/send-email", async (req, res) => {
       subject: `New Contact Form Submission from ${name}`,
       text:
         `Name: ${name}\n` +
-        `Company: ${company}\n` +
         `Telephone: ${telephone}\n` +
         `Email: ${email}\n` +
         `Message: ${message}\n`,

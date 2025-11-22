@@ -3,7 +3,6 @@ import React, { useState } from "react";
 function Form() {
   const [form, setForm] = useState({
     name: "",
-    company: "",
     telephone: "",
     email: "",
     message: "",
@@ -18,7 +17,7 @@ function Form() {
     e.preventDefault();
     setStatus("Enviando...");
     try {
-      const res = await fetch("http://localhost:3000/send-email", {
+      const res = await fetch("https://prometheustij.com/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -27,7 +26,6 @@ function Form() {
         setStatus("¡Mensaje enviado!");
         setForm({
           name: "",
-          company: "",
           telephone: "",
           email: "",
           message: "",
@@ -65,21 +63,6 @@ function Form() {
               required
             />
           </div>
-          {/* <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
-            <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
-              <label htmlFor="company" className="text-texto w-max">
-                Company name
-              </label>
-            </div>
-            <input
-              type="text"
-              name="company"
-              id="company"
-              value={form.company}
-              onChange={handleChange}
-              className="border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal focus:ease-in-out focus:duration-300"
-            />
-          </div> */}
           <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
             <label
               htmlFor="telephone"
