@@ -1,5 +1,7 @@
 ---
-
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section>
@@ -7,7 +9,7 @@
     class="max-w-[1200px] mx-auto px-6 flex flex-col justify-center pb-10 mt-10 lg:mt-24"
   >
     <h1 class="font-bold text-xl md:text-2xl lg:text-5xl text-texto lg:mb-6">
-      Community powered alerts for missing pets near you !
+      {t("home.about.h1")}
     </h1>
     <div class="flex flex-col md:flex-row gap-7 mt-10">
       <div class="md:h-[500px] overflow-hidden md:w-3/5 relative">
@@ -19,10 +21,9 @@
           />
         </figure>
         <div
-          class="absolute bottom-1/12 left-1/12 text-texto text-xl xl:text-3xl font-semibold"
+          class="absolute bottom-1/12 left-1/12 text-texto text-xl xl:text-3xl font-semibold max-w-md"
         >
-          <p>Track local sightings and bring</p>
-          <p>them home faster</p>
+          <p>{t("home.about.p1")}</p>
         </div>
       </div>
 
@@ -50,7 +51,7 @@
     class="max-w-[1200px] mx-auto px-6 flex flex-col justify-center pb-8 mt-8 lg:mt-24"
   >
     <h1 class="font-bold text-xl md:text-2xl lg:text-5xl text-texto md:mb-6">
-      Get the location of your pets all from home!
+      {t("home.about.h2")}
     </h1>
 
     <div class="flex flex-col md:flex-row gap-7 mt-10">
@@ -68,10 +69,11 @@
         class="md:h-[450px] h-[350px] w-full block bg-white overflow-hidden md:w-1/2 relative rounded-2xl p-6"
       >
         <div class="text-texto">
-          <h1 class="text-xl xl:text-2xl font-semibold">Community Network</h1>
+          <h1 class="text-xl xl:text-2xl font-semibold">
+            {t("home.about.p2")}
+          </h1>
           <p class="text-lg xl:text-xl max-w-md md:max-w-xl">
-            Connect with other pet owners in your area for a more effective
-            search
+            {t("home.about.p3")}
           </p>
         </div>
         <figure

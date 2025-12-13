@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useTranslations } from "../../i18n/utils";
 
-function Form() {
+function Form({ lang }) {
+  const t = useTranslations(lang);
   const [form, setForm] = useState({
     name: "",
     telephone: "",
@@ -48,7 +50,7 @@ function Form() {
           <div className="flex flex-col mb-4 col-span-2 lg:col-span-1">
             <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
               <label htmlFor="name" className="text-texto w-max">
-                Name
+                {t("contact.form.p1")}
               </label>
               <p className="text-principal">*</p>
             </div>
@@ -68,7 +70,7 @@ function Form() {
               htmlFor="telephone"
               className="mb-2 text-sm md:text-2xl font-semibold text-texto w-max"
             >
-              Telephone Number
+              {t("contact.form.p2")}
             </label>
             <input
               type="tel"
@@ -84,7 +86,7 @@ function Form() {
           <div className="flex flex-col mb-4 col-span-2">
             <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
               <label htmlFor="email" className="text-texto w-max">
-                Email Address
+                {t("contact.form.p3")}
               </label>
               <p className="text-principal">*</p>
             </div>
@@ -94,7 +96,7 @@ function Form() {
               id="email"
               value={form.email}
               onChange={handleChange}
-              placeholder="janedoe@emaildomain.com"
+              placeholder="janedoe@email.com"
               className="bg-white border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal"
               required
             />
@@ -102,7 +104,7 @@ function Form() {
           <div className="flex flex-col mb-4 col-span-2">
             <div className="flex mb-2 text-sm md:text-2xl font-semibold gap-1">
               <label htmlFor="message" className="text-texto w-max">
-                Content of Inquiry
+                {t("contact.form.p4")}
               </label>
               <p className="text-principal">*</p>
             </div>
@@ -113,14 +115,14 @@ function Form() {
               onChange={handleChange}
               className="bg-white border border-gray-300 text-sm md:text-xl text-neutral-600 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-principal h-[174px]"
               required
-              placeholder="Enter your question or message here..."
+              placeholder={t("contact.form.placeholder")}
             ></textarea>
           </div>
           <button
             type="submit"
             className="bg-principal md:text-2xl font-semibold col-span-2 text-white rounded-xl p-3 md:py-5 mt-8 transition-opacity duration-300"
           >
-            Submit
+            {t("contact.form.button")}
           </button>
         </form>
         {status && <div className="mt-4">{status}</div>}

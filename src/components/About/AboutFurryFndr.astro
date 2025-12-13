@@ -1,5 +1,7 @@
 ---
-
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section
@@ -10,18 +12,16 @@
   >
     <div class="md:max-w-1/2 flex flex-col gap-3 md:gap-4 lg:gap-6 text-texto">
       <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold">
-        About FurryFndr
+        {t("about.h1")}
       </h1>
       <h2 class="md:text-lg lg:text-xl text-[#828282]">
-        FurryFndr an app by Prometheus R&D
+        {t("about.h2")}
       </h2>
       <p class="text-sm md:text-base lg:text-lg">
-        FurryFndr was born with the idea of providing an extra level of care and
-        protect for pet and their owners.
+        {t("about.p1")}
       </p>
       <p class="text-sm md:text-base lg:text-lg">
-        FurryFndr was developed by Prometheus R&D, a Tijuana-based company that
-        focusses on creating high-end tech solutions.
+        {t("about.p2")}
       </p>
     </div>
     <div class="w-full md:w-1/2 flex-shrink-0">

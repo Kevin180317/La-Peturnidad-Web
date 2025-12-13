@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
-function Header() {
+import { useTranslations } from "../i18n/utils";
+
+function NavBar({ lang }) {
+  const t = useTranslations(lang);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
@@ -10,7 +13,11 @@ function Header() {
     <section className="fixed top-0 bg-[#F0F3EC] w-full z-50">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex justify-between items-center h-20">
-          <a href="/" title="Petnow Home" aria-label="Go to home page">
+          <a
+            href={lang === "es" ? "/" : "/en"}
+            title="Petnow Home"
+            aria-label="Go to home page"
+          >
             <figure>
               <img src="/logo.png" alt="Logo" />
             </figure>
@@ -24,39 +31,39 @@ function Header() {
                 <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-fondo pt-8 p-4">
                   <div className="flex flex-col gap-2">
                     <a
-                      href="/about"
+                      href={lang === "en" ? "/en/about" : "/about"}
                       title="About Page"
                       aria-label="Learn more about us"
                       className="hover:text-principal"
                     >
-                      About
+                      {t("nav.about")}
                     </a>
                     <a
-                      href="/how-to-use"
+                      href={lang === "en" ? "/en/how-to-use" : "/how-to-use"}
                       title="How To Use Page"
                       aria-label="How to use the app"
                       className="hover:text-principal"
                     >
-                      How to Use
+                      {t("nav.howToUse")}
                     </a>
                   </div>
                 </div>
               </div>
               <a
-                href="/contact"
+                href={lang === "en" ? "/contact" : "/contact"}
                 title="Contact Page"
                 aria-label="Contact us"
                 className="hover:text-principal"
               >
-                Contact
+                {t("nav.contact")}
               </a>
               <a
-                href="/faq"
+                href={lang === "en" ? "/en/faq" : "/faq"}
                 title="FAQ Page"
                 aria-label="Frequently Asked Questions"
                 className="hover:text-principal"
               >
-                FAQ
+                {t("nav.faq")}
               </a>
 
               <div className="flex flex-col text-xl relative ml-4">
@@ -67,7 +74,7 @@ function Header() {
                   aria-expanded={isLanguageOpen}
                   onClick={() => setIsLanguageOpen((s) => !s)}
                 >
-                  <p>Idioma</p>
+                  <p>{t("nav.language")}</p>
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
@@ -94,19 +101,27 @@ function Header() {
                 >
                   <div className="flex flex-col">
                     <a
-                      href="/"
+                      href={lang === "es" ? undefined : "/"}
                       title="Spanish Page"
                       aria-label="Go to Spanish version"
-                      className="p-4 text-left hover:bg-[#FFEEEA] block"
+                      className={`p-4 text-left block ${
+                        lang === "es"
+                          ? "text-principal cursor-default pointer-events-none"
+                          : "hover:bg-[#FFEEEA]"
+                      }`}
                       onClick={() => setIsLanguageOpen(false)}
                     >
                       Español
                     </a>
                     <a
-                      href="/en"
+                      href={lang === "en" ? undefined : "/en"}
                       title="English Page"
                       aria-label="Go to English version"
-                      className="p-4 text-left hover:bg-[#FFEEEA] block"
+                      className={`p-4 text-left block ${
+                        lang === "en"
+                          ? "text-principal cursor-default pointer-events-none"
+                          : "hover:bg-[#FFEEEA]"
+                      }`}
                       onClick={() => setIsLanguageOpen(false)}
                     >
                       English
@@ -209,7 +224,9 @@ function Header() {
                     aria-expanded={isMobileLanguageOpen}
                     className="w-full text-left py-2 px-2 flex items-center justify-between hover:cursor-pointer"
                   >
-                    <span className="text-base text-principal">Idioma</span>
+                    <span className="text-base text-principal">
+                      {t("nav.language")}
+                    </span>
                     <svg
                       className={`w-5 h-5 transition-transform duration-200 ${
                         isMobileLanguageOpen ? "rotate-180" : ""
@@ -236,22 +253,30 @@ function Header() {
                     }`}
                   >
                     <a
-                      href="/"
+                      href={lang === "es" ? undefined : "/"}
                       onClick={() => {
                         setIsMenuOpen(false);
                         setIsMobileLanguageOpen(false);
                       }}
-                      className="block py-2 px-4 hover:text-principal"
+                      className={`block py-2 px-4 ${
+                        lang === "es"
+                          ? "text-principal cursor-default pointer-events-none"
+                          : "hover:text-principal"
+                      }`}
                     >
                       Español
                     </a>
                     <a
-                      href="/en"
+                      href={lang === "en" ? undefined : "/en"}
                       onClick={() => {
                         setIsMenuOpen(false);
                         setIsMobileLanguageOpen(false);
                       }}
-                      className="block py-2 px-4 hover:text-principal"
+                      className={`block py-2 px-4 ${
+                        lang === "en"
+                          ? "text-principal cursor-default pointer-events-none"
+                          : "hover:text-principal"
+                      }`}
                     >
                       English
                     </a>
@@ -259,36 +284,36 @@ function Header() {
                 </div>
 
                 <a
-                  href="/about"
+                  href={lang === "en" ? "/en/about" : "/about"}
                   title="About page"
                   aria-label="Learn more about us"
                   className="py-2 px-4 w-full hover:text-principal"
                 >
-                  About
+                  {t("nav.about")}
                 </a>
                 <a
-                  href="/how-to-use"
+                  href={lang === "en" ? "/en/how-to-use" : "/how-to-use"}
                   title="How To Use Page"
                   aria-label="How to use the app"
                   className="py-2 px-4 w-full hover:text-principal"
                 >
-                  How to Use
+                  {t("nav.howToUse")}
                 </a>
                 <a
-                  href="/contact"
+                  href={lang === "en" ? "/contact" : "/contact"}
                   title="Contact Page"
                   aria-label="Contact Us"
                   className="py-2 px-4 w-full hover:text-principal"
                 >
-                  Contact
+                  {t("nav.contact")}
                 </a>
                 <a
-                  href="/faq"
+                  href={lang === "en" ? "/en/faq" : "/faq"}
                   title="FAQ Page"
                   aria-label="Frequently Asked Questions"
                   className="py-2 px-4 w-full hover:text-principal"
                 >
-                  FAQ
+                  {t("nav.faq")}
                 </a>
               </div>
 
@@ -340,4 +365,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default NavBar;
