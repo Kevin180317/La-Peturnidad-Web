@@ -50,7 +50,7 @@ function NavBar({ lang }) {
                 </div>
               </div>
               <a
-                href={lang === "en" ? "/contact" : "/contact"}
+                href={lang === "en" ? "/en/contact" : "/contact"}
                 title="Contact Page"
                 aria-label="Contact us"
                 className="hover:text-principal"
