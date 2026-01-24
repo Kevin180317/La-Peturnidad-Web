@@ -16,6 +16,7 @@
     "@types/react-dom": "^19.1.6",
     "astro": "5.12.9",
     "react": "19.2.1",
+    "react-chatbotify": "^2.5.0",
     "react-dom": "19.2.1",
     "tailwindcss": "^4.1.10"
   }
