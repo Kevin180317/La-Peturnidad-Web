@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Chatbot from "./Chatbot";
 
-export default function ChatbotLauncher() {
+export default function ChatbotLauncher({ lang }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ export default function ChatbotLauncher() {
       {/* Contenedor del chatbot */}
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-[360px] max-w-[90vw] h-[500px] shadow-xl rounded-lg overflow-hidden">
-          <Chatbot />
+          <Chatbot lang={lang} client:visible />
         </div>
       )}
     </>

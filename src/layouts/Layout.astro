@@ -37,7 +37,7 @@ const lang = getLangFromUrl(Astro.url);
     <NavBar lang={lang} client:visible />
     <slot />
     <Footer />
-    <ChatButton client:only="react" />
+    <ChatButton lang={lang} client:only="react" />
   </body>
 </html>
 
