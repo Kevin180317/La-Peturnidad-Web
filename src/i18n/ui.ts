@@ -134,6 +134,8 @@ export const ui = {
       "You can reach the Peturnidad team via the contact section on the website.",
     "chatbot.faq":
       "Common questions include how to post reports, edit information, and stay safe.",
+    "placeholder.h1": "Page Under Development",
+    "placeholder.p1": "We are working hard to bring you this content soon!",
   },
   es: {
     "nav.about": "Acerca de",
@@ -267,5 +269,7 @@ export const ui = {
       "Puedes contactar al equipo de Peturnidad a través de la sección de contacto en el sitio web.",
     "chatbot.faq":
       "Las preguntas comunes incluyen cómo publicar reportes, editar información y mantenerse seguro.",
+    "placeholder.h1": "Página en Desarrollo",
+    "placeholder.p1": "¡Estamos trabajando duro para traerte este contenido pronto!",
   },
 } as const;
