@@ -17,7 +17,7 @@ const lang = getLangFromUrl(Astro.url);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>Peturnidad - Encuentra Mascotas Perdidas en tu Comunidad</title>
     <meta
@@ -28,10 +28,25 @@ const lang = getLangFromUrl(Astro.url);
       name="keywords"
       content="Mascotas Perdidas, Comunidad, Reporte de Mascotas, Reunión de Mascotas, Peturnidad, Ayuda a Mascotas, Encuentra Mascotas, Reporta Mascotas, Mascotas Encontradas"
     />
-    <link rel="canonical" href="https://la-peturnidad.netlify.app/" />
+    <link rel="canonical" href="https://la-peturnidad.vercel.app/" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Prometheus R&D" />
     <meta name="publisher" content="Prometheus R&D" />
+
+    <meta property="og:url" content="https://la-peturnidad.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Peturnidad - Encuentra Mascotas Perdidas en tu Comunidad"
+    />
+    <meta
+      property="og:description"
+      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Peturnidad y ayuda a reunir familias con sus peludos."
+    />
+    <meta
+      property="og:image"
+      content="https://la-peturnidad.vercel.app/logoBig.jpg"
+    />
   </head>
   <body class="overflow-x-hidden relative bg-fondo">
     <NavBar lang={lang} client:visible />
