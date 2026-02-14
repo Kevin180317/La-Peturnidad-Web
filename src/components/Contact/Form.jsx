@@ -34,6 +34,7 @@ function Form({ lang }) {
         });
       } else {
         setStatus("Error al enviar.");
+        console.error("Error response:" + res.statusText);
       }
     } catch (err) {
       setStatus("Error de conexión.");
