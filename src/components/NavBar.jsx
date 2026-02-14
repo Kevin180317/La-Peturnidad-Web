@@ -9,6 +9,20 @@ function NavBar({ lang }) {
 
   const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
 
+  const changeLanguage = (newLang) => {
+    const { pathname, search, hash } = window.location;
+
+    // Quitar /en si existe al inicio
+    const pathWithoutLang = pathname.startsWith("/en")
+      ? pathname.replace(/^\/en/, "")
+      : pathname;
+
+    const newPath =
+      newLang === "en" ? `/en${pathWithoutLang}` : pathWithoutLang || "/";
+
+    window.location.href = newPath + search + hash;
+  };
+
   return (
     <section className="fixed top-0 bg-[#F0F3EC] w-full z-50">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -101,7 +115,6 @@ function NavBar({ lang }) {
                 >
                   <div className="flex flex-col">
                     <a
-                      href={lang === "es" ? undefined : "/"}
                       title="Spanish Page"
                       aria-label="Go to Spanish version"
                       className={`p-4 text-left block ${
@@ -109,12 +122,16 @@ function NavBar({ lang }) {
                           ? "text-principal cursor-default pointer-events-none"
                           : "hover:bg-[#FFEEEA]"
                       }`}
-                      onClick={() => setIsLanguageOpen(false)}
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        changeLanguage("es");
+                        setIsLanguageOpen(false);
+                      }}
                     >
                       Español
                     </a>
                     <a
-                      href={lang === "en" ? undefined : "/en"}
                       title="English Page"
                       aria-label="Go to English version"
                       className={`p-4 text-left block ${
@@ -122,7 +139,12 @@ function NavBar({ lang }) {
                           ? "text-principal cursor-default pointer-events-none"
                           : "hover:bg-[#FFEEEA]"
                       }`}
-                      onClick={() => setIsLanguageOpen(false)}
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        changeLanguage("en");
+                        setIsLanguageOpen(false);
+                      }}
                     >
                       English
                     </a>
@@ -248,35 +270,30 @@ function NavBar({ lang }) {
                   <div
                     className={`overflow-hidden transition-all duration-200 ${
                       isMobileLanguageOpen
-                        ? "max-h-40 opacity-100"
+                        ? "flex flex-col max-h-40 opacity-100"
                         : "max-h-0 opacity-0"
                     }`}
                   >
                     <a
-                      href={lang === "es" ? undefined : "/"}
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setIsMobileLanguageOpen(false);
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        changeLanguage("es");
+                        setIsLanguageOpen(false);
                       }}
-                      className={`block py-2 px-4 ${
-                        lang === "es"
-                          ? "text-principal cursor-default pointer-events-none"
-                          : "hover:text-principal"
-                      }`}
+                      className="hover:text-principal pl-2"
                     >
                       Español
                     </a>
+
                     <a
-                      href={lang === "en" ? undefined : "/en"}
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setIsMobileLanguageOpen(false);
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        changeLanguage("en");
+                        setIsLanguageOpen(false);
                       }}
-                      className={`block py-2 px-4 ${
-                        lang === "en"
-                          ? "text-principal cursor-default pointer-events-none"
-                          : "hover:text-principal"
-                      }`}
+                      className="hover:text-principal pl-2"
                     >
                       English
                     </a>
