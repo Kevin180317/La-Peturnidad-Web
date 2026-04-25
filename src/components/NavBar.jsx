@@ -24,7 +24,7 @@ function NavBar({ lang }) {
   };
 
   return (
-    <section className="fixed top-0 bg-[#F0F3EC] w-full z-50">
+    <section className="fixed top-0 bg-fondo w-full z-50">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex justify-between items-center h-20">
           <a
@@ -33,7 +33,11 @@ function NavBar({ lang }) {
             aria-label="Go to home page"
           >
             <figure>
-              <img src="/logo.png" alt="Logo" />
+              <img
+                src="/Imagotipo_colore_original.png"
+                alt="Logo"
+                className="h-16"
+              />
             </figure>
           </a>
           <div className="hidden lg:block">
