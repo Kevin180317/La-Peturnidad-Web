@@ -44,7 +44,7 @@ function NavBar({ lang }) {
             <div className="flex items-center font-medium justify-center gap-16 text-xl">
               <div className="relative inline-block group">
                 <button className="group-hover:text-principal pl-4">
-                  FurryFndrApp
+                  LuckyTrackerApp
                 </button>
                 <div className="hidden absolute group-hover:block min-w-44 top-full z-10 bg-fondo pt-8 p-4">
                   <div className="flex flex-col gap-2">
