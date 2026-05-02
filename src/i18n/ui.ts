@@ -13,24 +13,24 @@ export const ui = {
     "nav.faq": "FAQ",
     "nav.language": "Language",
     "footer.msg":
-      "Provide additional protection to the most furry family members with FurryFndr.",
+      "Provide additional protection to the most furry family members with Lucky Tracker.",
     "footer.Terms": "Terms and Conditions",
     "footer.Privacy": "Privacy Policy",
     "home.hero.h1": "Technology that keeps them safe!",
     "home.hero.h2":
-      "Provide additional protection to the most furry family members with FurryFndr.",
+      "Provide additional protection to the most furry family members with Lucky Tracker.",
     "home.about.h1": "Community powered alerts for missing pets near you !",
     "home.about.p1": "Track local sightings and bring them home faster",
     "home.about.h2": "Get the location of your pets all from home!",
     "home.about.p2": "Community Network",
     "home.about.p3":
       "Connect with other pet owners in your area for a more effective search",
-    "about.h1": "About FurryFndr",
-    "about.h2": "FurryFndr an app by Prometheus R&D",
+    "about.h1": "About Lucky Tracker",
+    "about.h2": "Lucky Tracker an app by Prometheus R&D",
     "about.p1":
-      "FurryFndr was born with the idea of providing an extra level of care and protect for pet and their owners.",
+      "Lucky Tracker was born with the idea of providing an extra level of care and protect for pet and their owners.",
     "about.p2":
-      "FurryFndr was developed by Prometheus R&D, a Tijuana-based company that focusses on creating high-end tech solutions.",
+      "Lucky Tracker was developed by Prometheus R&D, a Tijuana-based company that focusses on creating high-end tech solutions.",
     "contact.h1": "Contact Us",
     "contact.form.p1": "Name",
     "contact.form.p2": "Telephone Number",
@@ -82,10 +82,10 @@ export const ui = {
     "policy.items.t6": "Consent",
     "policy.items.p6":
       "By using our website and services, you agree to the terms of our privacy policy.",
-    "chatbot.welcome": "Hello! Welcome to FurryFndr. How can I help you today?",
+    "chatbot.welcome": "Hello! Welcome to Lucky Tracker. How can I help you today?",
     "chatbot.welcome.opt1": "🔍 I lost a pet",
     "chatbot.welcome.opt2": "🐕 I found a pet",
-    "chatbot.welcome.opt3": "🤔 What is FurryFndr?",
+    "chatbot.welcome.opt3": "🤔 What is Lucky Tracker?",
     "chatbot.welcome.opt4": "🌎 How does the community help?",
     "chatbot.welcome.opt5": "📩 Contact & support",
     "chatbot.lostPet":
@@ -97,7 +97,7 @@ export const ui = {
     "chatbot.lostPetReport":
       "You can create a lost pet report with photos, description, and last known location.\nThis helps nearby users receive alerts.",
     "chatbot.lostPetTracking":
-      "FurryFndr uses community alerts and location-based reports to help reconnect pets with their families faster.",
+      "Lucky Tracker uses community alerts and location-based reports to help reconnect pets with their families faster.",
     "chatbot.lostPetTips":
       "Here are some tips:\n• Share clear photos\n• Include last seen location\n• Ask neighbors & local shelters",
     "chatbot.foundPet":
@@ -111,19 +111,19 @@ export const ui = {
       "You can browse recent lost pet reports filtered by your location.",
     "chatbot.foundPetMeanwhile":
       "Meanwhile:\n• Keep the pet safe\n• Check for ID or tags\n• Avoid assuming ownership",
-    "chatbot.whatIsPeturnidad":
-      "Peturnidad is a community-powered platform designed to reunite lost pets with their families 🐕🐈",
-    "chatbot.whatIsPeturnidad.opt1": "💡 What problems does it solve?",
-    "chatbot.whatIsPeturnidad.opt2": "🛠️ What features does it offer?",
-    "chatbot.whatIsPeturnidad.opt3": "👥 Who is it for?",
-    "chatbot.peturnidadProblems":
+    "chatbot.whatIsLuckyTracker":
+      "Lucky Tracker is a community-powered platform designed to reunite lost pets with their families 🐕🐈",
+    "chatbot.whatIsLuckyTracker.opt1": "💡 What problems does it solve?",
+    "chatbot.whatIsLuckyTracker.opt2": "🛠️ What features does it offer?",
+    "chatbot.whatIsLuckyTracker.opt3": "👥 Who is it for?",
+    "chatbot.luckyTrackerProblems":
       "It reduces the time pets stay lost by connecting communities through alerts and shared information.",
-    "chatbot.peturnidadFeatures":
+    "chatbot.luckyTrackerFeatures":
       "Features include:\n• Lost & found pet reports\n• Location-based alerts\n• Community collaboration",
-    "chatbot.peturnidadForWho":
+    "chatbot.luckyTrackerForWho":
       "Pet owners, animal lovers, and anyone who wants to help reunite pets with their families.",
     "chatbot.communityHelp":
-      "Community is the heart of Peturnidad 💛 How would you like to help?",
+      "Community is the heart of Lucky Tracker 💛 How would you like to help?",
     "chatbot.communityHelp.opt1": "🤝 How can I help others?",
     "chatbot.communityHelp.opt2": "📣 How alerts work",
     "chatbot.communityHelp.opt3": "🐾 Why community matters",
@@ -131,7 +131,7 @@ export const ui = {
     "chatbot.contactSupport.opt1": "📧 Contact information",
     "chatbot.contactSupport.opt2": "❓ Frequently Asked Questions",
     "chatbot.contactInfo":
-      "You can reach the Peturnidad team via the contact section on the website.",
+      "You can reach the Lucky Tracker team via the contact section on the website.",
     "chatbot.faq":
       "Common questions include how to post reports, edit information, and stay safe.",
     "placeholder.h1": "Page Under Development",
@@ -144,12 +144,12 @@ export const ui = {
     "nav.faq": "Preguntas Frecuentes",
     "nav.language": "Idioma",
     "footer.msg":
-      "Brinda protección adicional a los miembros peludos de la familia con FurryFndr.",
+      "Brinda protección adicional a los miembros peludos de la familia con Lucky Tracker.",
     "footer.Terms": "Términos y Condiciones",
     "footer.Privacy": "Política de Privacidad",
     "home.hero.h1": "¡Tecnología que los mantiene seguros!",
     "home.hero.h2":
-      "Brinda protección adicional a los miembros peludos de la familia con FurryFndr.",
+      "Brinda protección adicional a los miembros peludos de la familia con Lucky Tracker.",
     "home.about.h1":
       "¡Alertas impulsadas por la comunidad para mascotas perdidas cerca de ti!",
     "home.about.p1":
@@ -158,12 +158,12 @@ export const ui = {
     "home.about.p2": "Red Comunitaria",
     "home.about.p3":
       "Conéctate con otros dueños de mascotas en tu área para una búsqueda más efectiva",
-    "about.h1": "Acerca de FurryFndr",
-    "about.h2": "FurryFndr una aplicación de Prometheus R&D",
+    "about.h1": "Acerca de Lucky Tracker",
+    "about.h2": "Lucky Tracker una aplicación de Prometheus R&D",
     "about.p1":
-      "FurryFndr nació con la idea de proporcionar un nivel extra de cuidado y protección para las mascotas y sus dueños.",
+      "Lucky Tracker nació con la idea de proporcionar un nivel extra de cuidado y protección para las mascotas y sus dueños.",
     "about.p2":
-      "FurryFndr fue desarrollado por Prometheus R&D, una empresa con sede en Tijuana que se enfoca en crear soluciones tecnológicas de alta gama.",
+      "Lucky Tracker fue desarrollado por Prometheus R&D, una empresa con sede en Tijuana que se enfoca en crear soluciones tecnológicas de alta gama.",
     "contact.h1": "Contáctanos",
     "contact.form.p1": "Nombre",
     "contact.form.p2": "Número de Teléfono",
@@ -216,10 +216,10 @@ export const ui = {
     "policy.items.p6":
       "Al utilizar nuestro sitio web y servicios, usted acepta los términos de nuestra política de privacidad.",
     "chatbot.welcome":
-      "¡Hola! Bienvenido a FurryFndr. ¿Cómo puedo ayudarte hoy?",
+      "¡Hola! Bienvenido a Lucky Tracker. ¿Cómo puedo ayudarte hoy?",
     "chatbot.welcome.opt1": "🔍 Perdí a una mascota",
     "chatbot.welcome.opt2": "🐕 Encontré una mascota",
-    "chatbot.welcome.opt3": "🤔 ¿Qué es Peturnidad?",
+    "chatbot.welcome.opt3": "🤔 ¿Qué es Lucky Tracker?",
     "chatbot.welcome.opt4": "🌎 ¿Cómo ayuda la comunidad?",
     "chatbot.welcome.opt5": "📩 Contacto y soporte",
     "chatbot.lostPet":
@@ -231,7 +231,7 @@ export const ui = {
     "chatbot.lostPetReport":
       "Puedes crear un reporte de mascota perdida con fotos, descripción y última ubicación conocida.\nEsto ayuda a que los usuarios cercanos reciban alertas.",
     "chatbot.lostPetTracking":
-      "FurryFndr usa alertas comunitarias y reportes basados en ubicación para ayudar a reconectar mascotas con sus familias más rápido.",
+      "Lucky Tracker usa alertas comunitarias y reportes basados en ubicación para ayudar a reconectar mascotas con sus familias más rápido.",
     "chatbot.lostPetTips":
       "Aquí tienes algunos consejos:\n• Comparte fotos claras\n• Incluye la última ubicación vista\n• Pregunta a vecinos y refugios locales",
     "chatbot.foundPet":
@@ -245,19 +245,19 @@ export const ui = {
       "Puedes navegar por reportes recientes de mascotas perdidas filtrados por tu ubicación.",
     "chatbot.foundPetMeanwhile":
       "Mientras tanto:\n• Mantén a la mascota segura\n• Revisa si tiene identificación o etiquetas\n• Evita asumir la propiedad",
-    "chatbot.whatIsPeturnidad":
-      "Peturnidad es una plataforma impulsada por la comunidad diseñada para reunir mascotas perdidas con sus familias 🐕🐈",
-    "chatbot.whatIsPeturnidad.opt1": "💡 ¿Qué problemas resuelve?",
-    "chatbot.whatIsPeturnidad.opt2": "🛠️ ¿Qué características ofrece?",
-    "chatbot.whatIsPeturnidad.opt3": "👥 ¿Para quién es?",
-    "chatbot.peturnidadProblems":
+    "chatbot.whatIsLuckyTracker":
+      "Lucky Tracker es una plataforma impulsada por la comunidad diseñada para reunir mascotas perdidas con sus familias 🐕🐈",
+    "chatbot.whatIsLuckyTracker.opt1": "💡 ¿Qué problemas resuelve?",
+    "chatbot.whatIsLuckyTracker.opt2": "🛠️ ¿Qué características ofrece?",
+    "chatbot.whatIsLuckyTracker.opt3": "👥 ¿Para quién es?",
+    "chatbot.luckyTrackerProblems":
       "Reduce el tiempo que las mascotas permanecen perdidas al conectar comunidades a través de alertas e información compartida.",
-    "chatbot.peturnidadFeatures":
+    "chatbot.luckyTrackerFeatures":
       "Las características incluyen:\n• Reportes de mascotas perdidas y encontradas\n• Alertas basadas en ubicación\n• Colaboración comunitaria",
-    "chatbot.peturnidadForWho":
+    "chatbot.luckyTrackerForWho":
       "Dueños de mascotas, amantes de los animales y cualquier persona que quiera ayudar a reunir mascotas con sus familias.",
     "chatbot.communityHelp":
-      "La comunidad es el corazón de Peturnidad 💛 ¿Cómo te gustaría ayudar?",
+      "La comunidad es el corazón de Lucky Tracker 💛 ¿Cómo te gustaría ayudar?",
     "chatbot.communityHelp.opt1": "🤝 ¿Cómo puedo ayudar a otros?",
     "chatbot.communityHelp.opt2": "📣 Cómo funcionan las alertas",
     "chatbot.communityHelp.opt3": "🐾 Por qué la comunidad es importante",
@@ -266,7 +266,7 @@ export const ui = {
     "chatbot.contactSupport.opt1": "📧 Información de contacto",
     "chatbot.contactSupport.opt2": "❓ Preguntas Frecuentes",
     "chatbot.contactInfo":
-      "Puedes contactar al equipo de Peturnidad a través de la sección de contacto en el sitio web.",
+      "Puedes contactar al equipo de Lucky Tracker a través de la sección de contacto en el sitio web.",
     "chatbot.faq":
       "Las preguntas comunes incluyen cómo publicar reportes, editar información y mantenerse seguro.",
     "placeholder.h1": "Página en Desarrollo",

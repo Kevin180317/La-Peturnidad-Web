@@ -82,7 +82,7 @@ const flow = (t: ReturnType<typeof useTranslations>) => ({
           return "foundPet";
         }
         case t("chatbot.welcome.opt3"): {
-          return "whatIsPeturnidad";
+          return "whatIsLuckyTracker";
         }
         case t("chatbot.welcome.opt4"): {
           return "communityHelp";
@@ -185,22 +185,22 @@ const flow = (t: ReturnType<typeof useTranslations>) => ({
     chatDisabled: true,
   },
 
-  whatIsPeturnidad: {
-    message: t("chatbot.whatIsPeturnidad"),
+  whatIsLuckyTracker: {
+    message: t("chatbot.whatIsLuckyTracker"),
     options: [
-      t("chatbot.whatIsPeturnidad.opt1"),
-      t("chatbot.whatIsPeturnidad.opt2"),
-      t("chatbot.whatIsPeturnidad.opt3"),
+      t("chatbot.whatIsLuckyTracker.opt1"),
+      t("chatbot.whatIsLuckyTracker.opt2"),
+      t("chatbot.whatIsLuckyTracker.opt3"),
       t("chatbot.back"),
     ],
     path: (params: ChatParams) => {
       switch (params.userInput) {
-        case t("chatbot.whatIsPeturnidad.opt1"):
-          return "peturnidadProblems";
-        case t("chatbot.whatIsPeturnidad.opt2"):
-          return "peturnidadFeatures";
-        case t("chatbot.whatIsPeturnidad.opt3"):
-          return "peturnidadForWho";
+        case t("chatbot.whatIsLuckyTracker.opt1"):
+          return "luckyTrackerProblems";
+        case t("chatbot.whatIsLuckyTracker.opt2"):
+          return "luckyTrackerFeatures";
+        case t("chatbot.whatIsLuckyTracker.opt3"):
+          return "luckyTrackerForWho";
         case t("chatbot.back"):
           return "start";
       }
@@ -208,22 +208,22 @@ const flow = (t: ReturnType<typeof useTranslations>) => ({
     chatDisabled: true,
   },
 
-  peturnidadProblems: {
-    message: t("chatbot.peturnidadProblems"),
+  luckyTrackerProblems: {
+    message: t("chatbot.luckyTrackerProblems"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
   },
 
-  peturnidadFeatures: {
-    message: t("chatbot.peturnidadFeatures"),
+  luckyTrackerFeatures: {
+    message: t("chatbot.luckyTrackerFeatures"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
   },
 
-  peturnidadForWho: {
-    message: t("chatbot.peturnidadForWho"),
+  luckyTrackerForWho: {
+    message: t("chatbot.luckyTrackerForWho"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
