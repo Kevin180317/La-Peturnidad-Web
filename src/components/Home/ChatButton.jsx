@@ -9,7 +9,7 @@ export default function ChatbotLauncher({ lang }) {
       {/* Botón flotante */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center hover:scale-105 transition"
+        className="fixed bottom-6 right-6 z-50 bg-primary bg-fondo rounded-full w-14 h-14 shadow-lg flex items-center justify-center hover:scale-105 transition"
         aria-label="Abrir chat"
       >
         💬

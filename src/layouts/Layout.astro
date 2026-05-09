@@ -5,10 +5,9 @@ import "@fontsource/pretendard/400.css";
 import "@fontsource/pretendard/500.css";
 import "@fontsource/pretendard/600.css";
 import "@fontsource/pretendard/700.css";
-import NavBar from "../components/NavBar.jsx";
+import HeaderAndChat from "../components/HeaderAndChat.jsx";
 import Footer from "../components/Footer.astro";
 import { getLangFromUrl } from "../i18n/utils";
-import ChatButton from "../components/Home/ChatButton";
 const lang = getLangFromUrl(Astro.url);
 ---
 
@@ -19,14 +18,14 @@ const lang = getLangFromUrl(Astro.url);
     <meta name="viewport" content="width=device-width" />
     <link rel="shortcut icon" href="/favicon_16x16.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>Peturnidad - Encuentra Mascotas Perdidas en tu Comunidad</title>
+    <title>Lucky Tracker - Encuentra Mascotas Perdidas en tu Comunidad</title>
     <meta
       name="description"
-      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Peturnidad y ayuda a reunir familias con sus peludos."
+      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos."
     />
     <meta
       name="keywords"
-      content="Mascotas Perdidas, Comunidad, Reporte de Mascotas, Reunión de Mascotas, Peturnidad, Ayuda a Mascotas, Encuentra Mascotas, Reporta Mascotas, Mascotas Encontradas"
+      content="Mascotas Perdidas, Comunidad, Reporte de Mascotas, Reunión de Mascotas, Lucky Tracker, Ayuda a Mascotas, Encuentra Mascotas, Reporta Mascotas, Mascotas Encontradas"
     />
     <link rel="canonical" href="https://la-peturnidad.vercel.app/" />
     <meta name="robots" content="index, follow" />
@@ -37,22 +36,49 @@ const lang = getLangFromUrl(Astro.url);
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="Peturnidad - Encuentra Mascotas Perdidas en tu Comunidad"
+      content="Lucky Tracker - Encuentra Mascotas Perdidas en tu Comunidad"
     />
     <meta
       property="og:description"
-      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Peturnidad y ayuda a reunir familias con sus peludos."
+      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos."
     />
     <meta
       property="og:image"
-      content="https://la-peturnidad.vercel.app/logoBig.jpg"
+      content="https://la-peturnidad.vercel.app/OpenGraphLogo.png"
     />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Lucky Tracker",
+        "url": "https://la-peturnidad.vercel.app/",
+        "logo": "https://la-peturnidad.vercel.app/Imagotipo_colore_original.png",
+        "description": "Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos.",
+        "founder": "Prometheus R&D",
+        "sameAs": [
+          "https://www.facebook.com/petnowofficial",
+          "https://www.instagram.com/petnow_official/"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Lucky Tracker",
+        "url": "https://la-peturnidad.vercel.app/",
+        "description": "Encuentra Mascotas Perdidas en tu Comunidad",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Prometheus R&D"
+        }
+      }
+    </script>
   </head>
   <body class="overflow-x-hidden relative bg-fondo">
-    <NavBar lang={lang} client:visible />
+    <HeaderAndChat lang={lang} client:visible />
     <slot />
     <Footer />
-    <ChatButton lang={lang} client:only="react" />
   </body>
 </html>
 
