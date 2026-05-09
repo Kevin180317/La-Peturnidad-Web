@@ -42,7 +42,38 @@ const lang = getLangFromUrl(Astro.url);
       property="og:description"
       content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos."
     />
-    <meta property="og:image" content="Imagotipo_colore_original.png" />
+    <meta
+      property="og:image"
+      content="https://la-peturnidad.vercel.app/Imagotipo_colore_original.png"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Lucky Tracker",
+        "url": "https://la-peturnidad.vercel.app/",
+        "logo": "https://la-peturnidad.vercel.app/Imagotipo_colore_original.png",
+        "description": "Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos.",
+        "founder": "Prometheus R&D",
+        "sameAs": [
+          "https://www.facebook.com/petnowofficial",
+          "https://www.instagram.com/petnow_official/"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Lucky Tracker",
+        "url": "https://la-peturnidad.vercel.app/",
+        "description": "Encuentra Mascotas Perdidas en tu Comunidad",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Prometheus R&D"
+        }
+      }
+    </script>
   </head>
   <body class="overflow-x-hidden relative bg-fondo">
     <HeaderAndChat lang={lang} client:visible />
