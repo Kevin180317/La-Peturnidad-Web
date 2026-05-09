@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 import { useTranslations } from "../i18n/utils";
 
-function NavBar({ lang }) {
+function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
   const t = useTranslations(lang);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
   const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
@@ -22,6 +22,7 @@ function NavBar({ lang }) {
 
     window.location.href = newPath + search + hash;
   };
+  const year = new Date().getFullYear();
 
   return (
     <section className="fixed top-0 bg-fondo w-full z-50">
@@ -210,9 +211,11 @@ function NavBar({ lang }) {
               <div className="flex-1 flex flex-col items-center justify-start pt-6">
                 <div className="flex items-center justify-between w-full px-4 h-5 mb-12">
                   <a href="/" title="Petnow Home" aria-label="Go to home page">
-                    <figure>
-                      <img src="/logo.png" alt="Logo" />
-                    </figure>
+                    <img
+                      src="/Imagotipo_colore_original.png"
+                      alt="Logo"
+                      className="h-16"
+                    />
                   </a>
 
                   <button
@@ -339,10 +342,10 @@ function NavBar({ lang }) {
               </div>
 
               {/* footer dentro del menú móvil */}
-              <div className="border-t border-neutral-200 p-4 bg-[#F7F8F6]">
+              <div className="border-t border-neutral-200 p-4 bg-fondo">
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-neutral-600">
-                    Prometheus R&D | © 2025 Petnow
+                    Prometheus R&D | {year} Lucky Tracker
                   </div>
                   <div className="flex gap-3">
                     <a
