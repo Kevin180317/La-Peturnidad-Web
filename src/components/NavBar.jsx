@@ -324,7 +324,7 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
                   {t("nav.howToUse")}
                 </a>
                 <a
-                  href={lang === "en" ? "/contact" : "/contact"}
+                  href={lang === "en" ? "/en/contact" : "/contact"}
                   title="Contact Page"
                   aria-label="Contact Us"
                   className="py-2 px-4 w-full hover:text-principal"

@@ -3,16 +3,16 @@ import React, { useState } from "react";
 function Questions() {
   const accordionData = [
     {
-      title: "What’s FurryFndr?",
+      title: "What’s Lucky Tracker?",
       content:
-        "FurryFndr is an app that enables pet parents to keep track of their love ones by sending community driven alerts in case their pets are missing.",
+        "Lucky Tracker is an app that enables pet parents to keep track of their love ones by sending community driven alerts in case their pets are missing.",
     },
     {
       title: "What type of alerts do I get in case my pet is missing?",
       content: "",
     },
     {
-      title: "Does FurryFndr gives me accurate position 24/7 of my pet?",
+      title: "Does Lucky Tracker gives me accurate position 24/7 of my pet?",
       content: "",
     },
     {
