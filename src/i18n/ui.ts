@@ -41,19 +41,19 @@ export const ui = {
     "terms.title": "Terms & Conditions",
     "terms.items.t1": "Website Use",
     "terms.items.p1":
-      "By accessing and using the PrometheusR&D website, you agree to comply with these terms and conditions, as well as all applicable laws and regulations.",
+      "By accessing and using the Lucky Tracker website, you agree to comply with these terms and conditions, as well as all applicable laws and regulations.",
     "terms.items.t2": "Intellectual Property",
     "terms.items.p2":
-      "All content included on this website, such as text, graphics, logos, images, videos, audio clips, digital downloads, and compiled data, is the property of PrometheusR&DTij and is protected by intellectual property laws.",
+      "All content included on this website, such as text, graphics, logos, images, videos, audio clips, digital downloads, and compiled data, is the property of Lucky Tracker and is protected by intellectual property laws.",
     "terms.items.t3": "Limitation of Liability",
     "terms.items.p3":
-      "PrometheusR&DTij shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from the use or inability to use our website or services.",
+      "Lucky Tracker shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from the use or inability to use our website or services.",
     "terms.items.t4": "Links to Third Parties",
     "terms.items.p4":
-      "Our website may contain links to third-party websites that are not controlled or operated by PrometheusR&DTij. We are not responsible for the content or privacy practices of these websites.",
+      "Our website may contain links to third-party websites that are not controlled or operated by Lucky Tracker. We are not responsible for the content or privacy practices of these websites.",
     "terms.items.t5": "Modifications",
     "terms.items.p5":
-      "PrometheusR&DTij reserves the right to modify or replace these terms and conditions at any time. Changes will be effective when posted on our website.",
+      "Lucky Tracker reserves the right to modify or replace these terms and conditions at any time. Changes will be effective when posted on our website.",
     "terms.items.t6": "Governing Law",
     "terms.items.p6":
       "These terms and conditions shall be governed by and construed in accordance with the laws of the State of [specify state or country], without regard to its conflict of law provisions.",
@@ -62,27 +62,28 @@ export const ui = {
       "If you have any questions about our privacy policy or terms of service, you can contact us at [contact email] or our physical address.",
     "terms.items.t8": "Conclusion",
     "terms.items.p8":
-      "This document sets forth the terms and conditions under which you may access and use the PrometheusR&DTij website and services. By using our website, you agree to these terms and conditions in their entirety.",
+      "This document sets forth the terms and conditions under which you may access and use the Lucky Tracker website and services. By using our website, you agree to these terms and conditions in their entirety.",
     "policy.title": "Terms & Conditions",
     "policy.items.t1": "Information Collected",
     "policy.items.p1":
-      "PrometheusR&DTij collects certain personal information from its users in order to improve our services and offer a personalized experience. This information may include, but is not limited to: - Contact information (name, email address, phone number). - Demographic information (age, gender, location). - Login information (IP address, browser type, pages visited).",
+      "Lucky Tracker collects certain personal information from its users in order to improve our services and offer a personalized experience. This information may include, but is not limited to: - Contact information (name, email address, phone number). - Demographic information (age, gender, location). - Login information (IP address, browser type, pages visited).",
     "policy.items.t2": "Use of Information",
     "policy.items.p2":
       "The information collected is used for the following purposes: - Personalization of the user experience. - Improvement of our products and services. - Communication with users about updates and news. - Analysis and reporting to improve our marketing and business strategies.",
     "policy.items.t3": "Protection of Information",
     "policy.items.p3":
-      "PrometheusR&DTij is committed to protecting the personal information of its users and employs appropriate security measures to prevent unauthorized access, disclosure, or modification of stored personal information.",
+      "Lucky Tracker is committed to protecting the personal information of its users and employs appropriate security measures to prevent unauthorized access, disclosure, or modification of stored personal information.",
     "policy.items.t4": "Disclosure to Third Parties",
     "policy.items.p4":
       "No vendemos, comercializamos ni transferimos de ninguna manera su información personal a terceros sin su consentimiento, excepto cuando sea necesario para cumplir con la ley o proteger nuestros derechos.",
     "policy.items.t5": "Changes to the Privacy Policy",
     "policy.items.p5":
-      "PrometheusR&DTij reserves the right to update this privacy policy at any time. Significant changes will be notified to users via our website or other communication channels.",
+      "Lucky Tracker reserves the right to update this privacy policy at any time. Significant changes will be notified to users via our website or other communication channels.",
     "policy.items.t6": "Consent",
     "policy.items.p6":
       "By using our website and services, you agree to the terms of our privacy policy.",
-    "chatbot.welcome": "Hello! Welcome to Lucky Tracker. How can I help you today?",
+    "chatbot.welcome":
+      "Hello! Welcome to Lucky Tracker. How can I help you today?",
     "chatbot.welcome.opt1": "🔍 I lost a pet",
     "chatbot.welcome.opt2": "🐕 I found a pet",
     "chatbot.welcome.opt3": "🤔 What is Lucky Tracker?",
@@ -136,6 +137,24 @@ export const ui = {
       "Common questions include how to post reports, edit information, and stay safe.",
     "placeholder.h1": "Page Under Development",
     "placeholder.p1": "We are working hard to bring you this content soon!",
+    "faq.title": "Frequently Asked Questions",
+    "faq.items.q1": "What’s Lucky Tracker?",
+    "faq.items.a1":
+      "Lucky Tracker is an app that enables pet parents to keep track of their love ones by sending community driven alerts in case their pets are missing.",
+    "faq.items.q2": "What type of alerts do I get in case my pet is missing?",
+    "faq.items.a2":
+      "You receive alerts about sightings of pets matching your pet’s description in your area, as well as tips and resources to help you find your pet.",
+    "faq.items.q3": "How can I report a lost pet?",
+    "faq.items.a3":
+      "You can report a lost pet by creating a post in the app with details such as photos, description, and last known location.",
+    "faq.items.q4": "What should I do if I find a pet?",
+    "faq.items.a4":
+      "If you find a pet, you can create a found pet report in the app to help connect the pet with its owner. Make sure to provide clear photos and details about where you found the pet.",
+    "faq.items.q5": "Is there a fee to use Lucky Tracker?",
+    "faq.items.a5": "No, Lucky Tracker is free to use for everyone.",
+    "faq.items.q6": "Where can I download the app?",
+    "faq.items.a6":
+      "Lucky Tracker is not currently available but we are working hard to launch it soon. Stay tuned for updates on our website and social media channels.",
   },
   es: {
     "nav.about": "Acerca de",
@@ -174,19 +193,19 @@ export const ui = {
     "terms.title": "Términos y Condiciones",
     "terms.items.t1": "Uso del Sitio Web",
     "terms.items.p1":
-      "Al acceder y utilizar el sitio web de PrometheusR&DTij, usted acepta cumplir con estos términos y condiciones, así como con todas las leyes y regulaciones aplicables.",
+      "Al acceder y utilizar el sitio web de Lucky Tracker, usted acepta cumplir con estos términos y condiciones, así como con todas las leyes y regulaciones aplicables.",
     "terms.items.t2": "Propiedad intelectual",
     "terms.items.p2":
-      "Todo el contenido incluido en este sitio web, como texto, gráficos, logotipos, imágenes, vídeos, clips de audio, descargas digitales y datos recopilados, es propiedad de PrometheusR&DTij y está protegido por las leyes de propiedad intelectual.",
+      "Todo el contenido incluido en este sitio web, como texto, gráficos, logotipos, imágenes, vídeos, clips de audio, descargas digitales y datos recopilados, es propiedad de Lucky Tracker y está protegido por las leyes de propiedad intelectual.",
     "terms.items.t3": "Limitación de responsabilidad",
     "terms.items.p3":
-      "PrometheusR&DTij no será responsable de ningún daño directo, indirecto, incidental, especial, consecuente o punitivo que surja del uso o la imposibilidad de uso de nuestro sitio web o servicios.",
+      "Lucky Tracker no será responsable de ningún daño directo, indirecto, incidental, especial, consecuente o punitivo que surja del uso o la imposibilidad de uso de nuestro sitio web o servicios.",
     "terms.items.t4": "Enlaces a terceros",
     "terms.items.p4":
-      "Nuestro sitio web puede contener enlaces a sitios web de terceros que no son controlados ni operados por PrometheusR&DTij. No nos hacemos responsables del contenido o las prácticas de privacidad de estos sitios web.",
+      "Nuestro sitio web puede contener enlaces a sitios web de terceros que no son controlados ni operados por Lucky Tracker. No nos hacemos responsables del contenido o las prácticas de privacidad de estos sitios web.",
     "terms.items.t5": "Modificaciones",
     "terms.items.p5":
-      "PrometheusR&DTij se reserva el derecho de modificar o reemplazar estos términos y condiciones en cualquier momento. Los cambios serán efectivos cuando se publiquen en nuestro sitio web.",
+      "Lucky Tracker se reserva el derecho de modificar o reemplazar estos términos y condiciones en cualquier momento. Los cambios serán efectivos cuando se publiquen en nuestro sitio web.",
     "terms.items.t6": "Ley Aplicable",
     "terms.items.p6":
       "Estos términos y condiciones se regirán e interpretarán de acuerdo con las leyes del Estado de [especificar el estado o país], sin tener en cuenta sus disposiciones sobre conflictos de leyes.",
@@ -195,23 +214,23 @@ export const ui = {
       "Si tiene alguna pregunta sobre nuestra política de privacidad o términos de servicio, puede contactarnos a través de [correo electrónico de contacto] o nuestra dirección física.",
     "terms.items.t8": "Conclusión",
     "terms.items.p8":
-      "Este documento establece los términos y condiciones bajo los cuales usted puede acceder y utilizar el sitio web y servicios de PrometheusR&DTij. Al utilizar nuestro sitio web, usted acepta estos términos y condiciones en su totalidad.",
+      "Este documento establece los términos y condiciones bajo los cuales usted puede acceder y utilizar el sitio web y servicios de Lucky Tracker. Al utilizar nuestro sitio web, usted acepta estos términos y condiciones en su totalidad.",
     "policy.title": "Politica de Privacidad",
     "policy.items.t1": "Información Recopilada",
     "policy.items.p1":
-      "PrometheusR&DTij recopila cierta información personal de sus usuarios con el fin de mejorar nuestros servicios y ofrecer una experiencia personalizada. Esta información puede incluir, pero no se limita a: - Información de contacto (nombre, dirección de correo electrónico, número de teléfono). - Información demográfica (edad, sexo, ubicación). - Información de inicio de sesión (dirección IP, tipo de navegador, páginas visitadas).",
+      "Lucky Tracker recopila cierta información personal de sus usuarios con el fin de mejorar nuestros servicios y ofrecer una experiencia personalizada. Esta información puede incluir, pero no se limita a: - Información de contacto (nombre, dirección de correo electrónico, número de teléfono). - Información demográfica (edad, sexo, ubicación). - Información de inicio de sesión (dirección IP, tipo de navegador, páginas visitadas).",
     "policy.items.t2": "Uso de la Información",
     "policy.items.p2":
       "La información recopilada se utiliza para los siguientes propósitos: - Personalización de la experiencia del usuario. - Mejora de nuestros productos y servicios. - Comunicación con los usuarios sobre actualizaciones y novedades. - Análisis y generación de informes para mejorar nuestro marketing y estrategias de negocio.",
     "policy.items.t3": "Protección de la Información",
     "policy.items.p3":
-      "PrometheusR&DTij se compromete a proteger la información personal de sus usuarios y emplea medidas de seguridad adecuadas para evitar accesos no autorizados, divulgación o modificación de la información personal almacenada.",
+      "Lucky Tracker se compromete a proteger la información personal de sus usuarios y emplea medidas de seguridad adecuadas para evitar accesos no autorizados, divulgación o modificación de la información personal almacenada.",
     "policy.items.t4": "Divulgación a Terceros",
     "policy.items.p4":
       "No vendemos, comercializamos ni transferimos de ninguna manera su información personal a terceros sin su consentimiento, excepto cuando sea necesario para cumplir con la ley o proteger nuestros derechos.",
     "policy.items.t5": "Cambios en la Política de Privacidad",
     "policy.items.p5":
-      "PrometheusR&DTij se reserva el derecho de actualizar esta política de privacidad en cualquier momento. Se notificarán los cambios significativos a los usuarios a través de nuestro sitio web u otros canales de comunicación.",
+      "Lucky Tracker se reserva el derecho de actualizar esta política de privacidad en cualquier momento. Se notificarán los cambios significativos a los usuarios a través de nuestro sitio web u otros canales de comunicación.",
     "policy.items.t6": "Consentimiento",
     "policy.items.p6":
       "Al utilizar nuestro sitio web y servicios, usted acepta los términos de nuestra política de privacidad.",
@@ -270,6 +289,25 @@ export const ui = {
     "chatbot.faq":
       "Las preguntas comunes incluyen cómo publicar reportes, editar información y mantenerse seguro.",
     "placeholder.h1": "Página en Desarrollo",
-    "placeholder.p1": "¡Estamos trabajando duro para traerte este contenido pronto!",
+    "placeholder.p1":
+      "¡Estamos trabajando duro para traerte este contenido pronto!",
+    "faq.title": "Preguntas Frecuentes",
+    "faq.items.q1": "¿Qué es Lucky Tracker?",
+    "faq.items.a1":
+      "Lucky Tracker es una aplicación que permite a los dueños de mascotas mantener un seguimiento de sus seres queridos mediante el envío de alertas impulsadas por la comunidad en caso de que sus mascotas estén desaparecidas.",
+    "faq.items.q2": "¿Qué tipo de alertas recibo si mi mascota está perdida?",
+    "faq.items.a2":
+      "Recibes alertas sobre avistamientos de mascotas que coinciden con la descripción de tu mascota en tu área, así como consejos y recursos para ayudarte a encontrar a tu mascota.",
+    "faq.items.q3": "¿Cómo puedo reportar a una mascota perdida?",
+    "faq.items.a3":
+      "Puedes reportar a una mascota perdida creando una publicación en la aplicación con detalles como fotos, descripción y la última ubicación conocida.",
+    "faq.items.q4": "¿Qué debo hacer si encuentro a una mascota?",
+    "faq.items.a4":
+      "Si encuentras a una mascota, puedes crear un reporte de mascota encontrada en la aplicación para ayudar a conectarla con su dueño. Asegúrate de proporcionar fotos claras y detalles sobre dónde encontraste a la mascota.",
+    "faq.items.q5": "¿Hay alguna tarifa para usar Lucky Tracker?",
+    "faq.items.a5": "No, Lucky Tracker es gratuito para todos.",
+    "faq.items.q6": "¿Dónde puedo descargar la aplicación?",
+    "faq.items.a6":
+      "Lucky Tracker no está disponible actualmente, pero estamos trabajando duro para lanzarla pronto. Mantente atento a las actualizaciones en nuestro sitio web y canales de redes sociales.",
   },
 } as const;
