@@ -82,7 +82,8 @@ export const ui = {
     "policy.items.t6": "Consent",
     "policy.items.p6":
       "By using our website and services, you agree to the terms of our privacy policy.",
-    "chatbot.welcome": "Hello! Welcome to Lucky Tracker. How can I help you today?",
+    "chatbot.welcome":
+      "Hello! Welcome to Lucky Tracker. How can I help you today?",
     "chatbot.welcome.opt1": "🔍 I lost a pet",
     "chatbot.welcome.opt2": "🐕 I found a pet",
     "chatbot.welcome.opt3": "🤔 What is Lucky Tracker?",
@@ -136,6 +137,24 @@ export const ui = {
       "Common questions include how to post reports, edit information, and stay safe.",
     "placeholder.h1": "Page Under Development",
     "placeholder.p1": "We are working hard to bring you this content soon!",
+    "faq.title": "Frequently Asked Questions",
+    "faq.items.q1": "What’s Lucky Tracker?",
+    "faq.items.a1":
+      "Lucky Tracker is an app that enables pet parents to keep track of their love ones by sending community driven alerts in case their pets are missing.",
+    "faq.items.q2": "What type of alerts do I get in case my pet is missing?",
+    "faq.items.a2":
+      "You receive alerts about sightings of pets matching your pet’s description in your area, as well as tips and resources to help you find your pet.",
+    "faq.items.q3": "How can I report a lost pet?",
+    "faq.items.a3":
+      "You can report a lost pet by creating a post in the app with details such as photos, description, and last known location.",
+    "faq.items.q4": "What should I do if I find a pet?",
+    "faq.items.a4":
+      "If you find a pet, you can create a found pet report in the app to help connect the pet with its owner. Make sure to provide clear photos and details about where you found the pet.",
+    "faq.items.q5": "Is there a fee to use Lucky Tracker?",
+    "faq.items.a5": "No, Lucky Tracker is free to use for everyone.",
+    "faq.items.q6": "Where can I download the app?",
+    "faq.items.a6":
+      "Lucky Tracker is not currently available but we are working hard to launch it soon. Stay tuned for updates on our website and social media channels.",
   },
   es: {
     "nav.about": "Acerca de",
@@ -270,6 +289,25 @@ export const ui = {
     "chatbot.faq":
       "Las preguntas comunes incluyen cómo publicar reportes, editar información y mantenerse seguro.",
     "placeholder.h1": "Página en Desarrollo",
-    "placeholder.p1": "¡Estamos trabajando duro para traerte este contenido pronto!",
+    "placeholder.p1":
+      "¡Estamos trabajando duro para traerte este contenido pronto!",
+    "faq.title": "Preguntas Frecuentes",
+    "faq.items.q1": "¿Qué es Lucky Tracker?",
+    "faq.items.a1":
+      "Lucky Tracker es una aplicación que permite a los dueños de mascotas mantener un seguimiento de sus seres queridos mediante el envío de alertas impulsadas por la comunidad en caso de que sus mascotas estén desaparecidas.",
+    "faq.items.q2": "¿Qué tipo de alertas recibo si mi mascota está perdida?",
+    "faq.items.a2":
+      "Recibes alertas sobre avistamientos de mascotas que coinciden con la descripción de tu mascota en tu área, así como consejos y recursos para ayudarte a encontrar a tu mascota.",
+    "faq.items.q3": "¿Cómo puedo reportar a una mascota perdida?",
+    "faq.items.a3":
+      "Puedes reportar a una mascota perdida creando una publicación en la aplicación con detalles como fotos, descripción y la última ubicación conocida.",
+    "faq.items.q4": "¿Qué debo hacer si encuentro a una mascota?",
+    "faq.items.a4":
+      "Si encuentras a una mascota, puedes crear un reporte de mascota encontrada en la aplicación para ayudar a conectarla con su dueño. Asegúrate de proporcionar fotos claras y detalles sobre dónde encontraste a la mascota.",
+    "faq.items.q5": "¿Hay alguna tarifa para usar Lucky Tracker?",
+    "faq.items.a5": "No, Lucky Tracker es gratuito para todos.",
+    "faq.items.q6": "¿Dónde puedo descargar la aplicación?",
+    "faq.items.a6":
+      "Lucky Tracker no está disponible actualmente, pero estamos trabajando duro para lanzarla pronto. Mantente atento a las actualizaciones en nuestro sitio web y canales de redes sociales.",
   },
 } as const;

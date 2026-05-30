@@ -1,11 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Questions from "../components/FAQ/Questions.jsx";
+import { getLangFromUrl } from "../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout
   title="FAQ"
   description="Frequently Asked Questions about our services and policies."
 >
-  <Questions client:visible />
+  <Questions lang={lang} client:visible />
 </Layout>

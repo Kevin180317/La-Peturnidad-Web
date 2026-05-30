@@ -1,33 +1,38 @@
 import React, { useState } from "react";
 
-function Questions() {
+import { useTranslations } from "../../i18n/utils";
+import { defaultLang, ui } from "../../i18n/ui";
+
+function Questions({ lang = defaultLang }) {
+  const currentLang =
+    typeof lang === "string" && lang in ui ? lang : defaultLang;
+  const t = useTranslations(currentLang);
+
   const accordionData = [
     {
-      title: "What’s Lucky Tracker?",
-      content:
-        "Lucky Tracker is an app that enables pet parents to keep track of their love ones by sending community driven alerts in case their pets are missing.",
+      title: t("faq.items.q1"),
+      content: t("faq.items.a1"),
     },
     {
-      title: "What type of alerts do I get in case my pet is missing?",
-      content: "",
+      title: t("faq.items.q2"),
+      content: t("faq.items.a2"),
     },
     {
-      title: "Does Lucky Tracker gives me accurate position 24/7 of my pet?",
-      content: "",
+      title: t("faq.items.q3"),
+      content: t("faq.items.a3"),
     },
     {
-      title: "Do community alerts has any cost?",
-      content: "",
+      title: t("faq.items.q4"),
+      content: t("faq.items.a4"),
     },
     {
-      title: "Where can I download the app?",
-      content: "",
+      title: t("faq.items.q5"),
+      content: t("faq.items.a5"),
     },
-    // {
-    //   title: "I want to know more about petnow!",
-    //   content: "For more information about petnow, feel free to email ",
-    //   Link: { text: "contact@petnow.io", href: "mailto:contact@petnow.io" },
-    // },
+    {
+      title: t("faq.items.q6"),
+      content: t("faq.items.a6"),
+    },
   ];
 
   const [activeIndex, setActiveIndex] = useState(null);
@@ -39,9 +44,7 @@ function Questions() {
   return (
     <section className="flex flex-col items-center justify-center my-16 md:my-20 lg:my-26 mx-4">
       <div className="max-w-[1000px] w-full text-lg md:text-2xl">
-        <h1 className="text-center font-bold my-4 mb-6">
-          Frequently Asked Questions
-        </h1>
+        <h1 className="text-center font-bold my-4 mb-6">{t("faq.title")}</h1>
         <hr className="border-1 border-neutral-300" />
         {accordionData.map((item, index) => (
           <div
