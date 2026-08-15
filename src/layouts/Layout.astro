@@ -9,6 +9,7 @@ import HeaderAndChat from "../components/HeaderAndChat.jsx";
 import Footer from "../components/Footer.astro";
 import { getLangFromUrl } from "../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
+const { footer = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -78,7 +79,7 @@ const lang = getLangFromUrl(Astro.url);
   <body class="overflow-x-hidden relative bg-fondo">
     <HeaderAndChat lang={lang} client:visible />
     <slot />
-    <Footer />
+    {footer ? <Footer /> : <slot name="footer" />}
   </body>
 </html>
 

@@ -155,6 +155,10 @@ export const ui = {
     "faq.items.q6": "Where can I download the app?",
     "faq.items.a6":
       "Lucky Tracker is not currently available but we are working hard to launch it soon. Stay tuned for updates on our website and social media channels.",
+    "emailConfirmed.title": "Your account has been activated!",
+    "emailConfirmed.message":
+      "Your email address has been verified successfully. You can now log in and start using Lucky Tracker.",
+    "emailConfirmed.home": "Go to the home page",
   },
   es: {
     "nav.about": "Acerca de",
@@ -309,5 +313,9 @@ export const ui = {
     "faq.items.q6": "¿Dónde puedo descargar la aplicación?",
     "faq.items.a6":
       "Lucky Tracker no está disponible actualmente, pero estamos trabajando duro para lanzarla pronto. Mantente atento a las actualizaciones en nuestro sitio web y canales de redes sociales.",
+    "emailConfirmed.title": "¡Tu cuenta fue activada!",
+    "emailConfirmed.message":
+      "Tu correo electrónico ha sido verificado correctamente. Ya puedes iniciar sesión y empezar a usar Lucky Tracker.",
+    "emailConfirmed.home": "Ir a la página principal",
   },
 } as const;

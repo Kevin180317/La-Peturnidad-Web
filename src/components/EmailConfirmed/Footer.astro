@@ -1,0 +1,44 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-fondo">
+  <div class="max-w-[1200px] mx-auto px-6 py-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <a
+        href={lang === "en" ? "/en/" : "/"}
+        title="Lucky Tracker Logo"
+        aria-label="Go to the home page"
+        class="hover:scale-110 transition-transform max-w-[180px]"
+      >
+        <figure>
+          <img src="/Imagotipo_colore_original.png" alt="Logo" />
+        </figure>
+      </a>
+      <div class="flex flex-col gap-2 text-neutral-400 font-normal text-sm">
+        <p>
+          Prometheus R&D | {year} Lucky Tracker
+        </p>
+        <p>
+          <a
+            href={lang === "en" ? "/en/terms" : "/terms"}
+            aria-label="Terms and Conditions"
+            class="hover:text-principal"
+            >{t("footer.Terms")}</a
+          >
+          <span class="mx-2">•</span>
+          <a
+            href={lang === "en" ? "/en/policy" : "/policy"}
+            aria-label="Privacy Policy"
+            class="hover:text-principal"
+            >{t("footer.Privacy")}</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
