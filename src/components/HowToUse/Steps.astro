@@ -1,104 +1,132 @@
 ---
-const Steps = [
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { ui } from "../../i18n/ui";
+
+type Key = keyof (typeof ui)["es"];
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps: {
+  titleKey: Key;
+  descKey: Key;
+  accent: "salmon" | "teal";
+  screens: { src: string; captionKey: Key }[];
+}[] = [
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection1.webp",
-    title: "Make sure the face is clean",
-    points: [
-      "If sand, dirt, or other debris is on the face, wipe it off",
-      "If the nose is wet, blow it dry",
-      "If the nose is covered in fur, brush it out",
+    titleKey: "howto.step.dashboard.title",
+    descKey: "howto.step.dashboard.desc",
+    accent: "teal",
+    screens: [
+      { src: "/how-to-use/inicio-tab.jpeg", captionKey: "howto.caption.inicioTab" },
+      { src: "/how-to-use/inicio-lista.jpeg", captionKey: "howto.caption.inicioLista" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%8B%E1%85%A5%E1%86%AF%E1%84%80%E1%85%AE%E1%86%AF%E1%84%8B%E1%85%B3%E1%86%AF%20%E1%84%81%E1%85%A2%E1%84%81%E1%85%B3%E1%86%BA%E1%84%92%E1%85%A1%E1%84%80%E1%85%A6%20%E1%84%92%E1%85%A2%E1%84%8C%E1%85%AE%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection2.webp",
-    title: "Scan front of your dog’s face",
-    points: [
-      "Make sure the dog’s face is facing the camera to capture the nose print from the front",
+    titleKey: "howto.step.pets.title",
+    descKey: "howto.step.pets.desc",
+    accent: "teal",
+    screens: [
+      { src: "/how-to-use/inicio-mascota.jpeg", captionKey: "howto.caption.inicioMascota" },
+      { src: "/how-to-use/mascota-form.jpeg", captionKey: "howto.caption.mascotaForm" },
+      { src: "/how-to-use/mascota-ficha.jpeg", captionKey: "howto.caption.mascotaFicha" },
+      { src: "/how-to-use/mascota-editar.jpeg", captionKey: "howto.caption.mascotaEditar" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5%E1%84%8B%E1%85%B4_%E1%84%8B%E1%85%A5%E1%86%AF%E1%84%80%E1%85%AE%E1%86%AF_%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%86%E1%85%A7%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AF_%E1%84%8D%E1%85%B5%E1%86%A8%E1%84%8B%E1%85%A5%E1%84%8C%E1%85%AE%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection3.webp",
-    title: "Make sure to scan in a bright light.",
-    points: [
-      "A daytime outdoor setting or a room with plenty of light is preferred",
-      "Avoid direct sunlight or strong lighting such as pin lights",
+    titleKey: "howto.step.emergency.title",
+    descKey: "howto.step.emergency.desc",
+    accent: "salmon",
+    screens: [
+      { src: "/how-to-use/emergencia-grid.jpeg", captionKey: "howto.caption.emergenciaGrid" },
+      { src: "/how-to-use/emergencia-perdidas.jpeg", captionKey: "howto.caption.emergenciaPerdidas" },
+      { src: "/how-to-use/emergencia-alerta-confirm.jpeg", captionKey: "howto.caption.alertaConfirm" },
+      { src: "/how-to-use/emergencia-push.jpeg", captionKey: "howto.caption.push" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%87%E1%85%A1%E1%86%B0%E1%84%8B%E1%85%B3%E1%86%AB%20%E1%84%92%E1%85%AA%E1%86%AB%E1%84%80%E1%85%A7%E1%86%BC%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%20%E1%84%8E%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%92%E1%85%A2%E1%84%8C%E1%85%AE%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection4.webp",
-    title: "Slowly move back and forth at a set distance.",
-    points: [
-      "Keep the distance between the dog’s nose and the phone between 10-20cm (4-8 inches), moving slowly back and forth",
+    titleKey: "howto.step.found.title",
+    descKey: "howto.step.found.desc",
+    accent: "salmon",
+    screens: [
+      { src: "/how-to-use/emergencia-encontrada-confirm.jpeg", captionKey: "howto.caption.encontradaConfirm" },
+      { src: "/how-to-use/emergencia-encontradas.jpeg", captionKey: "howto.caption.encontradas" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_10_20cm_%E1%84%80%E1%85%A5%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5_%E1%84%8B%E1%85%A1%E1%87%81%E1%84%83%E1%85%B1%E1%84%85%E1%85%A9_%E1%84%8E%E1%85%A5%E1%86%AB%E1%84%8E%E1%85%A5%E1%86%AB%E1%84%92%E1%85%B5_%E1%84%8B%E1%85%AE%E1%86%B7%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%8B%E1%85%A7%E1%84%8C%E1%85%AE%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection5.webp",
-    title: "Tilt your phone as your dog’s face moves.",
-    points: [
-      "Orient your phone vertically if your dog is sitting upright, and horizontally if they’re lying down",
+    titleKey: "howto.step.feed.title",
+    descKey: "howto.step.feed.desc",
+    accent: "teal",
+    screens: [
+      { src: "/how-to-use/feed-tab.jpeg", captionKey: "howto.caption.feedTab" },
+      { src: "/how-to-use/feed-publicar.jpeg", captionKey: "howto.caption.feedPublicar" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%8B%E1%85%A5%E1%86%AF%E1%84%80%E1%85%AE%E1%86%AF%E1%84%80%E1%85%AA_%E1%84%92%E1%85%B2%E1%84%83%E1%85%A2%E1%84%91%E1%85%A9%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AF_%E1%84%80%E1%85%A1%E1%87%80%E1%84%8B%E1%85%B3%E1%86%AB_%E1%84%87%E1%85%A1%E1%86%BC%E1%84%92%E1%85%A3%E1%86%BC%E1%84%8B%E1%85%B3%E1%84%85%E1%85%A9_%E1%84%8B%E1%85%B2%E1%84%8C%E1%85%B5%E1%84%92%E1%85%A2%E1%84%8C%E1%85%AE%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection6.webp",
-    title: "Selfie-mode scans are now available!",
-    points: [
-      "Steadily scan your dog with selfie mode while holding them in your arms or sitting alongside them",
+    titleKey: "howto.step.community.title",
+    descKey: "howto.step.community.desc",
+    accent: "teal",
+    screens: [
+      { src: "/how-to-use/comunidad-tab.jpeg", captionKey: "howto.caption.comunidadTab" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%89%E1%85%A6%E1%86%AF%E1%84%91%E1%85%B5%E1%84%86%E1%85%A9%E1%84%83%E1%85%B3%E1%84%85%E1%85%A9_%E1%84%8D%E1%85%B5%E1%86%A8%E1%84%8B%E1%85%A5%E1%84%87%E1%85%A9%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
   {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection7.webp",
-    title: "Press and hold the sound button while scanning.",
-    points: [
-      "Dog’s favorite sounds help scan the nose by drawing attention towards the camera",
+    titleKey: "howto.step.profile.title",
+    descKey: "howto.step.profile.desc",
+    accent: "teal",
+    screens: [
+      { src: "/how-to-use/perfil-info.jpeg", captionKey: "howto.caption.perfilInfo" },
+      { src: "/how-to-use/perfil-cuenta.jpeg", captionKey: "howto.caption.perfilCuenta" },
     ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%8E%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%A7%E1%86%BC_%E1%84%83%E1%85%A1%E1%86%AB%E1%84%80%E1%85%A8%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5_%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%B3_%E1%84%87%E1%85%A5%E1%84%90%E1%85%B3%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AF_%E1%84%82%E1%85%AE%E1%86%AF%E1%84%85%E1%85%A5%E1%84%87%E1%85%A9%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
-  },
-  {
-    icon: "https://de23256m8hy18.cloudfront.net/new-homepage/howToUseSection8.webp",
-    title: "Try scanning while the dog's asleep.",
-    points: [
-      "If your dog’s nose is facing front in bright surroundings, you can easily take a nose print while asleep",
-    ],
-    Img: "https://de23256m8hy18.cloudfront.net/homepage/how-to-scan/ko/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%A1%E1%84%8C%E1%85%B5_%E1%84%8C%E1%85%A1%E1%84%80%E1%85%A9_%E1%84%8B%E1%85%B5%E1%86%BB%E1%84%8B%E1%85%B3%E1%86%AF_%E1%84%84%E1%85%A2_%E1%84%8D%E1%85%B5%E1%86%A8%E1%84%8B%E1%85%A5%E1%84%87%E1%85%A9%E1%84%89%E1%85%A6%E1%84%8B%E1%85%AD.mp4",
   },
 ];
 ---
 
-<section
-  class="mx-auto px-6 flex flex-col items-center justify-center mb-16 mt-28"
->
-  <div class="flex flex-col gap-10 max-w-[1200px]">
+<section id="steps" class="mx-auto px-6 pb-24 scroll-mt-24">
+  <div class="flex flex-col gap-20 md:gap-28 max-w-[1100px] mx-auto pt-16">
     {
-      Steps.map((step) => (
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/3 ">
-            <img src={step.icon} alt="Icon" class="rounded-lg h-12" />
-            <h3 class="text-4xl font-semibold mt-4 text-texto leading-12 max-w-xs">
-              {step.title}
-            </h3>
-            <ul class="list-disc pl-5 mt-4 text-neutral-500">
-              {step.points.map((point) => (
-                <li class="leading-8">{point}</li>
-              ))}
-            </ul>
+      steps.map((step, i) => (
+        <article
+          class={`flex flex-col ${
+            i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+          } items-center gap-10 md:gap-14`}
+        >
+          <div class="md:w-1/2 w-full">
+            <div class="bg-white rounded-3xl p-8 md:p-10 shadow-[0_4px_24px_rgba(33,31,30,0.08)] ring-1 ring-black/5">
+              <span
+                class={`inline-flex items-center justify-center w-11 h-11 rounded-full text-white font-bold text-lg mb-5 shadow-md ${
+                  step.accent === "salmon" ? "bg-principal" : "bg-secundario"
+                }`}
+              >
+                {i + 1}
+              </span>
+              <h2 class="text-2xl md:text-3xl font-bold text-texto leading-tight">
+                {t(step.titleKey)}
+              </h2>
+              <p class="mt-4 text-neutral-500 leading-relaxed md:text-lg">
+                {t(step.descKey)}
+              </p>
+            </div>
           </div>
-          <div class="md:w-2/3">
-            <video
-              preload="metadata"
-              autoplay
-              loop
-              muted
-              class="rounded-lg w-full"
-              src={step.Img}
-            />
+          <div class="md:w-1/2 flex flex-wrap justify-center items-start gap-x-5 gap-y-8">
+            {step.screens.map((s) => (
+              <figure class="group flex flex-col items-center gap-3 w-[170px] sm:w-[200px] shrink-0">
+                <div class="relative rounded-[32px] bg-[#0d0d0d] px-[9px] pt-7 pb-[9px] shadow-[0_16px_40px_rgba(0,0,0,0.3)] ring-1 ring-black/10 w-full transition-transform duration-300 group-hover:-translate-y-1">
+                  <span class="absolute top-2.5 left-1/2 -translate-x-1/2 h-[5px] w-14 rounded-full bg-white/15" />
+                  <img
+                    src={s.src}
+                    alt={t(s.captionKey)}
+                    loading="lazy"
+                    class="rounded-[22px] w-full block bg-white"
+                  />
+                </div>
+                <figcaption class="text-xs text-neutral-500 text-center leading-snug max-w-[190px]">
+                  {t(s.captionKey)}
+                </figcaption>
+              </figure>
+            ))}
           </div>
-        </div>
+        </article>
       ))
     }
   </div>

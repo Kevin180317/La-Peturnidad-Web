@@ -155,6 +155,47 @@ export const ui = {
     "faq.items.q6": "Where can I download the app?",
     "faq.items.a6":
       "Lucky Tracker is not currently available but we are working hard to launch it soon. Stay tuned for updates on our website and social media channels.",
+    "howto.hero.title": "How does Lucky Tracker work?",
+    "howto.hero.subtitle":
+      "Learn in minutes how to register your pets, report emergencies and connect with your community.",
+    "howto.step.dashboard.title": "Your control center: the Dashboard",
+    "howto.step.dashboard.desc":
+      "After logging in you land on the Dashboard. The bottom bar takes you through the 5 sections: Feed, Home, Community, Emergency and Profile. Pull down to refresh everything and use the magnifier to search pets, groups and users.",
+    "howto.step.pets.title": "Register your pets",
+    "howto.step.pets.desc":
+      "In the Home section you'll find summary cards (pets, alerts, found) and your pet tools. Tap «Register pet» and fill in type (dog/cat), name, color, size, features and photo. Tap a pet to open its detail card, where you can edit or delete it.",
+    "howto.step.emergency.title": "Report a lost pet",
+    "howto.step.emergency.desc":
+      "From the Emergency tab choose «Report lost pet», pick one of your pets and confirm. The alert goes out to every neighbor in your neighborhood and they instantly receive a push notification. Check «My alerts» anytime and delete the alert once your pet is back home.",
+    "howto.step.found.title": "Found a lost pet?",
+    "howto.step.found.desc":
+      "If you spot a lost pet, tap «I found it». Once confirmed, we put you in contact with the owner and the pet is listed under found pets.",
+    "howto.step.feed.title": "Share with the community: Feed",
+    "howto.step.feed.desc":
+      "Post messages for everyone in the Feed section: write your post with «Post», comment on other people's posts and check what you've published under My posts.",
+    "howto.step.community.title": "Neighborhood notices: Community",
+    "howto.step.community.desc":
+      "In Community you'll find neighborhood notices by category: general, notice, event or question. Create yours with «New» and publish it once title and content are validated.",
+    "howto.step.profile.title": "Your profile and settings",
+    "howto.step.profile.desc":
+      "In Profile check your stats (pets, followers, following), edit your info, set up notifications, access Messages, Groups and Successful Reunions, and log out whenever you want.",
+    "howto.caption.inicioTab": "Dashboard — Home section",
+    "howto.caption.inicioLista": "Your pet list",
+    "howto.caption.inicioMascota": "Home with one pet registered",
+    "howto.caption.mascotaForm": "New pet form",
+    "howto.caption.mascotaEditar": "Pet form in edit mode",
+    "howto.caption.mascotaFicha": "Pet detail card",
+    "howto.caption.emergenciaGrid": "Emergency action grid",
+    "howto.caption.emergenciaPerdidas": "Lost pets in your neighborhood",
+    "howto.caption.alertaConfirm": "Confirm emergency alert",
+    "howto.caption.push": "Push notification to neighbors",
+    "howto.caption.encontradaConfirm": "Report found pet",
+    "howto.caption.encontradas": "Found pets list",
+    "howto.caption.feedTab": "Community feed",
+    "howto.caption.feedPublicar": "Create a post",
+    "howto.caption.comunidadTab": "Community notices wall",
+    "howto.caption.perfilInfo": "Profile — info & stats",
+    "howto.caption.perfilCuenta": "Account & log out",
     "emailConfirmed.title": "Your account has been activated!",
     "emailConfirmed.message":
       "Your email address has been verified successfully. You can now log in and start using Lucky Tracker.",
@@ -313,6 +354,47 @@ export const ui = {
     "faq.items.q6": "¿Dónde puedo descargar la aplicación?",
     "faq.items.a6":
       "Lucky Tracker no está disponible actualmente, pero estamos trabajando duro para lanzarla pronto. Mantente atento a las actualizaciones en nuestro sitio web y canales de redes sociales.",
+    "howto.hero.title": "¿Cómo funciona Lucky Tracker?",
+    "howto.hero.subtitle":
+      "Aprende en minutos cómo registrar tus mascotas, reportar emergencias y conectar con tu comunidad.",
+    "howto.step.dashboard.title": "Tu centro de control: el Dashboard",
+    "howto.step.dashboard.desc":
+      "Al iniciar sesión llegas al Dashboard. La barra inferior te lleva por las 5 secciones: Feed, Inicio, Comunidad, Emergencia y Perfil. Desliza hacia abajo para actualizar todo y usa la lupa para buscar mascotas, grupos y usuarios.",
+    "howto.step.pets.title": "Registra tus mascotas",
+    "howto.step.pets.desc":
+      "En la sección Inicio encontrarás tarjetas resumen (mascotas, alertas, encontradas) y tus herramientas de mascotas. Toca «Registrar mascota» y completa tipo (perro/gato), nombre, color, tamaño, características y foto. Toca una mascota para abrir su ficha, donde puedes editarla o eliminarla.",
+    "howto.step.emergency.title": "Reporta una mascota perdida",
+    "howto.step.emergency.desc":
+      "Desde la pestaña de Emergencia elige «Reportar mascota perdida», selecciona a una de tus mascotas y confirma. La alerta se publica para todos los vecinos de tu colonia y reciben una notificación push al instante. Consulta «Mis alertas» cuando quieras y elimínala cuando tu mascota vuelva a casa.",
+    "howto.step.found.title": "¿Encontraste una mascota perdida?",
+    "howto.step.found.desc":
+      "Si ves a una mascota perdida, toca «Lo encontré». Al confirmar, te pondremos en contacto con el dueño y la mascota quedará registrada en encontradas.",
+    "howto.step.feed.title": "Comparte con la comunidad: Feed",
+    "howto.step.feed.desc":
+      "Publica mensajes para toda la comunidad en la sección Feed: escribe tu publicación con «Publicar», comenta en las publicaciones de otros y revisa lo que has publicado en Mis posts.",
+    "howto.step.community.title": "Avisos vecinales: Comunidad",
+    "howto.step.community.desc":
+      "En Comunidad encuentras avisos por categoría: general, aviso, evento o pregunta. Crea el tuyo con «Nuevo» y publícalo tras validar título y contenido.",
+    "howto.step.profile.title": "Tu perfil y ajustes",
+    "howto.step.profile.desc":
+      "En Perfil consulta tus estadísticas (mascotas, seguidores, siguiendo), edita tus datos, configura tus notificaciones, accede a Mensajes, Grupos y Reuniones Exitosas, y cierra sesión cuando quieras.",
+    "howto.caption.inicioTab": "Dashboard — sección Inicio",
+    "howto.caption.inicioLista": "Lista de tus mascotas",
+    "howto.caption.inicioMascota": "Inicio con una mascota registrada",
+    "howto.caption.mascotaForm": "Formulario de nueva mascota",
+    "howto.caption.mascotaEditar": "Formulario en modo edición",
+    "howto.caption.mascotaFicha": "Ficha de mascota",
+    "howto.caption.emergenciaGrid": "Cuadrícula de acciones de Emergencia",
+    "howto.caption.emergenciaPerdidas": "Mascotas perdidas en tu colonia",
+    "howto.caption.alertaConfirm": "Confirmar alerta de emergencia",
+    "howto.caption.push": "Notificación push a los vecinos",
+    "howto.caption.encontradaConfirm": "Reportar mascota encontrada",
+    "howto.caption.encontradas": "Lista de mascotas encontradas",
+    "howto.caption.feedTab": "Feed de la comunidad",
+    "howto.caption.feedPublicar": "Crear una publicación",
+    "howto.caption.comunidadTab": "Muro de avisos comunitarios",
+    "howto.caption.perfilInfo": "Perfil — información y estadísticas",
+    "howto.caption.perfilCuenta": "Cuenta y cierre de sesión",
     "emailConfirmed.title": "¡Tu cuenta fue activada!",
     "emailConfirmed.message":
       "Tu correo electrónico ha sido verificado correctamente. Ya puedes iniciar sesión y empezar a usar Lucky Tracker.",

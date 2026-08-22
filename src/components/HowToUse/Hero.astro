@@ -1,13 +1,85 @@
 ---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
-<section class="pt-20">
-  <div
-    class="bg-[url('https://de23256m8hy18.cloudfront.net/new-homepage/howToUse.webp')] bg-cover bg-center bg-no-repeat h-[280px] w-full flex items-center justify-center"
+<section
+  class="relative overflow-hidden bg-gradient-to-br from-principal via-[#d96a6c] to-secundario"
+>
+  <svg
+    class="absolute -top-8 -left-10 w-48 h-48 text-white/10 -rotate-[25deg]"
+    viewBox="0 0 100 100"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
   >
-    <h1 class="font-bold text-3xl md:text-5xl text-texto">
-      How to scan biometrics
+    <ellipse cx="30" cy="30" rx="11" ry="15" transform="rotate(-15 30 30)"></ellipse>
+    <ellipse cx="70" cy="30" rx="11" ry="15" transform="rotate(15 70 30)"></ellipse>
+    <ellipse cx="12" cy="52" rx="9" ry="12" transform="rotate(-35 12 52)"></ellipse>
+    <ellipse cx="88" cy="52" rx="9" ry="12" transform="rotate(35 88 52)"></ellipse>
+    <path
+      d="M50 45c-14 0-26 11-26 25 0 10 8 18 18 18 3 0 6-1 8-1s5 1 8 1c10 0 18-8 18-18 0-14-12-25-26-25z"
+    ></path>
+  </svg>
+  <svg
+    class="absolute top-16 right-8 w-28 h-28 text-white/10 rotate-[20deg]"
+    viewBox="0 0 100 100"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <ellipse cx="30" cy="30" rx="11" ry="15" transform="rotate(-15 30 30)"></ellipse>
+    <ellipse cx="70" cy="30" rx="11" ry="15" transform="rotate(15 70 30)"></ellipse>
+    <ellipse cx="12" cy="52" rx="9" ry="12" transform="rotate(-35 12 52)"></ellipse>
+    <ellipse cx="88" cy="52" rx="9" ry="12" transform="rotate(35 88 52)"></ellipse>
+    <path
+      d="M50 45c-14 0-26 11-26 25 0 10 8 18 18 18 3 0 6-1 8-1s5 1 8 1c10 0 18-8 18-18 0-14-12-25-26-25z"
+    ></path>
+  </svg>
+  <svg
+    class="absolute bottom-20 left-[22%] w-16 h-16 text-white/10 rotate-[40deg] hidden sm:block"
+    viewBox="0 0 100 100"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <ellipse cx="30" cy="30" rx="11" ry="15" transform="rotate(-15 30 30)"></ellipse>
+    <ellipse cx="70" cy="30" rx="11" ry="15" transform="rotate(15 70 30)"></ellipse>
+    <ellipse cx="12" cy="52" rx="9" ry="12" transform="rotate(-35 12 52)"></ellipse>
+    <ellipse cx="88" cy="52" rx="9" ry="12" transform="rotate(35 88 52)"></ellipse>
+    <path
+      d="M50 45c-14 0-26 11-26 25 0 10 8 18 18 18 3 0 6-1 8-1s5 1 8 1c10 0 18-8 18-18 0-14-12-25-26-25z"
+    ></path>
+  </svg>
+
+  <div
+    class="min-h-[420px] md:h-[500px] flex flex-col items-center justify-center px-6 pt-32 pb-24 relative"
+  >
+    <h1
+      class="font-bold text-white text-4xl md:text-6xl text-center max-w-3xl leading-tight"
+    >
+      {t("howto.hero.title")}
     </h1>
+    <p class="mt-5 text-white/85 text-lg md:text-xl text-center max-w-2xl">
+      {t("howto.hero.subtitle")}
+    </p>
   </div>
+
+  <svg
+    class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 w-10 h-10 animate-bounce"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="m19 9-7 7-7-7"
+    ></path>
+  </svg>
 </section>
