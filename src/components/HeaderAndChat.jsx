@@ -12,7 +12,7 @@ function HeaderAndChat({ lang }) {
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
       />
-      {!isMenuOpen && <ChatButton lang={lang} client:only="react" />}
+      {!isMenuOpen && <ChatButton lang={lang} />}
     </>
   );
 }

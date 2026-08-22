@@ -3,6 +3,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const chevronLabel = lang === "en" ? "Go to the steps" : "Ir a los pasos";
 ---
 
 <section
@@ -67,19 +68,51 @@ const t = useTranslations(lang);
     </p>
   </div>
 
-  <svg
-    class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 w-10 h-10 animate-bounce"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
+  <a
+    href="#steps"
+    id="hero-chevron"
+    aria-label={chevronLabel}
+    class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 hover:text-white transition-colors w-10 h-10 animate-bounce"
   >
-    <path
-      stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="m19 9-7 7-7-7"
-    ></path>
-  </svg>
+    <svg
+      class="w-full h-full"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m19 9-7 7-7-7"
+      ></path>
+    </svg>
+  </a>
 </section>
+
+<script>
+  const easeInOutCubic = (t: number) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  document.getElementById("hero-chevron")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const target = document.getElementById("steps");
+    if (!target) return;
+
+    const startY = window.scrollY;
+    const endY =
+      target.getBoundingClientRect().top + window.scrollY - 96;
+    const duration = 900;
+    const startTime = performance.now();
+
+    const animateScroll = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      window.scrollTo(0, startY + (endY - startY) * easeInOutCubic(progress));
+      if (progress < 1) requestAnimationFrame(animateScroll);
+    };
+
+    requestAnimationFrame(animateScroll);
+  });
+</script>

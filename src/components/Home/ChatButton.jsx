@@ -18,7 +18,7 @@ export default function ChatbotLauncher({ lang }) {
       {/* Contenedor del chatbot */}
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-[360px] max-w-[90vw] h-[500px] shadow-xl rounded-lg overflow-hidden">
-          <Chatbot lang={lang} client:visible />
+          <Chatbot lang={lang} />
         </div>
       )}
     </>

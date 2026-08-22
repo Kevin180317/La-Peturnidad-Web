@@ -128,6 +128,12 @@ export const ui = {
     "chatbot.communityHelp.opt1": "🤝 How can I help others?",
     "chatbot.communityHelp.opt2": "📣 How alerts work",
     "chatbot.communityHelp.opt3": "🐾 Why community matters",
+    "chatbot.communityHelpOthers":
+      "You can share reports, keep an eye out, and spread information locally.",
+    "chatbot.communityAlerts":
+      "Users nearby receive notifications when a pet is reported lost or found in their area.",
+    "chatbot.communityWhy":
+      "The more people involved, the faster pets return home.",
     "chatbot.contactSupport": "Need help or want to reach the team?",
     "chatbot.contactSupport.opt1": "📧 Contact information",
     "chatbot.contactSupport.opt2": "❓ Frequently Asked Questions",
@@ -324,7 +330,14 @@ export const ui = {
       "La comunidad es el corazón de Lucky Tracker 💛 ¿Cómo te gustaría ayudar?",
     "chatbot.communityHelp.opt1": "🤝 ¿Cómo puedo ayudar a otros?",
     "chatbot.communityHelp.opt2": "📣 Cómo funcionan las alertas",
-    "chatbot.communityHelp.opt3": "🐾 Por qué la comunidad es importante",
+    "chatbot.communityHelp.opt3":
+      "🐾 Por qué la comunidad es importante",
+    "chatbot.communityHelpOthers":
+      "Puedes compartir reportes, estar atento y difundir información en tu zona.",
+    "chatbot.communityAlerts":
+      "Los usuarios cercanos reciben notificaciones cuando se reporta una mascota perdida o encontrada en su área.",
+    "chatbot.communityWhy":
+      "Entre más personas participen, más rápido regresan a casa las mascotas.",
     "chatbot.contactSupport":
       "Necesitas ayuda o te quieres contactar con nosotros?",
     "chatbot.contactSupport.opt1": "📧 Información de contacto",

@@ -1,4 +1,12 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {
+  Component,
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { useTranslations } from "../../i18n/utils";
 
 /* =========================
@@ -12,6 +20,48 @@ const ChatBot = lazy(() => import("react-chatbotify"));
 
 interface ChatParams {
   userInput: string;
+}
+
+interface BoundaryProps {
+  children: ReactNode;
+  fallbackTitle: string;
+  retryLabel: string;
+}
+
+/* =========================
+   Error boundary
+   Evita que un fallo al cargar
+   el chatbot desmonte el navbar
+========================= */
+class ChatbotErrorBoundary extends Component<
+  BoundaryProps,
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-6 text-center">
+          <p className="text-sm text-neutral-500">
+            {this.props.fallbackTitle}
+          </p>
+          <button
+            type="button"
+            onClick={() => this.setState({ hasError: false })}
+            className="rounded-xl bg-principal px-5 py-2 text-sm font-bold text-white hover:opacity-90"
+          >
+            {this.props.retryLabel}
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }
 
 /* =========================
@@ -38,22 +88,42 @@ export default function ChatbotComponent({ lang }: { lang: "en" | "es" }) {
       showAvatar: true,
       avatar: "/roky_avatar.png",
     },
-    notifications: {
+    notification: {
       disabled: true,
     },
     header: {
       title: "Roky",
       avatar: "/roky_avatar.png",
     },
-    // other sections
+  };
+
+  const chatbotStyles = {
+    chatInputContainerStyle: { display: "none" },
   };
 
   return (
     <>
       {isLoaded && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <ChatBot settings={settings} flow={flow(t)} />
-        </Suspense>
+        <ChatbotErrorBoundary
+          fallbackTitle={
+            lang === "en"
+              ? "Roky couldn't load. Check your connection."
+              : "Roky no pudo cargarse. Revisa tu conexión."
+          }
+          retryLabel={lang === "en" ? "Retry" : "Reintentar"}
+        >
+          <Suspense
+            fallback={
+              <div>{lang === "en" ? "Loading..." : "Cargando..."}</div>
+            }
+          >
+            <ChatBot
+              settings={settings}
+              styles={chatbotStyles}
+              flow={flow(t)}
+            />
+          </Suspense>
+        </ChatbotErrorBoundary>
       )}
     </>
   );
@@ -163,23 +233,21 @@ const flow = (t: ReturnType<typeof useTranslations>) => ({
   },
 
   foundPetReport: {
-    message: "Create a found pet post so owners nearby can identify their pet.",
+    message: t("chatbot.foundPetReport"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
   },
 
   foundPetSearch: {
-    message:
-      "You can browse recent lost pet reports filtered by your location.",
+    message: t("chatbot.foundPetSearch"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
   },
 
   foundPetMeanwhile: {
-    message:
-      "Meanwhile:\n• Keep the pet safe\n• Check for ID or tags\n• Avoid assuming ownership",
+    message: t("chatbot.foundPetMeanwhile"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
@@ -253,23 +321,21 @@ const flow = (t: ReturnType<typeof useTranslations>) => ({
   },
 
   communityHelpOthers: {
-    message:
-      "You can share reports, keep an eye out, and spread information locally.",
+    message: t("chatbot.communityHelpOthers"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
   },
 
   communityAlerts: {
-    message:
-      "Users nearby receive notifications when a pet is reported lost or found in their area.",
+    message: t("chatbot.communityAlerts"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,
   },
 
   communityWhy: {
-    message: "The more people involved, the faster pets return home.",
+    message: t("chatbot.communityWhy"),
     options: [t("chatbot.back")],
     path: "start",
     chatDisabled: true,

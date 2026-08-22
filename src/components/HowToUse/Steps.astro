@@ -6,6 +6,7 @@ type Key = keyof (typeof ui)["es"];
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const closeLabel = lang === "en" ? "Close" : "Cerrar";
 
 const steps: {
   titleKey: Key;
@@ -110,8 +111,14 @@ const steps: {
           </div>
           <div class="md:w-1/2 flex flex-wrap justify-center items-start gap-x-5 gap-y-8">
             {step.screens.map((s) => (
-              <figure class="group flex flex-col items-center gap-3 w-[170px] sm:w-[200px] shrink-0">
-                <div class="relative rounded-[32px] bg-[#0d0d0d] px-[9px] pt-7 pb-[9px] shadow-[0_16px_40px_rgba(0,0,0,0.3)] ring-1 ring-black/10 w-full transition-transform duration-300 group-hover:-translate-y-1">
+              <figure
+                class="group flex flex-col items-center gap-3 w-[170px] sm:w-[200px] shrink-0 cursor-zoom-in"
+                data-full={s.src}
+                data-caption={t(s.captionKey)}
+                role="button"
+                tabindex="0"
+              >
+                <div class="relative rounded-[32px] bg-[#0d0d0d] px-[9px] pt-7 pb-[9px] shadow-[0_16px_40px_rgba(0,0,0,0.3)] ring-1 ring-black/10 w-full transition-transform duration-300 group-hover:-translate-y-1 group-hover:ring-principal/60">
                   <span class="absolute top-2.5 left-1/2 -translate-x-1/2 h-[5px] w-14 rounded-full bg-white/15" />
                   <img
                     src={s.src}
@@ -130,4 +137,93 @@ const steps: {
       ))
     }
   </div>
+
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/85 p-4 md:p-8"
+    role="dialog"
+    aria-modal="true"
+  >
+    <button
+      id="lightbox-close"
+      type="button"
+      aria-label={closeLabel}
+      class="absolute top-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/25 hover:rotate-90 duration-200"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="h-6 w-6"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <figure class="flex max-h-full flex-col items-center gap-3">
+      <img
+        id="lightbox-img"
+        src=""
+        alt=""
+        class="max-h-[82vh] max-w-[90vw] rounded-2xl bg-white object-contain shadow-2xl"
+      />
+      <figcaption id="lightbox-caption" class="text-sm text-white/75 text-center" />
+    </figure>
+  </div>
 </section>
+
+<script>
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  function openLightbox(src: string, caption: string) {
+    if (!lightbox || !lightboxImg || !lightboxCaption) return;
+    lightboxImg.src = src;
+    lightboxImg.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightbox.classList.remove("hidden");
+    lightbox.classList.add("flex");
+    document.body.style.overflow = "hidden";
+    closeBtn?.focus();
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.add("hidden");
+    lightbox.classList.remove("flex");
+    document.body.style.overflow = "";
+  }
+
+  document
+    .querySelectorAll<HTMLElement>("#steps figure[data-full]")
+    .forEach((fig) => {
+      fig.addEventListener("click", () =>
+        openLightbox(fig.dataset.full ?? "", fig.dataset.caption ?? "")
+      );
+      fig.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        openLightbox(fig.dataset.full ?? "", fig.dataset.caption ?? "");
+      });
+    });
+
+  closeBtn?.addEventListener("click", closeLightbox);
+
+  lightbox?.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (
+      e.key === "Escape" &&
+      lightbox &&
+      !lightbox.classList.contains("hidden")
+    ) {
+      closeLightbox();
+    }
+  });
+</script>
