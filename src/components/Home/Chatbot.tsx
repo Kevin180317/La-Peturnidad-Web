@@ -132,7 +132,7 @@ export default function ChatbotComponent({ lang }: { lang: "en" | "es" }) {
 /* =========================
      Flow del chatbot
   ========================= */
-const flow = (t: ReturnType<typeof useTranslations>) => ({
+export const flow = (t: ReturnType<typeof useTranslations>) => ({
   start: {
     message: t("chatbot.welcome"),
     options: [
