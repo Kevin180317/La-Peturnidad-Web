@@ -1,6 +1,19 @@
+/**
+ * Tests unitarios de la lógica de internacionalización (i18n).
+ *
+ * Con qué se usan estos tests:
+ * - `getLangFromUrl`: detección del idioma activo según la URL.
+ * - `useTranslations`: traducción correcta por idioma y fallback al idioma por defecto.
+ *
+ * Cómo ejecutarlos:
+ *   bun test                          # ejecuta todos los tests del proyecto
+ *   bun test test/i18n.test.ts        # solo este archivo
+ *   bun test --watch                  # re-ejecuta en vivo al guardar cambios
+ *   bun test --coverage               # reporte de cobertura
+ */
 import { describe, expect, test } from "bun:test";
-import { getLangFromUrl, useTranslations } from "./utils";
-import { ui } from "./ui";
+import { getLangFromUrl, useTranslations } from "../src/i18n/utils";
+import { ui } from "../src/i18n/ui";
 
 describe("getLangFromUrl", () => {
   test("detecta inglés cuando la URL empieza con /en", () => {

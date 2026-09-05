@@ -1,6 +1,21 @@
+/**
+ * Tests unitarios del flujo de navegación del chatbot (objeto `flow`).
+ *
+ * Qué cubren estos tests:
+ * - Cada opción de los nodos de menú navega al nodo destino correcto.
+ * - La opción "back" siempre regresa al nodo `start`.
+ * - Los nodos terminales retornan directamente a `start`.
+ * - Input desconocido no lanza error.
+ *
+ * Cómo ejecutarlos:
+ *   bun test                          # ejecuta todos los tests del proyecto
+ *   bun test test/chatbot-flow.test.ts # solo este archivo
+ *   bun test --watch                  # re-ejecuta en vivo al guardar cambios
+ *   bun test --coverage               # reporte de cobertura
+ */
 import { describe, expect, test } from "bun:test";
-import { flow } from "./Chatbot";
-import { useTranslations } from "../../i18n/utils";
+import { flow } from "../src/components/Home/Chatbot";
+import { useTranslations } from "../src/i18n/utils";
 
 const t = useTranslations("es");
 const nodes = flow(t);
