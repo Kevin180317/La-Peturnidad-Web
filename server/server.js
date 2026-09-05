@@ -73,7 +73,7 @@ app.post("/send-email", async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: "La Peturnidad <contact@prometheustij.com>",
+      from: "Lucky Tracker <contact@prometheustij.com>",
       to: email,
       subject: `New Contact Form Submission from ${name}`,
       text:
