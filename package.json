@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
+    "@astrojs/vercel": "^8.2.11",
     "@fontsource/pretendard": "^5.2.5",
     "@tailwindcss/vite": "^4.1.10",
     "@types/react": "^19.1.8",
@@ -19,6 +20,7 @@
     "react": "19.2.1",
     "react-chatbotify": "^2.5.0",
     "react-dom": "19.2.1",
+    "resend": "^6.28.0",
     "tailwindcss": "^4.1.10"
   }
 }

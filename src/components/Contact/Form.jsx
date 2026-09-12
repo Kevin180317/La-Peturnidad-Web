@@ -1,7 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslations } from "../../i18n/utils";
 
-function Form({ lang }) {
+const TURNSTILE_SCRIPT =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+
+let scriptLoaded = false;
+let scriptLoading = null;
+
+function loadTurnstileScript() {
+  if (scriptLoaded || window.turnstile) return Promise.resolve();
+  if (scriptLoading) return scriptLoading;
+
+  scriptLoading = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = TURNSTILE_SCRIPT;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      scriptLoaded = true;
+      resolve();
+    };
+    script.onerror = () => {
+      scriptLoading = null;
+      reject(new Error("Failed to load Turnstile script."));
+    };
+    document.head.appendChild(script);
+  });
+
+  return scriptLoading;
+}
+
+function Form({ lang, siteKey }) {
   const t = useTranslations(lang);
   const [form, setForm] = useState({
     name: "",
@@ -10,6 +39,44 @@ function Form({ lang }) {
     message: "",
   });
   const [status, setStatus] = useState(null);
+  const [turnstileToken, setTurnstileToken] = useState(null);
+  const turnstileContainerRef = useRef(null);
+  const turnstileWidgetId = useRef(null);
+
+  useEffect(() => {
+    if (!siteKey || !turnstileContainerRef.current) return;
+
+    let cancelled = false;
+
+    loadTurnstileScript()
+      .then(() => {
+        if (cancelled || !turnstileContainerRef.current) return;
+        if (turnstileWidgetId.current !== null) return;
+
+        turnstileWidgetId.current = window.turnstile.render(
+          turnstileContainerRef.current,
+          {
+            sitekey: siteKey,
+            theme: "light",
+            callback: (token) => setTurnstileToken(token),
+            "expired-callback": () => {
+              setTurnstileToken(null);
+              window.turnstile.reset(turnstileWidgetId.current);
+            },
+            "error-callback": () => setTurnstileToken(null),
+          }
+        );
+      })
+      .catch(() => setStatus("Error de conexión."));
+
+    return () => {
+      cancelled = true;
+      if (turnstileWidgetId.current !== null && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+        turnstileWidgetId.current = null;
+      }
+    };
+  }, [siteKey]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,10 +86,10 @@ function Form({ lang }) {
     e.preventDefault();
     setStatus("Enviando...");
     try {
-      const res = await fetch("https://prometheustij.com/send-email", {
+      const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, turnstileToken }),
       });
       if (res.ok) {
         setStatus("¡Mensaje enviado!");
@@ -32,6 +99,10 @@ function Form({ lang }) {
           email: "",
           message: "",
         });
+        setTurnstileToken(null);
+        if (turnstileWidgetId.current !== null && window.turnstile) {
+          window.turnstile.reset(turnstileWidgetId.current);
+        }
       } else {
         setStatus("Error al enviar.");
         console.error("Error response:" + res.statusText);
@@ -119,9 +190,19 @@ function Form({ lang }) {
               placeholder={t("contact.form.placeholder")}
             ></textarea>
           </div>
+          <div className="flex justify-center col-span-2 mb-4">
+            {siteKey ? (
+              <div ref={turnstileContainerRef}></div>
+            ) : (
+              <p className="text-sm text-neutral-500">
+                Verificación de seguridad no disponible.
+              </p>
+            )}
+          </div>
           <button
             type="submit"
-            className="bg-principal md:text-2xl font-semibold col-span-2 text-white rounded-xl p-3 md:py-5 mt-8 transition-opacity duration-300"
+            disabled={!turnstileToken}
+            className="bg-principal md:text-2xl font-semibold col-span-2 text-white rounded-xl p-3 md:py-5 mt-8 transition-opacity duration-300 disabled:opacity-50"
           >
             {t("contact.form.button")}
           </button>

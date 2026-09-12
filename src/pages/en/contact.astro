@@ -1,12 +1,14 @@
 ---
+export const prerender = true;
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/Contact/Hero.astro";
 import Form from "../../components/Contact/Form.jsx";
 import { getLangFromUrl } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
+const turnstileSiteKey = import.meta.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 ---
 
 <Layout title="Contact" description="Get in touch with us for any inquiries.">
   <Hero />
-  <Form lang={lang} client:visible />
+  <Form lang={lang} siteKey={turnstileSiteKey} client:visible />
 </Layout>
