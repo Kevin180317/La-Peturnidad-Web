@@ -3,7 +3,7 @@ import { Resend } from "resend";
 
 const TURNSTILE_VERIFY_URL =
   "https://challenges.cloudflare.com/turnstile/v0/siteverify";
-const FROM = "Lucky Tracker <contact@prometheustij.com>";
+const FROM = "Lucky Tracker <contact@luckytracker.com.mx>";
 
 export const prerender = false;
 
