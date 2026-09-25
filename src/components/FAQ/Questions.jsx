@@ -45,7 +45,6 @@ function Questions({ lang = defaultLang }) {
     <section className="flex flex-col items-center justify-center my-16 md:my-20 lg:my-26 mx-4">
       <div className="max-w-[1000px] w-full text-lg md:text-2xl">
         <h1 className="text-center font-bold my-4 mb-6">{t("faq.title")}</h1>
-        <hr className="border-1 border-neutral-300" />
         {accordionData.map((item, index) => (
           <div
             key={index}

@@ -1,6 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useTranslations } from "../i18n/utils";
+
+const getLanguageHref = (newLang) => {
+  if (typeof window === "undefined") return "#";
+  const { pathname, search, hash } = window.location;
+
+  // Quitar /en si existe al inicio
+  const pathWithoutLang = pathname.startsWith("/en")
+    ? pathname.replace(/^\/en/, "")
+    : pathname;
+
+  const newPath =
+    newLang === "en" ? `/en${pathWithoutLang}` : pathWithoutLang || "/";
+
+  return newPath + search + hash;
+};
 
 function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
   const t = useTranslations(lang);
@@ -9,19 +24,11 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
 
   const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
 
-  const changeLanguage = (newLang) => {
-    const { pathname, search, hash } = window.location;
+  const [langHrefs, setLangHrefs] = useState({ es: "#", en: "#" });
 
-    // Quitar /en si existe al inicio
-    const pathWithoutLang = pathname.startsWith("/en")
-      ? pathname.replace(/^\/en/, "")
-      : pathname;
-
-    const newPath =
-      newLang === "en" ? `/en${pathWithoutLang}` : pathWithoutLang || "/";
-
-    window.location.href = newPath + search + hash;
-  };
+  useEffect(() => {
+    setLangHrefs({ es: getLanguageHref("es"), en: getLanguageHref("en") });
+  }, []);
   const year = new Date().getFullYear();
 
   return (
@@ -30,13 +37,13 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
         <div className="flex justify-between items-center h-20">
           <a
             href={lang === "es" ? "/" : "/en"}
-            title="Petnow Home"
+            title="Lucky Tracker Home"
             aria-label="Go to home page"
           >
             <figure>
               <img
                 src="/Imagotipo_colore_original.png"
-                alt="Logo"
+                alt="Lucky Tracker logo"
                 className="h-16"
               />
             </figure>
@@ -127,12 +134,7 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
                           ? "text-principal cursor-default pointer-events-none"
                           : "hover:bg-[#FFEEEA]"
                       }`}
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        changeLanguage("es");
-                        setIsLanguageOpen(false);
-                      }}
+                      href={langHrefs.es}
                     >
                       Español
                     </a>
@@ -144,12 +146,7 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
                           ? "text-principal cursor-default pointer-events-none"
                           : "hover:bg-[#FFEEEA]"
                       }`}
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        changeLanguage("en");
-                        setIsLanguageOpen(false);
-                      }}
+                      href={langHrefs.en}
                     >
                       English
                     </a>
@@ -210,10 +207,10 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
             <div className="flex flex-col h-full text-texto">
               <div className="flex-1 flex flex-col items-center justify-start pt-6">
                 <div className="flex items-center justify-between w-full px-4 h-5 mb-12">
-                  <a href="/" title="Petnow Home" aria-label="Go to home page">
+                  <a href="/" title="Lucky Tracker Home" aria-label="Go to home page">
                     <img
                       src="/Imagotipo_colore_original.png"
-                      alt="Logo"
+                      alt="Lucky Tracker logo"
                       className="h-16"
                     />
                   </a>
@@ -282,24 +279,14 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
                     }`}
                   >
                     <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        changeLanguage("es");
-                        setIsLanguageOpen(false);
-                      }}
+                      href={langHrefs.es}
                       className="hover:text-principal pl-2"
                     >
                       Español
                     </a>
 
                     <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        changeLanguage("en");
-                        setIsLanguageOpen(false);
-                      }}
+                      href={langHrefs.en}
                       className="hover:text-principal pl-2"
                     >
                       English
@@ -346,38 +333,6 @@ function NavBar({ lang, isMenuOpen, setIsMenuOpen }) {
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-neutral-600">
                     Prometheus R&D | {year} Lucky Tracker
-                  </div>
-                  <div className="flex gap-3">
-                    <a
-                      href="https://www.facebook.com/petnowofficial"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-600 hover:text-principal"
-                      aria-label="Facebook"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z" />
-                      </svg>
-                    </a>
-                    <a
-                      href="https://www.instagram.com/petnow_official/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-600 hover:text-principal"
-                      aria-label="Instagram"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
-                      </svg>
-                    </a>
                   </div>
                 </div>
               </div>

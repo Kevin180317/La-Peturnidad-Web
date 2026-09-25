@@ -19,6 +19,8 @@ export const ui = {
     "home.hero.h1": "Technology that keeps them safe!",
     "home.hero.h2":
       "Provide additional protection to the most furry family members with Lucky Tracker.",
+    "home.hero.comingSoon": "Coming soon",
+    "home.hero.learnMore": "Learn more",
     "home.about.h1": "Community powered alerts for missing pets near you !",
     "home.about.p1": "Track local sightings and bring them home faster",
     "home.about.h2": "Get the location of your pets all from home!",
@@ -56,14 +58,14 @@ export const ui = {
       "Lucky Tracker reserves the right to modify or replace these terms and conditions at any time. Changes will be effective when posted on our website.",
     "terms.items.t6": "Governing Law",
     "terms.items.p6":
-      "These terms and conditions shall be governed by and construed in accordance with the laws of the State of [specify state or country], without regard to its conflict of law provisions.",
+      "These terms and conditions shall be governed by and construed in accordance with the laws of the State of Baja California, Mexico, without regard to its conflict of law provisions.",
     "terms.items.t7": "Contact",
     "terms.items.p7":
-      "If you have any questions about our privacy policy or terms of service, you can contact us at [contact email] or our physical address.",
+      "If you have any questions about our privacy policy or terms of service, you can contact us at contact@prometheustij.com.",
     "terms.items.t8": "Conclusion",
     "terms.items.p8":
       "This document sets forth the terms and conditions under which you may access and use the Lucky Tracker website and services. By using our website, you agree to these terms and conditions in their entirety.",
-    "policy.title": "Terms & Conditions",
+    "policy.title": "Privacy Policy",
     "policy.items.t1": "Information Collected",
     "policy.items.p1":
       "Lucky Tracker collects certain personal information from its users in order to improve our services and offer a personalized experience. This information may include, but is not limited to: - Contact information (name, email address, phone number). - Demographic information (age, gender, location). - Login information (IP address, browser type, pages visited).",
@@ -75,7 +77,7 @@ export const ui = {
       "Lucky Tracker is committed to protecting the personal information of its users and employs appropriate security measures to prevent unauthorized access, disclosure, or modification of stored personal information.",
     "policy.items.t4": "Disclosure to Third Parties",
     "policy.items.p4":
-      "No vendemos, comercializamos ni transferimos de ninguna manera su información personal a terceros sin su consentimiento, excepto cuando sea necesario para cumplir con la ley o proteger nuestros derechos.",
+      "We do not sell, market, or transfer your personal information to third parties in any way without your consent, except when necessary to comply with the law or protect our rights.",
     "policy.items.t5": "Changes to the Privacy Policy",
     "policy.items.p5":
       "Lucky Tracker reserves the right to update this privacy policy at any time. Significant changes will be notified to users via our website or other communication channels.",
@@ -220,6 +222,8 @@ export const ui = {
     "home.hero.h1": "¡Tecnología que los mantiene seguros!",
     "home.hero.h2":
       "Brinda protección adicional a los miembros peludos de la familia con Lucky Tracker.",
+    "home.hero.comingSoon": "Próximamente",
+    "home.hero.learnMore": "Conoce más",
     "home.about.h1":
       "¡Alertas impulsadas por la comunidad para mascotas perdidas cerca de ti!",
     "home.about.p1":
@@ -259,14 +263,14 @@ export const ui = {
       "Lucky Tracker se reserva el derecho de modificar o reemplazar estos términos y condiciones en cualquier momento. Los cambios serán efectivos cuando se publiquen en nuestro sitio web.",
     "terms.items.t6": "Ley Aplicable",
     "terms.items.p6":
-      "Estos términos y condiciones se regirán e interpretarán de acuerdo con las leyes del Estado de [especificar el estado o país], sin tener en cuenta sus disposiciones sobre conflictos de leyes.",
+      "Estos términos y condiciones se regirán e interpretarán de acuerdo con las leyes del Estado de Baja California, México, sin tener en cuenta sus disposiciones sobre conflictos de leyes.",
     "terms.items.t7": "Contacto",
     "terms.items.p7":
-      "Si tiene alguna pregunta sobre nuestra política de privacidad o términos de servicio, puede contactarnos a través de [correo electrónico de contacto] o nuestra dirección física.",
+      "Si tiene alguna pregunta sobre nuestra política de privacidad o términos de servicio, puede contactarnos a través de contact@prometheustij.com.",
     "terms.items.t8": "Conclusión",
     "terms.items.p8":
       "Este documento establece los términos y condiciones bajo los cuales usted puede acceder y utilizar el sitio web y servicios de Lucky Tracker. Al utilizar nuestro sitio web, usted acepta estos términos y condiciones en su totalidad.",
-    "policy.title": "Politica de Privacidad",
+    "policy.title": "Política de Privacidad",
     "policy.items.t1": "Información Recopilada",
     "policy.items.p1":
       "Lucky Tracker recopila cierta información personal de sus usuarios con el fin de mejorar nuestros servicios y ofrecer una experiencia personalizada. Esta información puede incluir, pero no se limita a: - Información de contacto (nombre, dirección de correo electrónico, número de teléfono). - Información demográfica (edad, sexo, ubicación). - Información de inicio de sesión (dirección IP, tipo de navegador, páginas visitadas).",
