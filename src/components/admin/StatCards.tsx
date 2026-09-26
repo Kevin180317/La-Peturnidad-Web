@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { IconExclamation, IconSpinner } from "./Icons";
+import {
+  IconExclamation,
+  IconSpinner,
+  IconUsers,
+  IconPets,
+  IconAlert,
+  IconHeart,
+  IconUsers2,
+  IconFile,
+  IconComment,
+  IconBell,
+  IconFlag,
+  IconBlock,
+} from "./Icons";
 
 interface Card {
   key: string;
@@ -7,32 +20,36 @@ interface Card {
   value: number;
   href?: string;
   tone?: string;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
 const CARDS: Card[] = [
-  { key: "user_profiles", label: "Usuarios", href: "/admin/usuarios" },
-  { key: "pets", label: "Mascotas", href: "/admin/mascotas" },
+  { key: "user_profiles", label: "Usuarios", href: "/admin/usuarios", icon: IconUsers },
+  { key: "pets", label: "Mascotas", href: "/admin/mascotas", icon: IconPets },
   {
     key: "emergency_alerts",
     label: "Alertas de pérdida",
     href: "/admin/alertas",
     tone: "text-texto",
+    icon: IconAlert,
   },
   {
     key: "found_pets",
     label: "Mascotas encontradas",
     href: "/admin/encontradas",
+    icon: IconHeart,
   },
-  { key: "success_stories", label: "Historias", href: "/admin/historias" },
-  { key: "groups", label: "Grupos", href: "/admin/grupos" },
-  { key: "group_members", label: "Membresías", href: "/admin/grupos" },
-  { key: "posts", label: "Publicaciones", href: "/admin/publicaciones" },
-  { key: "comments", label: "Comentarios", href: "/admin/publicaciones" },
-  { key: "announcements", label: "Avisos", href: "/admin/avisos" },
+  { key: "success_stories", label: "Historias", href: "/admin/historias", icon: IconFile },
+  { key: "groups", label: "Grupos", href: "/admin/grupos", icon: IconUsers2 },
+  { key: "group_members", label: "Membresías", href: "/admin/grupos", icon: IconUsers2 },
+  { key: "posts", label: "Publicaciones", href: "/admin/publicaciones", icon: IconFile },
+  { key: "comments", label: "Comentarios", href: "/admin/publicaciones", icon: IconComment },
+  { key: "announcements", label: "Avisos", href: "/admin/avisos", icon: IconBell },
   {
     key: "blocks",
     label: "Bloqueos",
     href: "/admin/bloqueos",
+    icon: IconBlock,
   },
 ];
 
@@ -105,9 +122,15 @@ export default function StatCards({ initialStats, initialPending }: Props) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map((card) => {
           const value = stats ? (stats[card.key] ?? 0) : null;
+          const Icon = card.icon;
 
           const body = (
             <div className="flex flex-col h-full">
+              {Icon && (
+                <div className="mb-3 inline-flex w-fit rounded-lg bg-principal/10 p-2.5 text-principal">
+                  <Icon className="w-5 h-5" />
+                </div>
+              )}
               <p className="text-xs font-semibold uppercase tracking-wide text-texto/60 mb-auto">
                 {card.label}
               </p>

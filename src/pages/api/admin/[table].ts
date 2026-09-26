@@ -31,7 +31,7 @@ export const GET: APIRoute = async ({ request, params, cookies }) => {
   if (!config) return json({ error: "Not found." }, 404);
 
   try {
-    const result = await listRows(table as AdminTable, new URL(request.url));
+    const result = await listRows(table, new URL(request.url), config);
     return json({ ...result, table: config.key }, 200);
   } catch (error) {
     console.error(`GET /api/admin/${table} failed:`, error);
