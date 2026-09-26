@@ -14,6 +14,7 @@ import {
   renderCell,
 } from "../../lib/admin/format";
 import UserDetailModal from "./UserDetailModal";
+import { IconExclamation, IconSpinner } from "./Icons";
 
 interface ListResponse {
   rows: Record<string, unknown>[];
@@ -150,183 +151,211 @@ export default function DataTable({
   const rows = data?.rows ?? [];
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-end gap-3">
-        {searchable ? (
-          <div className="min-w-56 flex-1">
-            <label htmlFor="admin-search" className="mb-1 block text-xs font-medium text-texto/60">
-              Buscar
-            </label>
-            <input
-              id="admin-search"
-              type="search"
-              value={searchInput}
-              onChange={(event) => setSearchInput(event.target.value)}
-              placeholder="Escribe para filtrar…"
-              className="w-full rounded-xl border border-texto/15 bg-white px-3 py-2 text-sm text-texto outline-none focus:border-secundario"
-            />
-          </div>
-        ) : null}
-
-        {filters.map((filter) => (
-          <div key={filter.param}>
-            <label
-              htmlFor={`filter-${filter.param}`}
-              className="mb-1 block text-xs font-medium text-texto/60"
-            >
-              {filter.label}
-            </label>
-            <select
-              id={`filter-${filter.param}`}
-              value={filterValues[filter.param] ?? ""}
-              onChange={(event) => {
-                setFilterValues((current) => ({ ...current, [filter.param]: event.target.value }));
+    <div className="space-y-6">
+      <div className="rounded-xl bg-white p-6 space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-texto">Filtros y búsqueda</h3>
+          {(searchInput || Object.values(filterValues).some(Boolean) || order !== defaultOrder) && (
+            <button
+              onClick={() => {
+                setSearchInput("");
+                setFilterValues({});
+                setOrder(defaultOrder);
                 setPage(1);
               }}
-              className="rounded-xl border border-texto/15 bg-white px-3 py-2 text-sm text-texto outline-none focus:border-secundario"
+              className="text-xs text-principal hover:text-principal/70 transition"
             >
-              <option value="">Todos</option>
-              {filter.options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
+              Limpiar filtros
+            </button>
+          )}
+        </div>
 
-        {orderOptions ? (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {searchable ? (
+            <div>
+              <label htmlFor="admin-search" className="mb-2 block text-xs font-semibold uppercase tracking-wide text-texto/60">
+                Buscar
+              </label>
+              <input
+                id="admin-search"
+                type="search"
+                value={searchInput}
+                onChange={(event) => setSearchInput(event.target.value)}
+                placeholder="Escribe para filtrar…"
+                className="w-full rounded-lg border border-texto/15 bg-white px-3 py-2.5 text-sm text-texto outline-none transition-all focus:border-principal focus:ring-2 focus:ring-principal/20"
+              />
+            </div>
+          ) : null}
+
+          {filters.map((filter) => (
+            <div key={filter.param}>
+              <label
+                htmlFor={`filter-${filter.param}`}
+                className="mb-2 block text-xs font-semibold uppercase tracking-wide text-texto/60"
+              >
+                {filter.label}
+              </label>
+              <select
+                id={`filter-${filter.param}`}
+                value={filterValues[filter.param] ?? ""}
+                onChange={(event) => {
+                  setFilterValues((current) => ({ ...current, [filter.param]: event.target.value }));
+                  setPage(1);
+                }}
+                className="w-full rounded-lg border border-texto/15 bg-white px-3 py-2.5 text-sm text-texto outline-none transition-all focus:border-principal focus:ring-2 focus:ring-principal/20"
+              >
+                <option value="">Todos</option>
+                {filter.options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+
+          {orderOptions ? (
+            <div>
+              <label htmlFor="admin-order" className="mb-2 block text-xs font-semibold uppercase tracking-wide text-texto/60">
+                Ordenar por
+              </label>
+              <select
+                id="admin-order"
+                value={order}
+                onChange={(event) => {
+                  setOrder(event.target.value);
+                  setPage(1);
+                }}
+                className="w-full rounded-lg border border-texto/15 bg-white px-3 py-2.5 text-sm text-texto outline-none transition-all focus:border-principal focus:ring-2 focus:ring-principal/20"
+              >
+                {orderOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : null}
+
           <div>
-            <label htmlFor="admin-order" className="mb-1 block text-xs font-medium text-texto/60">
-              Ordenar por
+            <label htmlFor="admin-dir" className="mb-2 block text-xs font-semibold uppercase tracking-wide text-texto/60">
+              Dirección
             </label>
             <select
-              id="admin-order"
-              value={order}
+              id="admin-dir"
+              value={dir}
               onChange={(event) => {
-                setOrder(event.target.value);
+                setDir(event.target.value as "asc" | "desc");
                 setPage(1);
               }}
-              className="rounded-xl border border-texto/15 bg-white px-3 py-2 text-sm text-texto outline-none focus:border-secundario"
+              className="w-full rounded-lg border border-texto/15 bg-white px-3 py-2.5 text-sm text-texto outline-none transition-all focus:border-principal focus:ring-2 focus:ring-principal/20"
             >
-              {orderOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
+              <option value="desc">Descendente</option>
+              <option value="asc">Ascendente</option>
             </select>
           </div>
-        ) : null}
-
-        <div>
-          <label htmlFor="admin-dir" className="mb-1 block text-xs font-medium text-texto/60">
-            Dirección
-          </label>
-          <select
-            id="admin-dir"
-            value={dir}
-            onChange={(event) => {
-              setDir(event.target.value as "asc" | "desc");
-              setPage(1);
-            }}
-            className="rounded-xl border border-texto/15 bg-white px-3 py-2 text-sm text-texto outline-none focus:border-secundario"
-          >
-            <option value="desc">Descendente</option>
-            <option value="asc">Ascendente</option>
-          </select>
         </div>
       </div>
 
       {error ? (
-        <p className="rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-700">{error}</p>
+        <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 flex items-start gap-3">
+          <IconExclamation className="w-5 h-5 flex-shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
       ) : null}
 
-      <div className="overflow-x-auto rounded-2xl bg-white">
-        <table className="w-full min-w-max text-left text-sm">
-          <thead>
-            <tr className="border-b border-texto/10 text-xs uppercase tracking-wide text-texto/50">
-              {columns.map((column) => (
-                <th key={column.key} className="px-4 py-3 font-medium">
-                  {column.label}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className={loading ? "opacity-50" : undefined}>
-            {rows.length === 0 && !loading ? (
+      <div className="rounded-xl bg-white border border-texto/5 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-fondo/50 border-b border-texto/10">
               <tr>
-                <td
-                  colSpan={columns.length}
-                  className="px-4 py-10 text-center text-texto/50"
-                >
-                  Sin resultados.
-                </td>
+                {columns.map((column) => (
+                  <th key={column.key} className="px-6 py-4 font-semibold text-xs uppercase tracking-wide text-texto/60">
+                    {column.label}
+                  </th>
+                ))}
               </tr>
-            ) : (
-              rows.map((row, index) => (
-                <tr
-                  key={String(row.id ?? index)}
-                  className={`border-b border-texto/5 last:border-0 ${
-                    detailEndpoint ? "cursor-pointer hover:bg-fondo/60" : ""
-                  }`}
-                  onClick={() => {
-                    if (detailEndpoint) setDetailRow(row);
-                  }}
-                >
-                  {columns.map((column) => (
-                    <td key={column.key} className="px-4 py-3 align-top text-texto">
-                      {renderCellValue(column, row)}
-                    </td>
-                  ))}
+            </thead>
+            <tbody className={`${loading ? "opacity-60" : ""} transition-opacity duration-200`}>
+              {rows.length === 0 && !loading ? (
+                <tr>
+                  <td
+                    colSpan={columns.length}
+                    className="px-6 py-12 text-center text-texto/50"
+                  >
+                    <p>Sin resultados</p>
+                  </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                rows.map((row, index) => (
+                  <tr
+                    key={String(row.id ?? index)}
+                    className={`border-b border-texto/5 last:border-0 transition-colors ${
+                      detailEndpoint ? "cursor-pointer hover:bg-fondo/30" : ""
+                    }`}
+                    onClick={() => {
+                      if (detailEndpoint) setDetailRow(row);
+                    }}
+                  >
+                    {columns.map((column) => (
+                      <td key={column.key} className="px-6 py-4 align-top text-texto">
+                        {renderCellValue(column, row)}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-texto/60">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-texto/60 rounded-xl bg-white p-4 border border-texto/5">
         <p>
           {data ? `${data.count.toLocaleString("es-MX")} registros` : "—"}
           {data && data.count > 0 ? ` · página ${data.page} de ${pageCount}` : ""}
         </p>
 
-        <div className="flex items-center gap-2">
-          <label htmlFor="admin-per-page" className="text-xs">
-            Por página
-          </label>
-          <select
-            id="admin-per-page"
-            value={perPage}
-            onChange={(event) => {
-              setPerPage(Number(event.target.value));
-              setPage(1);
-            }}
-            className="rounded-lg border border-texto/15 bg-white px-2 py-1 text-sm"
-          >
-            {PER_PAGE_OPTIONS.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <label htmlFor="admin-per-page" className="text-xs font-medium">
+              Por página
+            </label>
+            <select
+              id="admin-per-page"
+              value={perPage}
+              onChange={(event) => {
+                setPerPage(Number(event.target.value));
+                setPage(1);
+              }}
+              className="rounded-lg border border-texto/15 bg-white px-3 py-1.5 text-sm outline-none focus:border-principal focus:ring-2 focus:ring-principal/20"
+            >
+              {PER_PAGE_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <button
-            type="button"
-            onClick={() => setPage((current) => Math.max(1, current - 1))}
-            disabled={page <= 1}
-            className="rounded-lg border border-texto/15 px-3 py-1 disabled:opacity-40"
-          >
-            Anterior
-          </button>
-          <button
-            type="button"
-            onClick={() => setPage((current) => Math.min(pageCount, current + 1))}
-            disabled={page >= pageCount}
-            className="rounded-lg border border-texto/15 px-3 py-1 disabled:opacity-40"
-          >
-            Siguiente
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              disabled={page <= 1}
+              className="rounded-lg border border-texto/15 px-4 py-1.5 transition-all hover:bg-texto/5 disabled:opacity-40 disabled:hover:bg-transparent font-medium"
+            >
+              ← Anterior
+            </button>
+            <button
+              type="button"
+              onClick={() => setPage((current) => Math.min(pageCount, current + 1))}
+              disabled={page >= pageCount}
+              className="rounded-lg border border-texto/15 px-4 py-1.5 transition-all hover:bg-texto/5 disabled:opacity-40 disabled:hover:bg-transparent font-medium"
+            >
+              Siguiente →
+            </button>
+          </div>
         </div>
       </div>
 

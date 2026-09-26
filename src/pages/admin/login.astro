@@ -27,17 +27,34 @@ const nextPath = requested.startsWith("/admin") ? requested : "/admin";
     <link rel="shortcut icon" href="/favicon_16x16.png" />
     <title>Acceso · Panel Lucky Tracker</title>
   </head>
-  <body class="flex min-h-screen items-center justify-center bg-fondo px-4 text-texto">
-    <div class="w-full max-w-sm">
-      <div class="mb-6 text-center">
-        <p class="text-3xl" aria-hidden="true">🐾</p>
-        <h1 class="mt-2 text-xl font-bold">Panel Lucky Tracker</h1>
-        <p class="mt-1 text-sm text-texto/60">
-          Acceso exclusivo para el equipo.
-        </p>
+  <body class="flex min-h-screen items-center justify-center bg-gradient-to-br from-fondo via-white to-fondo px-4 text-texto">
+    <div class="w-full max-w-md">
+      <div class="rounded-2xl bg-white shadow-lg shadow-principal/10 border border-texto/5 p-8 sm:p-10">
+        <div class="mb-8 text-center">
+          <h1 class="text-2xl font-bold tracking-tight">Lucky Tracker</h1>
+          <p class="mt-2 text-sm text-texto/60">
+            Panel de administración
+          </p>
+        </div>
+
+        <div class="mb-8 space-y-1 text-center">
+          <p class="text-xs font-semibold uppercase tracking-wide text-texto/40">
+            Acceso exclusivo para administradores
+          </p>
+        </div>
+
+        <LoginForm nextPath={nextPath} client:load />
+
+        <div class="mt-8 pt-6 border-t border-texto/10">
+          <p class="text-center text-xs text-texto/50">
+            Panel seguro con autenticación de dos factores
+          </p>
+        </div>
       </div>
 
-      <LoginForm nextPath={nextPath} client:load />
+      <p class="mt-6 text-center text-xs text-texto/40">
+        © 2025 Lucky Tracker. Sistema administrativo.
+      </p>
     </div>
   </body>
 </html>

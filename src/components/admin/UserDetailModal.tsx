@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { EMPTY_CELL, formatDate, formatDateTime, formatText } from "../../lib/admin/format";
+import { IconClose, IconExclamation, IconSpinner } from "./Icons";
 
 interface Detail {
   profile: Record<string, unknown> | null;
@@ -82,19 +83,19 @@ export default function UserDetailModal({ endpoint, row, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-texto/40 p-4 sm:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-texto/50 backdrop-blur-sm p-4 sm:p-8"
       role="dialog"
       aria-modal="true"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl"
+        className="w-full max-w-2xl rounded-xl bg-white shadow-2xl shadow-principal/20"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="mb-4 flex items-start justify-between gap-4">
+        <div className="border-b border-texto/10 px-6 py-4 sm:px-8 sm:py-6 flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-bold text-texto">{fullName || "Usuario"}</h2>
-            <p className="font-mono text-xs text-texto/50">
+            <h2 className="text-xl font-bold text-texto">{fullName || "Usuario"}</h2>
+            <p className="font-mono text-xs text-texto/50 mt-1">
               {formatText(row.user_id)}
             </p>
           </div>
@@ -102,33 +103,41 @@ export default function UserDetailModal({ endpoint, row, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="rounded-lg border border-texto/15 px-2 py-1 text-sm text-texto/60 hover:text-texto"
+            className="rounded-lg hover:bg-texto/5 p-2 text-texto/60 hover:text-texto transition-all"
           >
-            ✕
+            <IconClose className="w-5 h-5" />
           </button>
         </div>
 
-        {error ? (
-          <p className="rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-700">
-            No se pudo cargar el detalle.
-          </p>
-        ) : null}
+        <div className="px-6 py-4 sm:px-8 sm:py-6">
+          {error ? (
+            <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 flex items-start gap-3">
+              <IconExclamation className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <span>No se pudo cargar el detalle.</span>
+            </div>
+          ) : null}
 
-        {!detail && !error ? (
-          <p className="text-sm text-texto/50">Cargando…</p>
-        ) : null}
+          {!detail && !error ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="inline-flex items-center gap-2 text-sm text-texto/50">
+                <IconSpinner className="w-4 h-4 text-texto/60" />
+                Cargando…
+              </div>
+            </div>
+          ) : null}
+
 
         {detail ? (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <section>
-              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-texto/50">
-                Cuenta
+              <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-texto/50">
+                Información de la cuenta
               </h3>
-              <dl className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+              <dl className="grid gap-x-6 gap-y-4 text-sm sm:grid-cols-2">
                 <Field label="Correo" value={detail.email} />
                 <Field
                   label="Correo verificado"
-                  value={detail.emailConfirmedAt ? "Sí" : "No"}
+                  value={detail.emailConfirmedAt ? "✓ Sí" : "✗ No"}
                 />
                 <Field
                   label="Rol"
@@ -142,28 +151,41 @@ export default function UserDetailModal({ endpoint, row, onClose }: Props) {
                   label="Fecha de nacimiento"
                   value={formatDate(profile.birth_date)}
                 />
-                <Field label="Último acceso" value={formatDateTime(detail.lastSignInAt)} />
-                <Field label="Alta en la app" value={formatDateTime(detail.createdAt)} />
               </dl>
             </section>
 
-            <section>
-              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-texto/50">
-                Actividad
-              </h3>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {Object.entries(detail.counts).map(([key, value]) => (
-                  <div key={key} className="rounded-xl bg-fondo px-3 py-2">
-                    <p className="text-xs text-texto/60">{COUNT_LABELS[key] ?? key}</p>
-                    <p className="text-lg font-bold tabular-nums text-texto">
-                      {value ?? 0}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
+            <div className="border-t border-texto/10 pt-8">
+              <section>
+                <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-texto/50">
+                  Actividad y estadísticas
+                </h3>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {Object.entries(detail.counts).map(([key, value]) => (
+                    <div key={key} className="rounded-lg bg-gradient-to-br from-fondo to-fondo/50 border border-texto/5 px-4 py-3 hover:border-principal/30 transition-colors">
+                      <p className="text-xs font-medium text-texto/60 mb-1">{COUNT_LABELS[key] ?? key}</p>
+                      <p className="text-2xl font-bold tabular-nums text-texto">
+                        {value ?? 0}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+
+            <div className="border-t border-texto/10 pt-8">
+              <section>
+                <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-texto/50">
+                  Historial de acceso
+                </h3>
+                <dl className="grid gap-y-3 text-sm">
+                  <Field label="Último acceso" value={formatDateTime(detail.lastSignInAt)} />
+                  <Field label="Miembro desde" value={formatDateTime(detail.createdAt)} />
+                </dl>
+              </section>
+            </div>
           </div>
         ) : null}
+        </div>
       </div>
     </div>
   );
@@ -173,8 +195,8 @@ function Field({ label, value }: { label: string; value: string | null }) {
   const empty = value === null || value === undefined || value === "" || value === EMPTY_CELL;
   return (
     <div>
-      <dt className="text-xs text-texto/50">{label}</dt>
-      <dd className={empty ? "text-texto/30" : "text-texto"}>{empty ? EMPTY_CELL : value}</dd>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-texto/50 mb-1">{label}</dt>
+      <dd className={empty ? "text-texto/30 text-sm" : "text-sm font-medium text-texto"}>{empty ? EMPTY_CELL : value}</dd>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { IconExclamation, IconSpinner } from "./Icons";
 
 interface Card {
   key: string;
@@ -77,48 +78,55 @@ export default function StatCards({ initialStats, initialPending }: Props) {
 
   if (failed) {
     return (
-      <p className="rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-700">
-        No se pudieron cargar las métricas.
-      </p>
+      <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 flex items-start gap-3">
+        <IconExclamation className="w-5 h-5 flex-shrink-0 mt-0.5" />
+        <span>No se pudieron cargar las métricas.</span>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {pending !== null && pending > 0 ? (
         <a
           href="/admin/reportes?status=pending"
-          className="flex items-center justify-between rounded-2xl bg-principal/20 px-5 py-4 text-texto transition hover:bg-principal/30"
+          className="flex items-center justify-between rounded-xl bg-gradient-to-r from-principal/15 to-principal/10 border border-principal/20 px-6 py-4 text-texto transition-all duration-200 hover:shadow-lg hover:shadow-principal/10"
         >
-          <span className="font-semibold">
-            {pending} {pending === 1 ? "reporte pendiente" : "reportes pendientes"}
-          </span>
-          <span className="text-sm text-texto/70">Revisar →</span>
+          <div>
+            <p className="font-semibold">
+              {pending} {pending === 1 ? "reporte pendiente" : "reportes pendientes"}
+            </p>
+            <p className="text-xs text-texto/60">Acción requerida</p>
+          </div>
+          <span className="text-sm font-semibold text-principal">Revisar →</span>
         </a>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map((card) => {
           const value = stats ? (stats[card.key] ?? 0) : null;
+
           const body = (
-            <>
-              <p className="text-xs font-medium text-texto/60">{card.label}</p>
-              <p className="mt-1 text-2xl font-bold tabular-nums text-texto">
+            <div className="flex flex-col h-full">
+              <p className="text-xs font-semibold uppercase tracking-wide text-texto/60 mb-auto">
+                {card.label}
+              </p>
+              <p className="mt-3 text-3xl font-bold tabular-nums text-texto">
                 {value === null ? "—" : value.toLocaleString("es-MX")}
               </p>
-            </>
+            </div>
           );
 
           return card.href ? (
             <a
               key={card.key}
               href={card.href}
-              className="rounded-2xl bg-white px-4 py-4 transition hover:shadow-sm"
+              className="rounded-xl bg-white p-5 transition-all duration-200 hover:shadow-lg hover:shadow-principal/10 border border-texto/5 hover:border-principal/20 group"
             >
               {body}
             </a>
           ) : (
-            <div key={card.key} className="rounded-2xl bg-white px-4 py-4">
+            <div key={card.key} className="rounded-xl bg-white p-5 border border-texto/5">
               {body}
             </div>
           );
@@ -126,7 +134,12 @@ export default function StatCards({ initialStats, initialPending }: Props) {
       </div>
 
       {stats ? null : (
-        <p className="text-sm text-texto/50">Cargando métricas…</p>
+        <div className="flex items-center justify-center py-8">
+          <div className="inline-flex items-center gap-2 text-sm text-texto/50">
+            <IconSpinner className="w-4 h-4 text-texto/60" />
+            Cargando métricas…
+          </div>
+        </div>
       )}
     </div>
   );

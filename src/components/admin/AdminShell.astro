@@ -36,52 +36,73 @@ const groups = ADMIN_SECTIONS.reduce<Record<string, typeof ADMIN_SECTIONS>>(
     <meta name="googlebot" content="noindex, nofollow" />
     <link rel="shortcut icon" href="/favicon_16x16.png" />
     <title>{title} · Panel Lucky Tracker</title>
+    <style>
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(33, 31, 30, 0.2); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(33, 31, 30, 0.3); }
+    </style>
   </head>
   <body class="min-h-screen bg-fondo text-texto">
-    <header class="border-b border-texto/10 bg-white">
-      <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-3">
-        <a href="/admin" class="flex items-center gap-2 font-bold text-texto">
-          <span aria-hidden="true">🐾</span>
-          <span>Panel Lucky Tracker</span>
-        </a>
-        <span class="hidden text-xs text-texto/40 sm:inline">Acceso interno</span>
-        <div class="ml-auto flex items-center gap-3">
-          <span class="hidden text-xs text-texto/50 md:inline">
-            {session?.email ?? session?.role}
-          </span>
-          <LogoutButton client:load />
+    <div class="flex min-h-screen flex-col lg:flex-row">
+      <!-- Sidebar Navigation -->
+      <aside class="border-b border-texto/10 bg-white lg:border-b-0 lg:border-r lg:w-64">
+        <div class="sticky top-0 p-4 lg:p-6">
+          <a href="/admin" class="flex items-center gap-3 font-bold text-texto mb-6">
+            <span class="text-2xl font-bold text-principal">L</span>
+            <span class="hidden lg:inline">Lucky Tracker</span>
+          </a>
+
+          <nav class="space-y-1" aria-label="Secciones del panel">
+            {
+              Object.entries(groups).map(([group, sections]) => (
+                <div class="mb-6">
+                  <span class="text-[11px] font-semibold uppercase tracking-wider text-texto/40 block px-3 mb-2">
+                    {group}
+                  </span>
+                  <div class="space-y-1">
+                    {sections.map((section) => (
+                      <a
+                        href={`/admin/${section.slug}`}
+                        aria-current={active === section.slug ? "page" : undefined}
+                        class:list={[
+                          "block px-3 py-2 rounded-lg text-sm transition-all duration-200",
+                          active === section.slug
+                            ? "bg-principal/15 text-principal font-semibold"
+                            : "text-texto/70 hover:bg-texto/5 hover:text-texto",
+                        ]}
+                      >
+                        {section.title}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </nav>
         </div>
-      </div>
+      </aside>
 
-      <nav class="mx-auto max-w-7xl px-4 pb-3" aria-label="Secciones del panel">
-        {
-          Object.entries(groups).map(([group, sections]) => (
-            <div class="mb-2 flex flex-wrap items-center gap-1.5">
-              <span class="mr-1 w-24 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-texto/40">
-                {group}
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col">
+        <!-- Top Bar -->
+        <header class="border-b border-texto/10 bg-white">
+          <div class="flex items-center justify-between px-4 py-3 lg:px-8 lg:py-4">
+            <h1 class="text-lg font-semibold text-texto">{title}</h1>
+            <div class="flex items-center gap-4">
+              <span class="text-xs text-texto/60">
+                {session?.email ?? session?.role}
               </span>
-              {sections.map((section) => (
-                <a
-                  href={`/admin/${section.slug}`}
-                  aria-current={active === section.slug ? "page" : undefined}
-                  class:list={[
-                    "rounded-lg px-2.5 py-1 text-sm transition",
-                    active === section.slug
-                      ? "bg-texto font-semibold text-white"
-                      : "text-texto/70 hover:bg-texto/5 hover:text-texto",
-                  ]}
-                >
-                  {section.title}
-                </a>
-              ))}
+              <LogoutButton client:load />
             </div>
-          ))
-        }
-      </nav>
-    </header>
+          </div>
+        </header>
 
-    <main class="mx-auto max-w-7xl px-4 py-6">
-      <slot />
-    </main>
+        <!-- Content Area -->
+        <main class="flex-1 px-4 py-6 lg:px-8 lg:py-8">
+          <slot />
+        </main>
+      </div>
+    </div>
   </body>
 </html>

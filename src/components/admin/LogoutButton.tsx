@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IconSpinner, IconLogout } from "./Icons";
 
 export default function LogoutButton() {
   const [busy, setBusy] = useState(false);
@@ -19,9 +20,19 @@ export default function LogoutButton() {
       type="button"
       onClick={onClick}
       disabled={busy}
-      className="rounded-lg border border-texto/15 px-3 py-1.5 text-xs font-medium text-texto/70 transition hover:border-texto/30 hover:text-texto disabled:opacity-60"
+      className="rounded-lg bg-red-50 border border-red-200/50 px-4 py-2 text-xs font-semibold text-red-600 transition-all duration-200 hover:bg-red-100 hover:border-red-300 disabled:opacity-60 disabled:hover:bg-red-50 disabled:hover:border-red-200/50 flex items-center gap-1.5"
     >
-      {busy ? "Saliendo…" : "Salir"}
+      {busy ? (
+        <>
+          <IconSpinner className="w-3 h-3 text-red-600" />
+          Saliendo…
+        </>
+      ) : (
+        <>
+          <IconLogout className="w-3 h-3" />
+          Salir
+        </>
+      )}
     </button>
   );
 }

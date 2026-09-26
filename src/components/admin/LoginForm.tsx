@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IconExclamation, IconSpinner } from "./Icons";
 
 /**
  * Sign-in form for the private panel.
@@ -45,13 +46,13 @@ export default function LoginForm({ nextPath = "/admin" }: { nextPath?: string }
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full max-w-sm space-y-4">
-      <div>
+    <form onSubmit={onSubmit} className="w-full max-w-md space-y-6">
+      <div className="space-y-2">
         <label
           htmlFor="admin-email"
-          className="mb-1 block text-sm font-medium text-texto"
+          className="block text-sm font-semibold text-texto"
         >
-          Correo
+          Correo electrónico
         </label>
         <input
           id="admin-email"
@@ -60,14 +61,15 @@ export default function LoginForm({ nextPath = "/admin" }: { nextPath?: string }
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="w-full rounded-xl border border-texto/15 bg-white px-4 py-3 text-texto outline-none focus:border-secundario"
+          placeholder="tu@email.com"
+          className="w-full rounded-lg border border-texto/15 bg-white px-4 py-3 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
         />
       </div>
 
-      <div>
+      <div className="space-y-2">
         <label
           htmlFor="admin-password"
-          className="mb-1 block text-sm font-medium text-texto"
+          className="block text-sm font-semibold text-texto"
         >
           Contraseña
         </label>
@@ -78,25 +80,34 @@ export default function LoginForm({ nextPath = "/admin" }: { nextPath?: string }
           required
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="w-full rounded-xl border border-texto/15 bg-white px-4 py-3 text-texto outline-none focus:border-secundario"
+          placeholder="••••••••"
+          className="w-full rounded-lg border border-texto/15 bg-white px-4 py-3 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
         />
       </div>
 
       {error ? (
-        <p
+        <div
           role="alert"
-          className="rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-700"
+          className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 flex items-start gap-3"
         >
-          {error}
-        </p>
+          <IconExclamation className="w-5 h-5 flex-shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
       ) : null}
 
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-xl bg-texto px-4 py-3 font-semibold text-white transition disabled:opacity-60"
+        className="w-full rounded-lg bg-principal px-4 py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg hover:shadow-principal/30 disabled:opacity-60 disabled:hover:shadow-none"
       >
-        {busy ? "Entrando…" : "Entrar"}
+        {busy ? (
+          <span className="flex items-center justify-center gap-2">
+            <IconSpinner className="w-4 h-4 text-white" />
+            Entrando…
+          </span>
+        ) : (
+          "Entrar al Panel"
+        )}
       </button>
     </form>
   );
