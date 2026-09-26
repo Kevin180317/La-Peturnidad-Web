@@ -1,0 +1,43 @@
+---
+import "../../styles/global.css";
+
+import "@fontsource/pretendard/400.css";
+import "@fontsource/pretendard/500.css";
+import "@fontsource/pretendard/600.css";
+import "@fontsource/pretendard/700.css";
+
+import LoginForm from "../../components/admin/LoginForm";
+
+// src/middleware.ts lets this route through without a session, so it must be
+// server rendered like the rest of the panel rather than prerendered.
+export const prerender = false;
+
+// Only same-origin admin paths are accepted, to keep ?next= from turning into
+// an open redirect.
+const requested = Astro.url.searchParams.get("next") ?? "/admin";
+const nextPath = requested.startsWith("/admin") ? requested : "/admin";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="shortcut icon" href="/favicon_16x16.png" />
+    <title>Acceso · Panel Lucky Tracker</title>
+  </head>
+  <body class="flex min-h-screen items-center justify-center bg-fondo px-4 text-texto">
+    <div class="w-full max-w-sm">
+      <div class="mb-6 text-center">
+        <p class="text-3xl" aria-hidden="true">🐾</p>
+        <h1 class="mt-2 text-xl font-bold">Panel Lucky Tracker</h1>
+        <p class="mt-1 text-sm text-texto/60">
+          Acceso exclusivo para el equipo.
+        </p>
+      </div>
+
+      <LoginForm nextPath={nextPath} client:load />
+    </div>
+  </body>
+</html>

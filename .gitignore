@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local MCP tool scratch file, not part of the site
+mcp_supabase

@@ -1,0 +1,35 @@
+---
+import AdminShell from "../../components/admin/AdminShell.astro";
+import DataTable from "../../components/admin/DataTable";
+import { getSection } from "../../lib/admin/sections";
+
+export const prerender = false;
+
+const section = getSection(Astro.params.section);
+
+// An unknown slug is a 404 rather than a silent redirect, so a typo in a shared
+// link is visible instead of quietly showing the wrong table.
+if (!section) {
+  return new Response(null, { status: 404, statusText: "Sección no encontrada" });
+}
+---
+
+<AdminShell title={section.title} active={section.slug}>
+  <div class="space-y-4">
+    <div>
+      <h1 class="text-2xl font-bold">{section.title}</h1>
+      <p class="mt-1 text-sm text-texto/60">{section.description}</p>
+    </div>
+
+    <DataTable
+      client:load
+      endpoint={section.endpoint}
+      columns={section.columns}
+      searchable={section.searchable}
+      defaultOrder={section.defaultOrder}
+      orderOptions={section.orderOptions}
+      filters={section.filters}
+      detailEndpoint={section.detail?.endpoint}
+    />
+  </div>
+</AdminShell>

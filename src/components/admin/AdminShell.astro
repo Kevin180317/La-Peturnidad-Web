@@ -1,0 +1,87 @@
+---
+import "../../styles/global.css";
+
+import "@fontsource/pretendard/400.css";
+import "@fontsource/pretendard/500.css";
+import "@fontsource/pretendard/600.css";
+import "@fontsource/pretendard/700.css";
+
+import { ADMIN_SECTIONS } from "../../lib/admin/sections";
+import LogoutButton from "./LogoutButton";
+
+interface Props {
+  title: string;
+  active?: string;
+}
+
+const { title, active } = Astro.props;
+const session = Astro.locals.admin;
+
+const groups = ADMIN_SECTIONS.reduce<Record<string, typeof ADMIN_SECTIONS>>(
+  (acc, section) => {
+    (acc[section.group] ??= []).push(section);
+    return acc;
+  },
+  {}
+);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Private tool: never index it. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="shortcut icon" href="/favicon_16x16.png" />
+    <title>{title} · Panel Lucky Tracker</title>
+  </head>
+  <body class="min-h-screen bg-fondo text-texto">
+    <header class="border-b border-texto/10 bg-white">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-3">
+        <a href="/admin" class="flex items-center gap-2 font-bold text-texto">
+          <span aria-hidden="true">🐾</span>
+          <span>Panel Lucky Tracker</span>
+        </a>
+        <span class="hidden text-xs text-texto/40 sm:inline">Acceso interno</span>
+        <div class="ml-auto flex items-center gap-3">
+          <span class="hidden text-xs text-texto/50 md:inline">
+            {session?.email ?? session?.role}
+          </span>
+          <LogoutButton client:load />
+        </div>
+      </div>
+
+      <nav class="mx-auto max-w-7xl px-4 pb-3" aria-label="Secciones del panel">
+        {
+          Object.entries(groups).map(([group, sections]) => (
+            <div class="mb-2 flex flex-wrap items-center gap-1.5">
+              <span class="mr-1 w-24 shrink-0 text-[11px] font-semibold uppercase tracking-wide text-texto/40">
+                {group}
+              </span>
+              {sections.map((section) => (
+                <a
+                  href={`/admin/${section.slug}`}
+                  aria-current={active === section.slug ? "page" : undefined}
+                  class:list={[
+                    "rounded-lg px-2.5 py-1 text-sm transition",
+                    active === section.slug
+                      ? "bg-texto font-semibold text-white"
+                      : "text-texto/70 hover:bg-texto/5 hover:text-texto",
+                  ]}
+                >
+                  {section.title}
+                </a>
+              ))}
+            </div>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-6">
+      <slot />
+    </main>
+  </body>
+</html>

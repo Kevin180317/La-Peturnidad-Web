@@ -8,41 +8,40 @@ import "@fontsource/pretendard/700.css";
 import HeaderAndChat from "../components/HeaderAndChat.jsx";
 import Footer from "../components/Footer.astro";
 import { getLangFromUrl } from "../i18n/utils";
+
 const lang = getLangFromUrl(Astro.url);
-const { footer = true } = Astro.props;
+const { footer = true, title, description, canonical } = Astro.props;
+
+const siteTitle =
+  title ?? "Lucky Tracker - Encuentra Mascotas Perdidas en tu Comunidad";
+const siteDescription =
+  description ??
+  "Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos.";
+const canonicalUrl = canonical ?? Astro.url.href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="shortcut icon" href="/favicon_16x16.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>Lucky Tracker - Encuentra Mascotas Perdidas en tu Comunidad</title>
-    <meta
-      name="description"
-      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos."
-    />
+    <title>{siteTitle}</title>
+    <meta name="description" content={siteDescription} />
     <meta
       name="keywords"
       content="Mascotas Perdidas, Comunidad, Reporte de Mascotas, Reunión de Mascotas, Lucky Tracker, Ayuda a Mascotas, Encuentra Mascotas, Reporta Mascotas, Mascotas Encontradas"
     />
-    <link rel="canonical" href="https://luckytracker.com.mx/" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Prometheus R&D" />
     <meta name="publisher" content="Prometheus R&D" />
 
-    <meta property="og:url" content="https://luckytracker.com.mx/" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="Lucky Tracker - Encuentra Mascotas Perdidas en tu Comunidad"
-    />
-    <meta
-      property="og:description"
-      content="Conecta con tu comunidad y reporta mascotas perdidas o encontradas. Únete a Lucky Tracker y ayuda a reunir familias con sus peludos."
-    />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
     <meta
       property="og:image"
       content="https://luckytracker.com.mx/OpenGraphLogo.png"

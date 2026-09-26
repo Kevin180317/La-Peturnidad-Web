@@ -1,0 +1,76 @@
+---
+import AdminShell from "../../components/admin/AdminShell.astro";
+import StatCards from "../../components/admin/StatCards";
+import { ADMIN_SECTIONS } from "../../lib/admin/sections";
+import { countPendingReports, getAdminStats } from "../../lib/admin/queries";
+
+export const prerender = false;
+
+// Counted during SSR so the cards paint with data on arrival, and so the full
+// set arrives without a client round trip. Safe to read directly here because
+// src/middleware.ts has already verified the session before this renders.
+let initialStats: Record<string, number> | undefined;
+let initialPending: number | undefined;
+
+try {
+  [initialStats, initialPending] = await Promise.all([
+    getAdminStats(),
+    countPendingReports(),
+  ]);
+} catch (error) {
+  console.error("Admin index: could not read summary counts:", error);
+}
+---
+
+<AdminShell title="Resumen" active="">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-2xl font-bold">Resumen</h1>
+      <p class="mt-1 text-sm text-texto/60">
+        Métricas de Lucky Tracker, leídas de la base de datos de la app.
+      </p>
+    </div>
+
+    <StatCards
+      initialStats={initialStats}
+      initialPending={initialPending}
+      client:load
+    />
+
+    <section class="rounded-2xl bg-white p-5">
+      <h2 class="text-sm font-semibold text-texto">Nota sobre los conteos</h2>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-texto/60">
+        <li>
+          <strong>Alertas de pérdida</strong> es un acumulado histórico: la app
+          borra el registro cuando la mascota aparece, así que no son
+          emergencias abiertas.
+        </li>
+        <li>
+          <strong>Historias</strong> solo cuenta las reuniones que los usuarios
+          publican a mano, por lo que queda por debajo de las reuniones reales.
+        </li>
+        <li>
+          <strong>Mensajes y conversaciones</strong> no están en el panel a
+          propósito: no se da acceso al chat privado de los usuarios.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="mb-2 text-sm font-semibold text-texto">Secciones</h2>
+      <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          ADMIN_SECTIONS.map((section) => (
+            <a
+              href={`/admin/${section.slug}`}
+              class="rounded-xl bg-white px-4 py-3 transition hover:shadow-sm"
+            >
+              <p class="text-sm font-semibold text-texto">{section.title}</p>
+              <p class="mt-0.5 text-xs text-texto/50">{section.description}</p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</AdminShell>
