@@ -89,10 +89,10 @@ export default function UserDetailModal({ endpoint, row, onClose }: Props) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl rounded-xl bg-white shadow-2xl shadow-principal/20"
+        className="w-full max-w-2xl rounded-2xl bg-panel shadow-2xl shadow-principal/20"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="border-b border-texto/10 px-6 py-4 sm:px-8 sm:py-6 flex items-start justify-between gap-4">
+        <div className="border-b border-texto/10 px-5 py-4 sm:px-7 sm:py-5 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-texto">{fullName || "Usuario"}</h2>
             <p className="font-mono text-xs text-texto/50 mt-1">
@@ -109,9 +109,9 @@ export default function UserDetailModal({ endpoint, row, onClose }: Props) {
           </button>
         </div>
 
-        <div className="px-6 py-4 sm:px-8 sm:py-6">
+        <div className="px-5 py-5 sm:px-7">
           {error ? (
-            <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 flex items-start gap-3">
+            <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-300 flex items-start gap-3">
               <IconExclamation className="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span>No se pudo cargar el detalle.</span>
             </div>
@@ -161,7 +161,7 @@ export default function UserDetailModal({ endpoint, row, onClose }: Props) {
                 </h3>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {Object.entries(detail.counts).map(([key, value]) => (
-                    <div key={key} className="rounded-lg bg-gradient-to-br from-fondo to-fondo/50 border border-texto/5 px-4 py-3 hover:border-principal/30 transition-colors">
+                    <div key={key} className="rounded-lg bg-fondo/60 px-4 py-3 ring-1 ring-texto/5 transition-colors hover:ring-principal/30 transition-colors">
                       <p className="text-xs font-medium text-texto/60 mb-1">{COUNT_LABELS[key] ?? key}</p>
                       <p className="text-2xl font-bold tabular-nums text-texto">
                         {value ?? 0}

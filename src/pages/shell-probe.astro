@@ -1,0 +1,203 @@
+---
+// TEMPORARY probe. Renders the real AdminShell, collapses the rail in a real
+// browser, and samples the resolved width over time so the collapse can be
+// checked for intermediate values instead of just its end state. Deleted after
+// the check; /admin itself needs an httpOnly session cookie we cannot forge.
+//
+// Sampling uses setTimeout rather than requestAnimationFrame: under
+// --virtual-time-budget timers advance deterministically, while rAF does not
+// fire in headless without a compositor.
+export const prerender = true;
+import AdminShell from "../components/admin/AdminShell.astro";
+---
+
+// Headless Chrome always answers `prefers-reduced-motion: reduce`, which sends
+// the shell down its jump path and hides the animation under test. Neutralise
+// that one query before the shell's module runs, so the animated path can be
+// exercised. The jump path is verified separately, on purpose, via ?rm=1.
+// A classic inline script runs during parsing, ahead of the deferred module.
+<script is:inline>
+  (function () {
+    window.__probeErrors = [];
+    window.__probeClicks = 0;
+    window.addEventListener("error", (e) => {
+      window.__probeErrors.push("error: " + (e.message || String(e.error)));
+    });
+    window.addEventListener("unhandledrejection", (e) => {
+      window.__probeErrors.push("rejection: " + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
+    });
+    const wantsReduce =
+      new URLSearchParams(location.search).get("rm") === "1";
+    if (wantsReduce) return;
+    const real = window.matchMedia.bind(window);
+    const fake = { matches: false, onchange: null, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}, dispatchEvent: () => false };
+    window.matchMedia = function (q) {
+      return String(q).includes("prefers-reduced-motion") ? { ...fake, media: q } : real(q);
+    };
+  })();
+</script>
+
+<AdminShell title="probe" active="resumen">
+  <p>probe</p>
+</AdminShell>
+
+<pre id="rail-log" data-state="pending">no data yet</pre>
+
+<script>
+  const log = document.getElementById("rail-log");
+  const stage = (s) => log.setAttribute("data-stage", s);
+  const finish = (state, payload) => {
+    log.setAttribute("data-state", state);
+    log.textContent = JSON.stringify(payload);
+  };
+
+  toggle.addEventListener("click", () => {
+    window.__probeClicks++;
+  });
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  const snapshot = (tag) => ({
+    tag,
+    attr: document.documentElement.getAttribute("data-admin-sidebar"),
+    inlineWidth: sidebar.style.width,
+    inlineInset: document.querySelector(".admin-content").style.paddingLeft,
+    hasInlineOpacity: Array.from(sidebar.querySelectorAll(".nav-label")).some(
+      (l) => l.style.opacity !== ""
+    ),
+    computedWidth: +parseFloat(getComputedStyle(sidebar).width).toFixed(1),
+    ariaLabel: toggle.getAttribute("aria-label"),
+  });
+
+  const sample = async (action, ms) => {
+    const out = [];
+    const t0 = performance.now();
+    let clickError = null;
+    try {
+      action();
+    } catch (e) {
+      clickError = String(e && e.message ? e.message : e);
+    }
+    while (performance.now() - t0 < ms) {
+      await sleep(16);
+      out.push(parseFloat(getComputedStyle(sidebar).width));
+    }
+    return { out, clickError };
+  };
+
+  const sidebar = document.getElementById("admin-sidebar");
+  const toggle = document.getElementById("admin-sidebar-toggle");
+
+  (async () => {
+    try {
+      stage("start");
+      if (!window.matchMedia("(min-width: 1024px)").matches) {
+        return finish("failed", { error: "viewport not desktop width" });
+      }
+      stage("waiting-for-wiring");
+      for (let i = 0; i < 100 && !toggle.getAttribute("aria-label"); i++) {
+        await sleep(20);
+      }
+      if (!toggle.getAttribute("aria-label")) {
+        return finish("failed", { error: "toggle never got wired" });
+      }
+
+      // What is actually attached to the sidebar right now.
+      const animInfo = () =>
+        sidebar.getAnimations().map((a) => ({
+          state: a.playState,
+          currentTime: Math.round(Number(a.currentTime) || 0),
+          duration: a.effect.getComputedTiming().duration,
+          delay: a.effect.getComputedTiming().delay,
+          fill: a.effect.getComputedTiming().fill,
+          frames: a.effect.getKeyframes().map((k) => k.offset ?? null),
+          props: Object.keys(a.effect.getKeyframes()[0] || {}).filter(
+            (p) => p !== "offset" && p !== "computedOffset" && p !== "easing"
+          ),
+          values: JSON.stringify(a.effect.getKeyframes().map((k) => k.width ?? null)),
+        }));
+
+      stage("sampling-cycles");
+      const before = snapshot("before");
+      const cycles = [];
+      const errors = [];
+      const attrChanges = [];
+      const observer = new MutationObserver((records) => {
+        for (const r of records) {
+          attrChanges.push(
+            document.documentElement.getAttribute("data-admin-sidebar")
+          );
+        }
+      });
+      observer.observe(document.documentElement, {
+        attributeFilter: ["data-admin-sidebar"],
+      });
+
+      // Three round trips, because the real usage is repeated toggling and a
+      // fill-mode animation left behind by one cycle could swallow the next.
+      for (let i = 0; i < 3; i++) {
+        const from = parseFloat(getComputedStyle(sidebar).width);
+        const { out, clickError } = await sample(() => toggle.click(), 900);
+        const to = parseFloat(getComputedStyle(sidebar).width);
+        cycles.push({
+          i,
+          from: +from.toFixed(1),
+          to: +to.toFixed(1),
+          frames: out.length,
+          distinct: new Set(out.map((v) => v.toFixed(1))).size,
+          intermediate: out.filter(
+            (v) => v > Math.min(from, to) + 4 && v < Math.max(from, to) - 4
+          ).length,
+          firstFrames: out.slice(0, 6).map((v) => +v.toFixed(1)),
+          animsAtEnd: animInfo(),
+        });
+        errors.push(clickError);
+      }
+
+      // --- Interruption -------------------------------------------------
+      // Clicking again mid-flight is the case that used to leave the inline
+      // width disagreeing with the state attribute. Start from expanded, then
+      // interrupt a collapse halfway and check where it comes to rest.
+      stage("sampling-interrupt");
+      const isRail = () =>
+        document.documentElement.getAttribute("data-admin-sidebar") !== null;
+      if (isRail()) {
+        toggle.click();
+        await sleep(1200);
+      }
+      toggle.click(); // start collapsing
+      await sleep(120); // ...then change our mind, mid-spring
+      toggle.click();
+      await sleep(1800);
+      const interrupt = snapshot("interrupt");
+      const interruptWidth = +parseFloat(getComputedStyle(sidebar).width).toFixed(1);
+
+      const after = snapshot("after");
+      // Let the settle cleanup run, then look again: the inline styles are
+      // supposed to exist only while an animation is in flight.
+      await sleep(800);
+      const settled = snapshot("settled");
+      observer.disconnect();
+      const anims = sidebar.getAnimations().map((a) => ({
+        playState: a.playState,
+        fill: a.effect.getComputedTiming().fill,
+        target: a.effect.target === sidebar ? "sidebar" : "other",
+      }));
+      finish("done", {
+        reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        cycles,
+        before,
+        after,
+        settled,
+        clickErrors: errors,
+        windowErrors: window.__probeErrors.slice(),
+        attrChanges,
+        probeClicks: window.__probeClicks,
+        interrupt,
+        interruptWidth,
+        liveAnimations: anims,
+      });
+    } catch (error) {
+      finish("failed", { error: String(error && error.stack ? error.stack : error) });
+    }
+  })();
+</script>

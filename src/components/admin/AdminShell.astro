@@ -1,12 +1,13 @@
 ---
-import "../../styles/global.css";
+import "../../styles/admin.css";
 
 import "@fontsource/pretendard/400.css";
 import "@fontsource/pretendard/500.css";
 import "@fontsource/pretendard/600.css";
 import "@fontsource/pretendard/700.css";
 
-import { ADMIN_SECTIONS } from "../../lib/admin/sections";
+import { ADMIN_GROUPS, ADMIN_SECTIONS } from "../../lib/admin/sections";
+import { iconSvg } from "../../lib/admin/icons";
 import LogoutButton from "./LogoutButton";
 
 interface Props {
@@ -17,42 +18,33 @@ interface Props {
 const { title, active } = Astro.props;
 const session = Astro.locals.admin;
 
-const sectionIcons: Record<string, string> = {
-  usuarios: "users",
-  mascotas: "pets",
-  alertas: "alert",
-  encontradas: "heart",
-  historias: "file",
-  grupos: "users2",
-  publicaciones: "file",
-  avisos: "bell",
-  reportes: "flag",
-  bloqueos: "block",
+// ADMIN_GROUPS declares "Resumen" but no section uses it, so the dashboard had no
+// sidebar entry of its own. It is added here rather than as a fake section,
+// because /admin is a page and not a table listing.
+const OVERVIEW = {
+  slug: "resumen",
+  title: "Resumen",
+  icon: "grid",
+  href: "/admin",
 };
 
-function getSectionIcon(iconKey: string): string {
-  const icons: Record<string, string> = {
-    users: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 12H9m6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-    pets: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-1.104 0-2-0.896-2-2s0.896-2 2-2 2 0.896 2 2-0.896 2-2 2zm0 4c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm8-2c-1.104 0-2-0.896-2-2s0.896-2 2-2 2 0.896 2 2-0.896 2-2 2zm0 4c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zM4 2c-1.104 0-2-0.896-2-2s0.896-2 2-2 2 0.896 2 2-0.896 2-2 2zm0 4c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/></svg>',
-    alert: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m6-4a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-    heart: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
-    file: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
-    users2: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
-    comment: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
-    bell: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
-    flag: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-7 7 7 7H12.5l-1-1H5a2 2 0 00-2 2zm9-13h2.5L12 7"/></svg>',
-    block: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-  };
-  return icons[iconKey] || '';
-}
+// Any group in ADMIN_SECTIONS that is not declared in ADMIN_GROUPS would
+// silently disappear from the sidebar, so unknown groups are appended instead.
+const groupOrder = [
+  ...ADMIN_GROUPS.filter((group) => group !== "Resumen"),
+  ...ADMIN_SECTIONS.map((section) => section.group).filter(
+    (group, index, all) => !ADMIN_GROUPS.includes(group as never) && all.indexOf(group) === index
+  ),
+];
 
-const groups = ADMIN_SECTIONS.reduce<Record<string, typeof ADMIN_SECTIONS>>(
-  (acc, section) => {
-    (acc[section.group] ??= []).push(section);
-    return acc;
-  },
-  {}
-);
+const groups = groupOrder
+  .map((group) => ({
+    group,
+    sections: ADMIN_SECTIONS.filter((section) => section.group === group),
+  }))
+  .filter((entry) => entry.sections.length > 0);
+
+const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCase();
 ---
 
 <!doctype html>
@@ -65,78 +57,681 @@ const groups = ADMIN_SECTIONS.reduce<Record<string, typeof ADMIN_SECTIONS>>(
     <meta name="googlebot" content="noindex, nofollow" />
     <link rel="shortcut icon" href="/favicon_16x16.png" />
     <title>{title} · Panel Lucky Tracker</title>
-    <style>
-      ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: rgba(33, 31, 30, 0.2); border-radius: 4px; }
-      ::-webkit-scrollbar-thumb:hover { background: rgba(33, 31, 30, 0.3); }
-    </style>
-  </head>
-  <body class="min-h-screen bg-fondo text-texto">
-    <div class="flex min-h-screen flex-col lg:flex-row">
-      <!-- Sidebar Navigation -->
-      <aside class="border-b border-texto/10 bg-white lg:border-b-0 lg:border-r lg:w-64">
-        <div class="sticky top-0 p-4 lg:p-6">
-          <a href="/admin" class="flex items-center gap-3 font-bold text-texto mb-6">
-            <span class="text-2xl font-bold text-principal">L</span>
-            <span class="hidden lg:inline">Lucky Tracker</span>
-          </a>
 
-          <nav class="space-y-1" aria-label="Secciones del panel">
-            {
-              Object.entries(groups).map(([group, sections]) => (
-                <div class="mb-6">
-                  <span class="text-[11px] font-semibold uppercase tracking-wider text-texto/40 block px-3 mb-2">
+    <script is:inline>
+      // Applied before first paint, not after it. Reading this in a deferred
+      // script would let the browser paint the light theme first and then flash
+      // the dark one, which is worse than having no toggle at all.
+      (function () {
+        try {
+          var stored = localStorage.getItem("lt-admin-theme");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (error) {
+          // Private browsing modes can throw on localStorage. The panel still
+          // works, it just always renders light.
+        }
+      })();
+
+      // Same reasoning for the sidebar: setting the attribute here means the CSS
+      // can key off it directly, so a collapsed sidebar is never painted open and
+      // then yanked away a frame later. "collapsed" was the pre-rail name for
+      // the same state, so it is accepted too.
+      (function () {
+        try {
+          var stored = localStorage.getItem("lt-admin-sidebar");
+          if (stored === "rail" || stored === "collapsed") {
+            document.documentElement.setAttribute("data-admin-sidebar", "rail");
+          }
+        } catch (error) {
+          // Default to the sidebar being expanded.
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-fondo text-texto">
+    <a
+      href="#admin-main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-panel focus:px-4 focus:py-2 focus:shadow-lg"
+    >
+      Saltar al contenido
+    </a>
+
+    <div class="min-h-screen">
+      <!-- Mobile drawer backdrop -->
+      <div
+        id="admin-backdrop"
+        class="fixed inset-0 z-40 hidden bg-texto/50 backdrop-blur-sm lg:hidden"
+        aria-hidden="true"
+      >
+      </div>
+
+      <!-- Sidebar. Fixed at every width: on mobile it is an overlay drawer, on
+           desktop it collapses to an icon rail. Width and the content inset are
+           driven from the script; CSS only holds the resting states.
+
+           The transform transition is for the mobile drawer only, and it is
+           deliberately not `transition-all`: width is animated by Motion on
+           desktop, and a CSS width transition would fight it. -->
+      <aside
+        id="admin-sidebar"
+        class="fixed inset-y-0 left-0 z-50 flex flex-col border-r border-texto/10 bg-panel transition-transform duration-200 motion-reduce:transition-none"
+        aria-label="Navegación del panel"
+      >
+        <div class="admin-sidebar-head flex items-center justify-between gap-3 px-5 py-5">
+          <a href="/admin" class="flex min-w-0 items-center gap-2.5 font-bold text-texto">
+            <span
+              class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-principal/15 text-lg font-bold text-principal"
+              >L</span
+            >
+            <span class="nav-label truncate">Lucky Tracker</span>
+          </a>
+          <!-- Only shown while there is something left to collapse to. -->
+          <button
+            type="button"
+            id="admin-sidebar-close"
+            class="admin-sidebar-hide flex-shrink-0 rounded-lg p-1.5 text-texto/50 transition-colors hover:bg-texto/5 hover:text-texto"
+            aria-label="Ocultar navegación"
+            title="Ocultar navegación"
+          >
+            <span set:html={iconSvg("close", "h-5 w-5")} />
+          </button>
+        </div>
+
+        <nav
+          class="admin-nav flex-1 space-y-6 overflow-y-auto px-3 pb-6"
+          aria-label="Secciones"
+        >
+          <div>
+            <a
+              href={OVERVIEW.href}
+              title={OVERVIEW.title}
+              aria-current={active === OVERVIEW.slug ? "page" : undefined}
+              class:list={[
+                "nav-link nav-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
+                active === OVERVIEW.slug
+                  ? "bg-principal/10 font-semibold text-principal"
+                  : "text-texto/70 hover:bg-texto/5 hover:text-texto",
+              ]}
+            >
+              <span set:html={iconSvg(OVERVIEW.icon, "h-5 w-5 flex-shrink-0")} />
+              <span class="nav-label truncate">{OVERVIEW.title}</span>
+            </a>
+          </div>
+
+          {
+            groups.map(({ group, sections }) => (
+              <div class="nav-group" data-group={group}>
+                <button
+                  type="button"
+                  class="nav-group-head group flex w-full items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-left"
+                  aria-expanded="true"
+                >
+                  <span class="text-[11px] font-semibold uppercase tracking-wider text-texto/40">
                     {group}
                   </span>
-                  <div class="space-y-1">
-                    {sections.map((section) => {
-                      const iconKey = sectionIcons[section.slug];
-                      const iconSvg = getSectionIcon(iconKey);
-                      return (
-                        <a
-                          href={`/admin/${section.slug}`}
-                          aria-current={active === section.slug ? "page" : undefined}
-                          class:list={[
-                            "flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200",
-                            active === section.slug
-                              ? "bg-principal/15 text-principal font-semibold"
-                              : "text-texto/70 hover:bg-texto/5 hover:text-texto",
-                          ]}
-                        >
-                          <span class="flex-shrink-0" set:html={iconSvg} />
-                          <span>{section.title}</span>
-                        </a>
-                      );
-                    })}
-                  </div>
+                  <span
+                    class="nav-group-chevron text-texto/30 transition-transform"
+                    set:html={iconSvg("chevronDown", "h-4 w-4")}
+                  />
+                </button>
+                {/* Stands in for the header in rail mode, where there is no room
+                    for the label. Purely decorative, hence aria-hidden. */}
+                <div class="nav-group-divider" aria-hidden="true" />
+                <div class="nav-group-panel mt-1 space-y-0.5">
+                  {sections.map((section) => (
+                    <a
+                      href={`/admin/${section.slug}`}
+                      title={section.title}
+                      aria-current={active === section.slug ? "page" : undefined}
+                      class:list={[
+                        "nav-link nav-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
+                        active === section.slug
+                          ? "bg-principal/10 font-semibold text-principal"
+                          : "text-texto/70 hover:bg-texto/5 hover:text-texto",
+                      ]}
+                    >
+                      <span
+                        set:html={iconSvg(section.icon, "h-5 w-5 flex-shrink-0")}
+                      />
+                      <span class="nav-label truncate">{section.title}</span>
+                    </a>
+                  ))}
                 </div>
-              ))
-            }
-          </nav>
-        </div>
+              </div>
+            ))
+          }
+        </nav>
       </aside>
 
-      <!-- Main Content -->
-      <div class="flex-1 flex flex-col">
-        <!-- Top Bar -->
-        <header class="border-b border-texto/10 bg-white">
-          <div class="flex items-center justify-between px-4 py-3 lg:px-8 lg:py-4">
-            <h1 class="text-lg font-semibold text-texto">{title}</h1>
-            <div class="flex items-center gap-4">
-              <span class="text-xs text-texto/60">
-                {session?.email ?? session?.role}
-              </span>
+      <!-- Content column. `admin-content` carries the left inset that matches the
+         sidebar width, so collapsing it slides the panel away and hands the
+         space back instead of leaving a gap. -->
+      <div class="admin-content flex min-w-0 flex-col">
+        <header
+          class="sticky top-0 z-30 border-b border-texto/10 bg-fondo/85 backdrop-blur"
+        >
+          <div class="flex items-center justify-between gap-4 px-4 py-3 lg:px-8">
+            <div class="flex min-w-0 items-center gap-3">
+              <button
+                type="button"
+                id="admin-sidebar-toggle"
+                class="rounded-lg p-2 text-texto/70 transition-colors hover:bg-texto/5 hover:text-texto"
+                aria-label="Ocultar navegación"
+                title="Ocultar navegación"
+                aria-controls="admin-sidebar"
+                aria-expanded="true"
+              >
+                <span set:html={iconSvg("menu", "h-5 w-5")} />
+              </button>
+
+              <nav aria-label="Ruta" class="hidden min-w-0 sm:block">
+                <ol class="flex items-center gap-1.5 text-sm">
+                  <li class="text-texto/40">Panel</li>
+                  <li class="text-texto/30" aria-hidden="true">
+                    <span set:html={iconSvg("chevronRight", "h-3.5 w-3.5")} />
+                  </li>
+                  <li class="truncate font-semibold text-texto" aria-current="page">
+                    {title}
+                  </li>
+                </ol>
+              </nav>
+              <p class="truncate text-sm font-semibold text-texto sm:hidden">{title}</p>
+            </div>
+
+            <div class="flex items-center gap-1.5 sm:gap-3">
+              <button
+                type="button"
+                id="admin-theme-toggle"
+                class="rounded-lg p-2 text-texto/60 transition-colors hover:bg-texto/5 hover:text-texto"
+                aria-label="Cambiar tema"
+                title="Cambiar tema"
+              >
+                <span class="hidden dark:block" set:html={iconSvg("sun", "h-5 w-5")} />
+                <span class="block dark:hidden" set:html={iconSvg("moon", "h-5 w-5")} />
+              </button>
+
+              <div class="flex items-center gap-2.5 rounded-xl border border-texto/10 py-1 pl-1 pr-2 sm:pr-3">
+                <span
+                  class="flex h-7 w-7 items-center justify-center rounded-lg bg-principal/15 text-xs font-bold text-principal"
+                  aria-hidden="true">{initials}</span
+                >
+                <span class="hidden max-w-[14rem] truncate text-xs text-texto/70 sm:block">
+                  {session?.email ?? session?.role}
+                </span>
+              </div>
+
               <LogoutButton client:load />
             </div>
           </div>
         </header>
 
-        <!-- Content Area -->
-        <main class="flex-1 px-4 py-6 lg:px-8 lg:py-8">
-          <slot />
+        <main id="admin-main" class="flex-1 px-4 py-6 lg:px-8 lg:py-8">
+          <!-- Capped so a wide table stops stretching across a 27" display. -->
+          <div class="mx-auto w-full max-w-[1600px]">
+            <slot />
+          </div>
         </main>
       </div>
     </div>
+
+    <style>
+      /* Two widths, used by the sidebar and by the content inset so the two can
+         never fall out of step. The script animates between them; these values
+         are only the resting states, which is what makes the first paint correct
+         without waiting for any JavaScript.
+
+         The widths themselves are declared in styles/admin.css, on :root, with
+         fallbacks repeated here so the shell still lays out correctly if that
+         sheet ever fails to load. */
+      #admin-sidebar {
+        width: var(--admin-sidebar-expanded, 17.5rem);
+      }
+
+      /* Mobile: an overlay drawer, translated off-canvas until opened. Driven
+         from the script through `data-open` rather than a class swap. */
+      #admin-sidebar {
+        transform: translateX(-100%);
+      }
+
+      #admin-sidebar[data-open] {
+        transform: translateX(0);
+      }
+
+      @media (min-width: 1024px) {
+        /* Desktop: the sidebar is part of the page. Shown unless collapsed to
+           the icon rail. */
+        #admin-sidebar {
+          transform: translateX(0);
+        }
+
+        html[data-admin-sidebar="rail"] #admin-sidebar,
+        /* "collapsed" was the pre-rail name for the same state. */
+        html[data-admin-sidebar="collapsed"] #admin-sidebar {
+          width: var(--admin-sidebar-rail, 4.25rem);
+        }
+
+        .admin-content {
+          padding-left: var(--admin-sidebar-expanded, 17.5rem);
+        }
+
+        html[data-admin-sidebar="rail"] .admin-content,
+        html[data-admin-sidebar="collapsed"] .admin-content {
+          padding-left: var(--admin-sidebar-rail, 4.25rem);
+        }
+      }
+
+      /* Rail mode: icons only. The labels are kept in the accessibility tree
+         rather than removed, so each link keeps its accessible name -- opacity
+         and the sr-only clip both hide visually without touching that. */
+      @media (min-width: 1024px) {
+        html[data-admin-sidebar="rail"] .nav-label,
+        html[data-admin-sidebar="collapsed"] .nav-label {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+          border-width: 0;
+        }
+
+        html[data-admin-sidebar="rail"] .nav-item,
+        html[data-admin-sidebar="collapsed"] .nav-item {
+          justify-content: center;
+          padding-inline: 0;
+        }
+
+        html[data-admin-sidebar="rail"] .admin-sidebar-head,
+        html[data-admin-sidebar="collapsed"] .admin-sidebar-head {
+          justify-content: center;
+          padding-inline: 0;
+        }
+
+        /* Nothing left to collapse to, so the control goes away. */
+        html[data-admin-sidebar="rail"] .admin-sidebar-hide,
+        html[data-admin-sidebar="collapsed"] .admin-sidebar-hide {
+          display: none;
+        }
+
+        /* A group header cannot show its label, and a 1px line is not a button,
+           so the header is replaced by a decorative divider. */
+        html[data-admin-sidebar="rail"] .nav-group-head,
+        html[data-admin-sidebar="collapsed"] .nav-group-head {
+          display: none;
+        }
+
+        html[data-admin-sidebar="rail"] .nav-group-divider,
+        html[data-admin-sidebar="collapsed"] .nav-group-divider {
+          display: block;
+        }
+
+        /* A group the user collapsed earlier must not hide its sections here, or
+           they would be unreachable with no visible control to expand it again.
+           Done in CSS so it also holds without JavaScript. */
+        html[data-admin-sidebar="rail"] .nav-group-panel,
+        html[data-admin-sidebar="collapsed"] .nav-group-panel {
+          display: block !important;
+        }
+
+        /* A 4.25rem column has no room for a scrollbar. Still scrollable. */
+        html[data-admin-sidebar="rail"] .admin-nav,
+        html[data-admin-sidebar="collapsed"] .admin-nav {
+          scrollbar-width: none;
+        }
+
+        html[data-admin-sidebar="rail"] .admin-nav::-webkit-scrollbar,
+        html[data-admin-sidebar="collapsed"] .admin-nav::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .nav-group-divider {
+        display: none;
+        height: 1px;
+        margin: 0.5rem auto;
+        width: 1.5rem;
+        background-color: color-mix(in oklab, var(--lt-fg) 10%, transparent);
+      }
+
+      /* The active item gets an accent bar instead of only a background tint,
+         which survives a long sidebar much better than colour alone. */
+      .nav-link[aria-current="page"] {
+        box-shadow: inset 2px 0 0 currentColor;
+      }
+
+      /* Keyed off aria-expanded rather than a class, so the chevron cannot drift
+         out of sync with the panel it is describing. */
+      .nav-group-head[aria-expanded="true"] .nav-group-chevron {
+        transform: rotate(180deg);
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+    </style>
+
+<script>
+      // Shell chrome: the sidebar (overlay drawer on mobile, icon rail on
+      // desktop), the collapsible nav groups and the theme toggle.
+      //
+      // This is a bundled module rather than an inline script for one reason:
+      // it imports Motion for the rail animation. Everything else here is still
+      // plain attribute flips on elements that already exist.
+      //
+      // The two pre-paint snippets in <head> stay inline on purpose -- they have
+      // to run before the first paint, which a deferred module cannot do.
+      import { animate } from "motion/mini";
+      import { spring } from "motion";
+
+      // Must match the resting widths in the component stylesheet.
+      const EXPANDED = "17.5rem";
+      const RAIL = "4.25rem";
+      const STORAGE_KEY = "lt-admin-sidebar";
+
+      // Mini's animate() throws if `type` is the string "spring"; it needs the
+      // generator itself. Motion samples it into a linear() easing for WAAPI.
+      const RAIL_SPRING = { type: spring, stiffness: 320, damping: 32, mass: 1 };
+
+      const root = document.documentElement;
+      const sidebar = document.getElementById("admin-sidebar");
+      const content = document.querySelector<HTMLElement>(".admin-content");
+      const backdrop = document.getElementById("admin-backdrop");
+      const toggleButton = document.getElementById("admin-sidebar-toggle");
+      const closeButton = document.getElementById("admin-sidebar-close");
+      const themeToggle = document.getElementById("admin-theme-toggle");
+      const desktop = window.matchMedia("(min-width: 1024px)");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      if (sidebar && content) {
+        const labels = Array.from(sidebar.querySelectorAll<HTMLElement>(".nav-label"));
+
+        // Mobile and desktop share one control but are two different states:
+        // below lg the sidebar is an overlay drawer, above it a column that
+        // collapses to an icon rail. The rail preference is remembered; opening
+        // the drawer is not.
+        const isRail = () =>
+          root.getAttribute("data-admin-sidebar") === "rail" ||
+          root.getAttribute("data-admin-sidebar") === "collapsed";
+
+        const isVisible = () =>
+          desktop.matches ? !isRail() : sidebar.hasAttribute("data-open");
+
+        function syncToggleLabel() {
+          if (!toggleButton) return;
+          const label = isVisible() ? "Ocultar navegación" : "Mostrar navegación";
+          toggleButton.setAttribute("aria-label", label);
+          toggleButton.setAttribute("title", label);
+          toggleButton.setAttribute("aria-expanded", String(isVisible()));
+        }
+
+        // --- Rail animation -------------------------------------------------
+
+        // Bumped by every toggle, so the cleanup belonging to an interrupted
+        // animation cannot fire against the one that replaced it.
+        let railRun = 0;
+        let running: { cancel: () => void }[] = [];
+
+        /**
+         * Freeze the rail at its current size before starting another animation.
+         *
+         * Called at the top of every toggle, before the state attribute changes,
+         * so the width it captures is always the one on screen rather than the one
+         * the stylesheet is about to apply. See toggleRail().
+         */
+        function freeze() {
+          const width = getComputedStyle(sidebar).width;
+          const inset = getComputedStyle(content).paddingLeft;
+          // cancel(), not stop(). stop() first commits the animation's
+          // interpolated value as inline style, so an interrupted spring leaves
+          // a width like "188.656px" behind that disagrees with the state
+          // attribute. cancel() drops the fill and leaves the inline style
+          // alone, so the widths written just below are the only thing holding
+          // the current size.
+          running.forEach((animation) => animation.cancel());
+          running = [];
+          sidebar.style.width = width;
+          content.style.paddingLeft = inset;
+        }
+
+        /**
+         * Hand the widths back to the stylesheet.
+         *
+         * Motion writes an animation's final value to inline style when it
+         * finishes and leaves it there. Left alone, `sidebar.style.width` becomes
+         * a second source of truth that drifts from the state attribute, and the
+         * rail ends up sized by leftover animation bookkeeping rather than by
+         * CSS. So the inline widths exist only while an animation is in flight:
+         * once it settles, the attribute and the stylesheet decide the width
+         * again.
+         *
+         * This is also what the reduced-motion path and a breakpoint crossing
+         * need -- in both cases the right width comes from the attribute alone.
+         */
+        function releaseRailStyles() {
+          running.forEach((animation) => animation.cancel());
+          running = [];
+          sidebar.style.width = "";
+          content.style.paddingLeft = "";
+          labels.forEach((label) => {
+            label.style.opacity = "";
+          });
+        }
+
+        function toggleRail() {
+          const toRail = !isRail();
+          railRun++;
+
+          // Measure before anything moves. Flipping the attribute below switches
+          // the stylesheet to the new resting width in the same tick, so a reading
+          // taken after it would already be the *target* -- which would leave the
+          // spring animating from 4.25rem to 4.25rem and the panel snapping over
+          // with no motion at all. Pinning the width inline here also masks that
+          // stylesheet jump, so the change is not painted before the animation
+          // starts.
+          freeze();
+
+          if (toRail) {
+            root.setAttribute("data-admin-sidebar", "rail");
+          } else {
+            root.removeAttribute("data-admin-sidebar");
+          }
+
+          // Persist alongside the state change, so what is stored always matches
+          // the state actually reached -- including on the reduced-motion path.
+          try {
+            localStorage.setItem(STORAGE_KEY, toRail ? "rail" : "expanded");
+          } catch {
+            // Nothing to persist to; the choice still applies for this visit.
+          }
+
+          if (reduceMotion.matches) {
+            // The attribute already carries the right width, so there is nothing
+            // to animate and nothing worth pinning.
+            releaseRailStyles();
+            syncToggleLabel();
+            return;
+          }
+
+          // Counting completions, rather than awaiting what animate() returns. That value
+          // is a thenable whose rejection handler is dropped, and the promise
+          // behind it never settles at all when an animation is cancelled -- so
+          // an interrupted toggle would leave the cleanup below hanging. onComplete
+          // only fires when an animation genuinely reaches its end, which is
+          // exactly the signal wanted here. Two structural animations plus one per
+          // label.
+          const run = railRun;
+          let remaining = 2 + labels.length;
+          const onSettled = () => {
+            if (--remaining > 0) return;
+            // A later toggle has already frozen its own starting width, so
+            // dropping the inline styles now would yank the rail out from under
+            // it.
+            if (run !== railRun) return;
+            releaseRailStyles();
+          };
+
+          running = toRail
+            ? [
+                // Labels go first: the panel is shrinking underneath them, so
+                // fading them out up front avoids text being clipped on the way.
+                // Kept in step with the fade on the way back, which is the same
+                // length plus a delay.
+                animate(
+                  labels,
+                  { opacity: 0 },
+                  { duration: 0.18, onComplete: onSettled }
+                ),
+                animate(
+                  sidebar,
+                  { width: RAIL },
+                  { ...RAIL_SPRING, onComplete: onSettled }
+                ),
+                animate(
+                  content,
+                  { paddingLeft: RAIL },
+                  { ...RAIL_SPRING, onComplete: onSettled }
+                ),
+              ]
+            : [
+                animate(
+                  sidebar,
+                  { width: EXPANDED },
+                  { ...RAIL_SPRING, onComplete: onSettled }
+                ),
+                animate(
+                  content,
+                  { paddingLeft: EXPANDED },
+                  { ...RAIL_SPRING, onComplete: onSettled }
+                ),
+                // ...and come back last, once there is room for them again.
+                animate(
+                  labels,
+                  { opacity: 1 },
+                  { duration: 0.18, delay: 0.08, onComplete: onSettled }
+                ),
+              ];
+
+          syncToggleLabel();
+        }
+
+        // --- Mobile drawer --------------------------------------------------
+
+        function setDrawer(open: boolean) {
+          if (open) sidebar.setAttribute("data-open", "");
+          else sidebar.removeAttribute("data-open");
+          if (backdrop) backdrop.classList.toggle("hidden", !open || desktop.matches);
+          // Stop the page behind the drawer from scrolling with it.
+          document.body.style.overflow = open && !desktop.matches ? "hidden" : "";
+          syncToggleLabel();
+        }
+
+        // --- Wiring ---------------------------------------------------------
+
+        if (toggleButton) {
+          toggleButton.addEventListener("click", () => {
+            if (desktop.matches) {
+              // Focus is already here, so collapsing cannot strand it. The X and
+              // Escape handlers do need to move it, and they do.
+              toggleRail();
+            } else if (sidebar.hasAttribute("data-open")) {
+              setDrawer(false);
+              toggleButton.focus();
+            } else {
+              setDrawer(true);
+              const first = sidebar.querySelector<HTMLElement>("a, button");
+              if (first) first.focus();
+            }
+          });
+        }
+
+        // The X inside the panel hides it on both layouts: it closes the mobile
+        // drawer and drops the desktop column to the rail.
+        if (closeButton) {
+          closeButton.addEventListener("click", () => {
+            if (desktop.matches) {
+              toggleRail();
+            } else {
+              setDrawer(false);
+            }
+            if (toggleButton) toggleButton.focus();
+          });
+        }
+
+        if (backdrop) backdrop.addEventListener("click", () => setDrawer(false));
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Escape") return;
+          if (desktop.matches) {
+            if (!isRail()) {
+              toggleRail();
+              if (toggleButton) toggleButton.focus();
+            }
+          } else if (sidebar.hasAttribute("data-open")) {
+            setDrawer(false);
+            if (toggleButton) toggleButton.focus();
+          }
+        });
+
+        // Crossing the breakpoint drops the drawer state, or the overlay stays
+        // hidden behind a sidebar that is now part of the page flow. The rail
+        // preference is kept: it is a deliberate choice, not a drawer artifact.
+        function onBreakpointChange() {
+          // Whichever way this is crossed, the rail is no longer animating and
+          // CSS owns the width again. The bump orphans any settle still pending
+          // from an animation the layout change just invalidated.
+          railRun++;
+          releaseRailStyles();
+          setDrawer(false);
+          document.body.style.overflow = "";
+          syncToggleLabel();
+        }
+
+        if (desktop.addEventListener) {
+          desktop.addEventListener("change", onBreakpointChange);
+        }
+
+        syncToggleLabel();
+      }
+
+      // --- Theme -----------------------------------------------------------
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const dark = root.classList.toggle("dark");
+          try {
+            localStorage.setItem("lt-admin-theme", dark ? "dark" : "light");
+          } catch {
+            // Nothing to persist to; the theme still applies for this visit.
+          }
+          // Applied for one frame so the repaint is not a hard cut, then dropped
+          // so it never interferes with later transitions.
+          root.classList.add("theme-transition");
+          window.setTimeout(() => {
+            root.classList.remove("theme-transition");
+          }, 200);
+        });
+      }
+
+      // --- Collapsible nav groups ------------------------------------------
+      document.querySelectorAll<HTMLElement>(".nav-group > .nav-group-head").forEach(
+        (button) => {
+          button.addEventListener("click", () => {
+            const group = button.closest(".nav-group");
+            if (!group) return;
+            const expanded = button.getAttribute("aria-expanded") === "true";
+            button.setAttribute("aria-expanded", String(!expanded));
+            const panel = group.querySelector<HTMLElement>(".nav-group-panel");
+            if (panel) panel.classList.toggle("hidden", expanded);
+          });
+        }
+      );
+    </script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { iconSvg, isIconName } from "../src/lib/admin/icons";
 import { ADMIN_SECTIONS, getSection } from "../src/lib/admin/sections";
 import {
   ADMIN_TABLES,
@@ -36,6 +37,15 @@ describe("admin sections", () => {
     for (const section of ADMIN_SECTIONS) {
       expect(section.columns.length).toBeGreaterThan(0);
       expect(section.defaultOrder).toBeTruthy();
+    }
+  });
+
+  it("gives every section an icon that exists in the shared icon map", () => {
+    // A typo here renders a blank gap in the sidebar and on the dashboard tiles
+    // rather than failing, so it is worth pinning down.
+    for (const section of ADMIN_SECTIONS) {
+      expect(isIconName(section.icon)).toBe(true);
+      expect(iconSvg(section.icon)).not.toBe("");
     }
   });
 

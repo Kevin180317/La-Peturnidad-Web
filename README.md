@@ -43,8 +43,8 @@ Apunta al mismo proyecto de Supabase que la app móvil
 
 ### Variables de entorno
 
-Copia `.env.example` a `.env` para desarrollo y define las mismas claves en los
-ajustes del proyecto de Vercel.
+Crea un `.env` en la raíz con estas cuatro variables para desarrollo, y define
+las mismas en los ajustes del proyecto de Vercel. `.env` está en `.gitignore`.
 
 | Variable                     | Lado         | Para qué sirve                          |
 | :--------------------------- | :----------- | :-------------------------------------- |
@@ -59,8 +59,12 @@ servidor se lee en el backend. Para comprobarlo tras un build:
 
 ```sh
 bun run build
-grep -ri "SUPABASE_SERVICE_ROLE" .vercel/output/static/   # sin resultados
+grep -ri "SUPABASE_SERVICE_ROLE" dist/client/ .vercel/output/static/   # sin resultados
+grep -rEo "eyJ[A-Za-z0-9_-]{20,}" dist/client/ | sort -u               # sin resultados
 ```
+
+La segunda búsqueda es la que importa: aunque el nombre de la variable no viaje,
+una clave JWT sí lo haría.
 
 ### Dar acceso a una cuenta
 
@@ -93,6 +97,75 @@ El `user_id` debe ser el id de `auth.users`, no el `id` de la fila de
 - El login tiene límite de intentos por IP más email, por encima de los límites
   de Supabase.
 
+### El resumen
+
+`/admin` arranca con un resumen de la actividad, y las gráficas son SVG propio: no
+hay librería de charts.
+
+- Los KPIs se cuentan en el servidor y se hidratan con `client:load`, así que la
+  primera pintura no espera a la red.
+- La serie diaria viene de `GET /api/admin/trends?range=7|30|90`. Trae seis
+  tablas a la vez (`user_profiles`, `pets`, `emergency_alerts`, `posts`,
+  `comments`, `reports`) y solo pide `created_at`: el agrupado por día se hace en
+  el cliente, no en SQL.
+- Cambiar de rango solo recarga la serie; los KPIs no se vuelven a pedir.
+- El aviso de «reportes pendientes» usa el recuento con `status = 'pending'`,
+  que es distinto del total de la tabla `reports`.
+
+Si añades una métrica al resumen, declárala en `src/lib/admin/dashboard.ts`:
+ahí viven la etiqueta, el color y las clases de Tailwind en forma literal, para
+que el compilador las vea.
+
+### Tema claro y oscuro
+
+Los tokens del panel están en `src/styles/admin.css`, que es una hoja aparte: el
+sitio público sigue con sus colores de siempre.
+
+- El tema se guarda en `localStorage` (`lt-admin-theme`) y, si no hay nada
+  guardado, sigue a `prefers-color-scheme`.
+- Un script en línea en el `<head>` aplica la clase `dark` antes de pintar, en
+  `AdminShell.astro` y en el login. Sin eso habría un destello del tema claro al
+  recargar.
+- Las utilidades usan tokens semánticos (`bg-panel`, `text-texto`,
+  `border-texto/10`), no colores literales. Un `bg-white` en el panel se ve
+  glaring en modo oscuro: si añades superficie nueva, usa `bg-panel`.
+
+### La barra lateral
+
+`AdminShell.astro` monta un solo `#admin-sidebar` que se comporta de dos maneras
+según el ancho, y un control los alterna:
+
+- **Por debajo de `lg`** es un cajón superpuesto sobre el contenido, con fondo y
+  bloqueo de scroll. El script solo conmuta atributos; la animación la lleva
+  `transition-transform`.
+- **Desde `lg`** es una columna fija que se pliega a un riel de iconos de `4.25rem`
+  (frente a `17.5rem` desplegada). El ancho y el margen del contenido se animan
+  con Motion.
+
+La elección se recuerda en `localStorage` (`lt-admin-sidebar`) y un script en línea
+en el `<head>` la aplica antes de pintar, así que recargar no da un salto de ancho.
+Ese valor antigua marca `collapsed` se sigue leyendo como el riel.
+
+Dos detalles que conviene no romper al tocarlo:
+
+- **Las anchuras son variables de `:root`, no del `#admin-sidebar`.** El sidebar y
+  `.admin-content` son hermanos, y una variable CSS solo se hereda hacia abajo:
+  definidas en el sidebar, el margen del contenido no las vería y en modo riel
+  caería a `0`.
+- **Los `width` en línea son del riel y se borran al cruzar el breakpoint.** Si se
+  dejan, el cajón móvil heredaría el ancho del riel y aparecería como una tira de
+  `4.25rem`.
+
+Con `prefers-reduced-motion` no hay animación: los valores se aplican de golpe y la
+preferencia se guarda igualmente.
+
+La dependencia es [`motion`](https://motion.dev), y solo para esto: se usa
+`motion/mini` con `spring`, que pesa `5.86 KB` gzip compilado dentro del script del
+shell. `motion/mini` no admite `type: "spring"` como cadena, hay que pasarle la
+función generadora; internamente la muestrea a un `linear()` para WAAPI. Si algún
+día hace falta animar algo más compuesto, el paquete completo está en el mismo
+`node_modules`, pero pesa bastante más y no está justificado todavía.
+
 ### Cosas que conviene saber de los datos
 
 - **Alertas de pérdida** es un acumulado histórico. La app borra el registro
@@ -119,4 +192,17 @@ bun test
 ```
 
 Cubren la puerta de acceso (`admin-gate`), el armado de consultas y
-parámetros, las rutas, el formato en español y la validación de la sesión.
+parámetros, las rutas, el formato en español, la validación de la sesión, el
+agrupado por día de las series (`admin-trend`), la geometría de las gráficas
+(`admin-chart`) y los iconos de cada sección.
+
+### Tipos
+
+No hay script de typecheck, pero se puede comprobar sin instalar nada:
+
+```sh
+./node_modules/.bin/tsc --noEmit -p tsconfig.json
+```
+
+Fallan los `import ... from "bun:test"` porque `tsc` no conoce los tipos de Bun;
+eso es esperado y no lo cubre `astro check` sin añadir `@astrojs/check`.

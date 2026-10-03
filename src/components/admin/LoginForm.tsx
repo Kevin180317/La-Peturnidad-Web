@@ -62,7 +62,7 @@ export default function LoginForm({ nextPath = "/admin" }: { nextPath?: string }
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="tu@email.com"
-          className="w-full rounded-lg border border-texto/15 bg-white px-4 py-3 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
+          className="w-full rounded-lg border border-texto/15 bg-panel px-4 py-3 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
         />
       </div>
 
@@ -81,14 +81,14 @@ export default function LoginForm({ nextPath = "/admin" }: { nextPath?: string }
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="••••••••"
-          className="w-full rounded-lg border border-texto/15 bg-white px-4 py-3 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
+          className="w-full rounded-lg border border-texto/15 bg-panel px-4 py-3 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
         />
       </div>
 
       {error ? (
         <div
           role="alert"
-          className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 flex items-start gap-3"
+          className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-300 flex items-start gap-3"
         >
           <IconExclamation className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <span>{error}</span>

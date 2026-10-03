@@ -7,6 +7,13 @@ import {
   sanitizeSearch,
   toLikePattern,
 } from "./params";
+import {
+  TREND_ROW_CAP,
+  bucketByDay,
+  dayKeys,
+  type TrendPayload,
+  type TrendSeries,
+} from "./trend";
 import type { TableConfig } from "./tables";
 
 export interface ListResult {
@@ -117,6 +124,76 @@ export async function countPendingReports(): Promise<number> {
     return 0;
   }
   return count ?? 0;
+}
+
+/**
+ * The tables the dashboard charts.
+ *
+ * The same set the KPI cards count, minus the ones whose growth is not
+ * meaningful or whose rows are deleted as they resolve: `group_members` is
+ * already implied by `users`, and `found_pets` only ever exists to close an
+ * alert that has since been deleted, so charting it would draw a decay curve
+ * that means nothing.
+ */
+const TREND_TABLES = [
+  "user_profiles",
+  "pets",
+  "emergency_alerts",
+  "posts",
+  "comments",
+  "reports",
+] as const;
+
+export type TrendTable = (typeof TREND_TABLES)[number];
+
+/**
+ * Daily row counts per table, oldest day first.
+ *
+ * PostgREST cannot group and count in one round trip, so this reads the single
+ * `created_at` column for the window and buckets it here. Only one column ever
+ * leaves the database -- no user data is touched -- and the row count is capped
+ * at TREND_ROW_CAP so the query stays bounded on a table that has been written
+ * to for years.
+ *
+ * `user_profiles` is queried directly rather than through the table allow-list
+ * for the same reason getAdminStats() does: the dashboard needs its daily
+ * registrations, and the allow-list exists to keep it off the generic listing
+ * route, not to forbid aggregates.
+ */
+export async function getAdminTrends(days: number): Promise<TrendPayload> {
+  const client = getAdminClient();
+  const keys = dayKeys(days);
+
+  // Start of the first bucket, in UTC so the comparison happens against the same
+  // clock the timestamps carry. One extra day of slack absorbs the offset
+  // between this and the admin's own calendar, which bucketByDay then assigns
+  // to the right local day.
+  const since = new Date();
+  since.setUTCDate(since.getUTCDate() - days);
+
+  const results = await Promise.all(
+    TREND_TABLES.map(async (table) => {
+      const { data, error } = await client
+        .from(table)
+        .select("created_at")
+        .gte("created_at", since.toISOString())
+        .limit(TREND_ROW_CAP);
+
+      if (error) {
+        console.error(`getAdminTrends: read failed for ${table}:`, error.message);
+        return [table, new Array<number>(keys.length).fill(0)] as const;
+      }
+
+      const timestamps = (data ?? [])
+        .map((row) => (row as { created_at?: unknown }).created_at)
+        .filter((value): value is string => typeof value === "string");
+
+      return [table, bucketByDay(timestamps, keys)] as const;
+    })
+  );
+
+  const series: TrendSeries[] = results.map(([key, values]) => ({ key, values }));
+  return { days: keys, series };
 }
 
 export interface UserDetail {

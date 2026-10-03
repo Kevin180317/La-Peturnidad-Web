@@ -1,0 +1,185 @@
+/*
+ * Styles for the private panel at /admin.
+ *
+ * Loaded only by AdminShell.astro and login.astro, on top of global.css. Keeping
+ * the two apart means the public site keeps compiling exactly the stylesheet it
+ * always did, and the dark palette below can never leak into it: the public
+ * layout never puts a `dark` class on <html>, so nothing here matches there.
+ *
+ * How the theming works
+ * --------------------
+ * global.css declares the four brand colours as literal @theme values. Here
+ * they are re-declared with `@theme inline` so each utility points at a CSS
+ * variable instead of baking in a hex value:
+ *
+ *   text-texto/60  ->  color: color-mix(in oklab, var(--lt-fg) 60%, transparent)
+ *
+ * That single change is what makes the whole panel theme-aware. Every existing
+ * utility that derives from a brand token -- text-texto/60, border-texto/10,
+ * bg-principal/15 -- follows the palette automatically, with no `dark:`
+ * variant on the markup and no duplicated colour values.
+ *
+ * Two things cannot follow automatically, and are the reason this file exists
+ * rather than a plain `dark:` class sprinkle:
+ *
+ *   1. Surfaces were hardcoded `bg-white`. That becomes `bg-panel`, a semantic
+ *      token defined here.
+ *   2. Native form controls (select popups, scrollbars, date pickers) follow
+ *      the `color-scheme` property, not the cascade, so .dark sets it
+ *      explicitly below.
+ */
+
+@import "./global.css";
+
+/* Class-based rather than media-query based so the toggle can override an
+ * explicit user preference without a fight. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --lt-bg: #faf5e0;
+  --lt-surface: #ffffff;
+  --lt-surface-alt: #f5f1e3;
+  --lt-fg: #211f1e;
+  --lt-muted: #6b6459;
+  --lt-principal: #ff7e70;
+  --lt-secondary: #005e66;
+
+  /* Chart series. Each one has to stay legible on white and on #1d2026, so the
+   * dark values are lighter rather than the same hue darkened. */
+  --lt-chart-1: #ff7e70;
+  --lt-chart-2: #005e66;
+  --lt-chart-3: #b45309;
+  --lt-chart-4: #6d28d9;
+  --lt-chart-5: #1d4ed8;
+  --lt-chart-6: #be123c;
+
+  --lt-grid: rgb(33 31 30 / 0.08);
+  --lt-shadow: rgb(33 31 30 / 0.08);
+}
+
+.dark {
+  --lt-bg: #15171b;
+  --lt-surface: #1d2026;
+  --lt-surface-alt: #24272f;
+  --lt-fg: #e8e6e3;
+  --lt-muted: #9c978d;
+  --lt-principal: #ff8f82;
+  --lt-secondary: #4fd1c5;
+
+  --lt-chart-1: #ff8f82;
+  --lt-chart-2: #4fd1c5;
+  --lt-chart-3: #fbbf24;
+  --lt-chart-4: #a78bfa;
+  --lt-chart-5: #60a5fa;
+  --lt-chart-6: #fb7185;
+
+  --lt-grid: rgb(232 230 227 / 0.1);
+  --lt-shadow: rgb(0 0 0 / 0.45);
+}
+
+/* Sidebar widths, shared by the sidebar and by the content inset that stands
+ * offset from it. They live on :root rather than on the sidebar because those
+ * two elements are siblings, and a custom property only inherits downwards --
+ * declared on the sidebar, the content column would not see them and its
+ * padding-left would silently fall back to 0 in rail mode. */
+:root {
+  --admin-sidebar-expanded: 17.5rem;
+  --admin-sidebar-rail: 4.25rem;
+}
+
+@theme inline {
+  --color-fondo: var(--lt-bg);
+  --color-panel: var(--lt-surface);
+  --color-panel-alt: var(--lt-surface-alt);
+  --color-texto: var(--lt-fg);
+  --color-muted: var(--lt-muted);
+  --color-principal: var(--lt-principal);
+  --color-secundario: var(--lt-secondary);
+
+  --color-chart-1: var(--lt-chart-1);
+  --color-chart-2: var(--lt-chart-2);
+  --color-chart-3: var(--lt-chart-3);
+  --color-chart-4: var(--lt-chart-4);
+  --color-chart-5: var(--lt-chart-5);
+  --color-chart-6: var(--lt-chart-6);
+
+  --color-grid: var(--lt-grid);
+  --color-shadow: var(--lt-shadow);
+}
+
+/*
+ * Pretendard is already imported by AdminShell and login.astro but was never
+ * declared in CSS, so `font-family` fell through to Inter and four font files
+ * were shipped unused. Naming it here makes those imports do their job; Inter
+ * stays as the fallback for anything Pretendard lacks.
+ */
+body {
+  font-family: "Pretendard", "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Native selects, scrollbars and form widgets have to be told separately from
+ * the cascade. */
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+/* Applied by the toggle so the first frame after a click is the new theme
+ * instead of the old one. */
+html.theme-transition,
+html.theme-transition * {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition,
+  html.theme-transition * {
+    transition: none !important;
+  }
+}
+
+/* Slimmer, theme-aware scrollbars for the sidebar and wide tables. The webkit
+ * pseudo-elements cannot read CSS variables from :root in every engine, so the
+ * dark values come from a custom property set on .dark as well. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--lt-shadow) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--lt-shadow);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--lt-muted);
+  opacity: 0.5;
+}
+
+/* Native select arrows disappear on a dark background once the dropdown adopts
+ * the dark colour scheme, so they are drawn in CSS instead. */
+@utility select-chevron {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239c978d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 1rem 1rem;
+  padding-right: 2rem;
+}

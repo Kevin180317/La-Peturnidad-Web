@@ -1,3 +1,5 @@
+import type { IconName } from "./icons";
+
 /**
  * Navigation and column layout for the admin panel.
  *
@@ -41,6 +43,8 @@ export interface SectionSpec {
   title: string;
   description: string;
   group: string;
+  /** Key into the shared icon map (lib/admin/icons.ts). */
+  icon: IconName;
   endpoint: string;
   columns: ColumnSpec[];
   /** Whether to render the search box. */
@@ -103,6 +107,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     description:
       "Cuentas registradas. El correo viene de auth.users y se une por user_id.",
     group: "Personas",
+    icon: "users",
     endpoint: "/api/admin/users",
     searchable: true,
     defaultOrder: "created_at",
@@ -135,6 +140,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     title: "Mascotas",
     description: "Mascotas registradas por los usuarios.",
     group: "Personas",
+    icon: "pets",
     endpoint: "/api/admin/pets",
     searchable: true,
     defaultOrder: "created_at",
@@ -164,6 +170,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     description:
       "Avisos de mascotas perdidas. La app borra la fila cuando la mascota aparece, así que este listado es histórico, no de emergencias activas.",
     group: "Emergencias",
+    icon: "alert",
     endpoint: "/api/admin/emergency_alerts",
     searchable: true,
     defaultOrder: "created_at",
@@ -198,6 +205,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     description:
       "Reportes de 'la encontré'. RLS no permite verlos entre usuarios, así que esta vista solo existe gracias al acceso con service_role.",
     group: "Emergencias",
+    icon: "heart",
     endpoint: "/api/admin/found_pets",
     searchable: false,
     defaultOrder: "created_at",
@@ -212,6 +220,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     title: "Publicaciones",
     description: "Posts del feed comunitario.",
     group: "Comunidad",
+    icon: "file",
     endpoint: "/api/admin/posts",
     searchable: true,
     defaultOrder: "created_at",
@@ -226,6 +235,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     title: "Grupos",
     description: "Grupos de la comunidad.",
     group: "Comunidad",
+    icon: "users2",
     endpoint: "/api/admin/groups",
     searchable: true,
     defaultOrder: "created_at",
@@ -241,6 +251,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     title: "Avisos",
     description: "Muro de avisos de la comunidad.",
     group: "Comunidad",
+    icon: "bell",
     endpoint: "/api/admin/announcements",
     searchable: true,
     defaultOrder: "created_at",
@@ -275,6 +286,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     description:
       "Reuniones publicadas a mano por los usuarios, así que el total va por debajo de las reuniones reales.",
     group: "Comunidad",
+    icon: "check",
     endpoint: "/api/admin/success_stories",
     searchable: true,
     defaultOrder: "created_at",
@@ -290,6 +302,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     title: "Reportes",
     description: "Denuncias de usuarios. Coincide con lo que moderan en la app.",
     group: "Moderación",
+    icon: "flag",
     endpoint: "/api/admin/reports",
     searchable: true,
     defaultOrder: "created_at",
@@ -323,6 +336,7 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     description:
       "Quién bloqueó a quién. La app solo muestra los bloqueos del propio moderador, así que esta vista es nueva.",
     group: "Moderación",
+    icon: "block",
     endpoint: "/api/admin/blocks",
     searchable: false,
     defaultOrder: "created_at",

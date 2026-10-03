@@ -1,5 +1,5 @@
 ---
-import "../../styles/global.css";
+import "../../styles/admin.css";
 
 import "@fontsource/pretendard/400.css";
 import "@fontsource/pretendard/500.css";
@@ -26,10 +26,27 @@ const nextPath = requested.startsWith("/admin") ? requested : "/admin";
     <meta name="robots" content="noindex, nofollow" />
     <link rel="shortcut icon" href="/favicon_16x16.png" />
     <title>Acceso · Panel Lucky Tracker</title>
+    <script is:inline>
+      // Same key and same timing as AdminShell, so signing in does not flash the
+      // light theme before the panel renders the chosen one.
+      (function () {
+        try {
+          var stored = localStorage.getItem("lt-admin-theme");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (error) {
+          // Private browsing can throw on localStorage; light theme is fine.
+        }
+      })();
+    </script>
   </head>
-  <body class="flex min-h-screen items-center justify-center bg-gradient-to-br from-fondo via-white to-fondo px-4 text-texto">
+  <body class="flex min-h-screen items-center justify-center bg-gradient-to-br from-fondo via-panel to-fondo px-4 text-texto">
     <div class="w-full max-w-md">
-      <div class="rounded-2xl bg-white shadow-lg shadow-principal/10 border border-texto/5 p-8 sm:p-10">
+      <div class="rounded-2xl bg-panel p-8 shadow-lg shadow-principal/10 ring-1 ring-texto/5 sm:p-10">
         <div class="mb-8 text-center">
           <h1 class="text-2xl font-bold tracking-tight">Lucky Tracker</h1>
           <p class="mt-2 text-sm text-texto/60">
