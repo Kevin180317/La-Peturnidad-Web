@@ -1,11 +1,11 @@
 import { getAdminClient } from "../supabase/admin";
 import {
+  buildSearchFilter,
   clampPage,
   clampPerPage,
   resolveFilters,
   resolveOrder,
   sanitizeSearch,
-  toLikePattern,
 } from "./params";
 import {
   TREND_ROW_CAP,
@@ -49,12 +49,9 @@ export async function listRows(
     .select(config.select, { count: "exact" });
 
   const term = sanitizeSearch(url.searchParams.get("q"));
-  if (term && config.searchColumns.length > 0) {
-    const pattern = toLikePattern(term);
-    const clauses = config.searchColumns
-      .map((column) => `${column}.ilike.${pattern}`)
-      .join(",");
-    query = query.or(clauses);
+  if (term) {
+    const clauses = buildSearchFilter(config, term);
+    if (clauses) query = query.or(clauses);
   }
 
   for (const [column, value] of Object.entries(resolveFilters(url, config))) {

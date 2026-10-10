@@ -31,6 +31,31 @@ export function toLikePattern(term: string): string {
   return `%${term}%`;
 }
 
+/**
+ * Builds the PostgREST `or()` filter for the search box, or null when there is
+ * nothing to search.
+ *
+ * `searchColumns` are matched with ILIKE and wildcards; `exactSearchColumns` are
+ * matched with `eq`, which is what uuid / foreign-key columns need because
+ * Postgres has no `uuid ILIKE text` operator and would reject the whole clause.
+ *
+ * `term` must already be sanitized with sanitizeSearch(), so no caller-supplied
+ * metacharacter can reshape the filter; the column names come from the reviewed
+ * table config.
+ */
+export function buildSearchFilter(
+  config: TableConfig,
+  term: string
+): string | null {
+  const clauses = [
+    ...config.searchColumns.map(
+      (column) => `${column}.ilike.${toLikePattern(term)}`
+    ),
+    ...(config.exactSearchColumns ?? []).map((column) => `${column}.eq.${term}`),
+  ];
+  return clauses.length > 0 ? clauses.join(",") : null;
+}
+
 export function clampPage(raw: string | null | undefined): number {
   const parsed = Number.parseInt(raw ?? "", 10);
   if (!Number.isFinite(parsed) || parsed < 1) return 1;

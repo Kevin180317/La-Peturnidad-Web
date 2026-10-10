@@ -31,6 +31,14 @@ export interface TableConfig {
   orderColumns: string[];
   /** Columns matched by the free-text search box. Empty disables search. */
   searchColumns: string[];
+  /**
+   * Columns matched by exact equality instead of ILIKE.
+   *
+   * For uuid / foreign-key columns, which Postgres cannot ILIKE: there is no
+   * `uuid ~~* text` operator, so an ILIKE clause on one of these makes the whole
+   * or() filter fail (42883) rather than simply matching nothing.
+   */
+  exactSearchColumns?: string[];
   /** Query params accepted as exact-match filters. */
   filters: Record<string, FilterConfig>;
 }
@@ -175,9 +183,13 @@ export const USERS_TABLE_CONFIG: TableConfig = {
     "id, user_id, first_name, last_name, phone, city, role, profile_picture_url, created_at",
   defaultOrder: "created_at",
   orderColumns: ["created_at", "first_name", "last_name", "role"],
-  // user_id is searchable so a uuid spotted in another table (a report, a block, a
-  // lost pet alert) can be pasted straight into this box to identify the person.
-  searchColumns: ["first_name", "last_name", "phone", "city", "user_id"],
+  // Text columns are matched with ILIKE. user_id is matched with equality
+  // instead, so a uuid spotted in another table (a report, a block, a lost pet
+  // alert) can be pasted straight into this box to identify the person: it is a
+  // uuid column, and `uuid ILIKE text` does not exist in Postgres, so putting it
+  // in searchColumns made every search in this section return 42883.
+  searchColumns: ["first_name", "last_name", "phone", "city"],
+  exactSearchColumns: ["user_id"],
   filters: {
     role: { column: "role" },
     city: { column: "city" },

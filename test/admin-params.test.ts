@@ -13,6 +13,7 @@ import {
   PER_PAGE_DEFAULT,
   PER_PAGE_MAX,
   SEARCH_MAX_LENGTH,
+  buildSearchFilter,
   clampPage,
   clampPerPage,
   resolveFilters,
@@ -20,7 +21,12 @@ import {
   sanitizeSearch,
   toLikePattern,
 } from "../src/lib/admin/params";
-import { ADMIN_TABLES, getTableConfig, isAdminTable } from "../src/lib/admin/tables";
+import {
+  ADMIN_TABLES,
+  USERS_TABLE_CONFIG,
+  getTableConfig,
+  isAdminTable,
+} from "../src/lib/admin/tables";
 
 const config = ADMIN_TABLES.pets;
 const url = (query: string) => new URL(`https://luckytracker.com.mx/api/admin/pets${query}`);
@@ -65,6 +71,29 @@ describe("sanitizeSearch", () => {
 describe("toLikePattern", () => {
   test("wraps the term in wildcards", () => {
     expect(toLikePattern("luna")).toBe("%luna%");
+  });
+});
+
+describe("buildSearchFilter", () => {
+  test("matches text columns with ILIKE and wildcards", () => {
+    expect(buildSearchFilter(config, "luna")).toBe(
+      "name.ilike.%luna%,type.ilike.%luna%,size.ilike.%luna%,color.ilike.%luna%"
+    );
+  });
+
+  test("matches uuid columns with equality, never ILIKE", () => {
+    // Postgres has no `uuid ILIKE text` operator: an ILIKE clause on user_id
+    // makes the whole or() fail with 42883, so it has to travel as eq.
+    const uuid = "0a5c0000-0000-0000-0000-000000000000";
+    const filter = buildSearchFilter(USERS_TABLE_CONFIG, uuid);
+    expect(filter).toContain(`user_id.eq.${uuid}`);
+    expect(filter).not.toContain("user_id.ilike");
+    // The text columns still use ILIKE in the same clause.
+    expect(filter).toContain("first_name.ilike.%0a5c0000-0000-0000-0000-000000000000%");
+  });
+
+  test("returns null when the table has nothing to search", () => {
+    expect(buildSearchFilter(ADMIN_TABLES.found_pets, "luna")).toBeNull();
   });
 });
 

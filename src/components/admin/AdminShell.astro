@@ -131,16 +131,6 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
             >
             <span class="nav-label truncate">Lucky Tracker</span>
           </a>
-          <!-- Only shown while there is something left to collapse to. -->
-          <button
-            type="button"
-            id="admin-sidebar-close"
-            class="admin-sidebar-hide flex-shrink-0 rounded-lg p-1.5 text-texto/50 transition-colors hover:bg-texto/5 hover:text-texto"
-            aria-label="Ocultar navegación"
-            title="Ocultar navegación"
-          >
-            <span set:html={iconSvg("close", "h-5 w-5")} />
-          </button>
         </div>
 
         <nav
@@ -355,12 +345,6 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
           padding-inline: 0;
         }
 
-        /* Nothing left to collapse to, so the control goes away. */
-        html[data-admin-sidebar="rail"] .admin-sidebar-hide,
-        html[data-admin-sidebar="collapsed"] .admin-sidebar-hide {
-          display: none;
-        }
-
         /* A group header cannot show its label, and a 1px line is not a button,
            so the header is replaced by a decorative divider. */
         html[data-admin-sidebar="rail"] .nav-group-head,
@@ -445,7 +429,6 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
       const content = document.querySelector<HTMLElement>(".admin-content");
       const backdrop = document.getElementById("admin-backdrop");
       const toggleButton = document.getElementById("admin-sidebar-toggle");
-      const closeButton = document.getElementById("admin-sidebar-close");
       const themeToggle = document.getElementById("admin-theme-toggle");
       const desktop = window.matchMedia("(min-width: 1024px)");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -649,19 +632,6 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
               const first = sidebar.querySelector<HTMLElement>("a, button");
               if (first) first.focus();
             }
-          });
-        }
-
-        // The X inside the panel hides it on both layouts: it closes the mobile
-        // drawer and drops the desktop column to the rail.
-        if (closeButton) {
-          closeButton.addEventListener("click", () => {
-            if (desktop.matches) {
-              toggleRail();
-            } else {
-              setDrawer(false);
-            }
-            if (toggleButton) toggleButton.focus();
           });
         }
 

@@ -110,6 +110,14 @@ describe("admin sections", () => {
       expect(USERS_TABLE_CONFIG.select).not.toContain(column);
     }
   });
+
+  it("matches the users uuid search exactly, not with ILIKE", () => {
+    // user_id is a uuid column and Postgres has no `uuid ILIKE text` operator,
+    // so it must not travel through the ILIKE search columns: doing so made
+    // every search in the users section fail with 42883.
+    expect(USERS_TABLE_CONFIG.searchColumns).not.toContain("user_id");
+    expect(USERS_TABLE_CONFIG.exactSearchColumns).toContain("user_id");
+  });
 });
 
 describe("admin table whitelist", () => {
