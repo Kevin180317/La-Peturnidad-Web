@@ -689,6 +689,9 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
           // from an animation the layout change just invalidated.
           railRun++;
           releaseRailStyles();
+          // Same for any nav group mid-animation: drop its inline dimensions so
+          // the stylesheet owns the resting states again.
+          releaseGroups();
           setDrawer(false);
           document.body.style.overflow = "";
           syncToggleLabel();
@@ -720,15 +723,103 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
       }
 
       // --- Collapsible nav groups ------------------------------------------
+
+      // Motion can only animate explicit lengths, and `height: auto` is not
+      // one, so the panels are measured and keep inline styles only while the
+      // animation is in flight. Once it settles, the inline dimensions are
+      // dropped and the stylesheet owns the resting state again -- the same
+      // rule as the rail. `mt-1` joins the animation so those 4px above the
+      // panel do not linger as a floating gap mid-animation.
+      const GROUP_MARGIN = "0.25rem";
+      let groupRuns = new Map<HTMLElement, { cancel: () => void }[]>();
+
+      function cancelGroup(panel: HTMLElement) {
+        groupRuns.get(panel)?.forEach((animation) => animation.cancel());
+        groupRuns.delete(panel);
+      }
+
+      function settleGroup(panel: HTMLElement) {
+        panel.style.height = "";
+        panel.style.marginTop = "";
+        panel.style.opacity = "";
+        panel.style.overflow = "";
+      }
+
+      function expandGroup(panel: HTMLElement) {
+        cancelGroup(panel);
+        // Measured while the panel is visible: scrollHeight reads 0 as long as
+        // `hidden` (display:none) is still applied, so it has to come off first.
+        panel.classList.remove("hidden");
+        panel.style.overflow = "hidden";
+        panel.style.height = "0px";
+        panel.style.marginTop = "0px";
+        panel.style.opacity = "0";
+        const target = panel.scrollHeight;
+        groupRuns.set(panel, [
+          animate(
+            panel,
+            { height: `${target}px`, marginTop: GROUP_MARGIN, opacity: 1 },
+            {
+              duration: 0.22,
+              ease: "easeOut",
+              onComplete: () => {
+                groupRuns.delete(panel);
+                settleGroup(panel);
+              },
+            }
+          ),
+        ]);
+      }
+
+      function collapseGroup(panel: HTMLElement) {
+        cancelGroup(panel);
+        // Freeze the current size before shrinking, so the animation runs from
+        // what is actually on screen rather than from a height read back off
+        // the stylesheet.
+        panel.style.height = `${panel.scrollHeight}px`;
+        panel.style.overflow = "hidden";
+        groupRuns.set(panel, [
+          animate(
+            panel,
+            { height: "0px", marginTop: "0px", opacity: 0 },
+            {
+              duration: 0.18,
+              ease: "easeIn",
+              onComplete: () => {
+                groupRuns.delete(panel);
+                panel.classList.add("hidden");
+                settleGroup(panel);
+              },
+            }
+          ),
+        ]);
+      }
+
+      // A breakpoint crossing invalidates any animation in flight, so the
+      // inline dimensions it left behind are collected back here.
+      function releaseGroups() {
+        for (const [panel, runs] of groupRuns) {
+          runs.forEach((animation) => animation.cancel());
+          settleGroup(panel);
+        }
+        groupRuns = new Map();
+      }
+
       document.querySelectorAll<HTMLElement>(".nav-group > .nav-group-head").forEach(
         (button) => {
           button.addEventListener("click", () => {
             const group = button.closest(".nav-group");
-            if (!group) return;
+            const panel = group?.querySelector<HTMLElement>(".nav-group-panel");
+            if (!panel) return;
             const expanded = button.getAttribute("aria-expanded") === "true";
             button.setAttribute("aria-expanded", String(!expanded));
-            const panel = group.querySelector<HTMLElement>(".nav-group-panel");
-            if (panel) panel.classList.toggle("hidden", expanded);
+
+            // Unlike the rail below, this menu animates even when the OS asks
+            // for reduced motion. The admin panel is a private tool and the
+            // slide was requested deliberately, so the preference is ignored
+            // here on purpose rather than by accident.
+            if (expanded) collapseGroup(panel);
+            else expandGroup(panel);
           });
         }
       );
