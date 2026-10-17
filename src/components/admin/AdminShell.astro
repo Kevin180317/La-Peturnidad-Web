@@ -8,7 +8,6 @@ import "@fontsource/pretendard/700.css";
 
 import { ADMIN_GROUPS, ADMIN_SECTIONS } from "../../lib/admin/sections";
 import { iconSvg } from "../../lib/admin/icons";
-import LogoutButton from "./LogoutButton";
 
 interface Props {
   title: string;
@@ -43,8 +42,6 @@ const groups = groupOrder
     sections: ADMIN_SECTIONS.filter((section) => section.group === group),
   }))
   .filter((entry) => entry.sections.length > 0);
-
-const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCase();
 ---
 
 <!doctype html>
@@ -197,6 +194,28 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
             ))
           }
         </nav>
+
+        <!-- Account footer: sits at the bottom of the sidebar, below the
+             scrollable nav. In rail mode the `nav-label` elements are clipped
+             by the same rule that hides the section labels, so it collapses to
+             a centered icon like every other nav item. -->
+        <footer class="border-t border-texto/10 p-3">
+          <button
+            type="button"
+            id="admin-logout"
+            title="Cerrar sesión"
+            class="nav-item flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-texto/70 transition-colors hover:bg-red-50 hover:text-red-600 disabled:opacity-50 dark:hover:bg-red-500/10 dark:hover:text-red-400"
+          >
+            <span class="flex-shrink-0" set:html={iconSvg("logout", "h-5 w-5")} />
+            <span class="nav-label truncate">Cerrar sesión</span>
+          </button>
+          <p
+            class="nav-label truncate px-3 pt-2 text-xs text-texto/40"
+            title={session?.email ?? session?.role}
+          >
+            {session?.email ?? session?.role}
+          </p>
+        </footer>
       </aside>
 
       <!-- Content column. `admin-content` carries the left inset that matches the
@@ -245,18 +264,6 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
                 <span class="hidden dark:block" set:html={iconSvg("sun", "h-5 w-5")} />
                 <span class="block dark:hidden" set:html={iconSvg("moon", "h-5 w-5")} />
               </button>
-
-              <div class="flex items-center gap-2.5 rounded-xl border border-texto/10 py-1 pl-1 pr-2 sm:pr-3">
-                <span
-                  class="flex h-7 w-7 items-center justify-center rounded-lg bg-principal/15 text-xs font-bold text-principal"
-                  aria-hidden="true">{initials}</span
-                >
-                <span class="hidden max-w-[14rem] truncate text-xs text-texto/70 sm:block">
-                  {session?.email ?? session?.role}
-                </span>
-              </div>
-
-              <LogoutButton client:load />
             </div>
           </div>
         </header>
@@ -689,6 +696,21 @@ const initials = (session?.email ?? session?.role ?? "?").slice(0, 1).toUpperCas
           window.setTimeout(() => {
             root.classList.remove("theme-transition");
           }, 200);
+        });
+      }
+
+      // --- Logout ----------------------------------------------------------
+      const logoutButton = document.getElementById("admin-logout");
+      if (logoutButton) {
+        logoutButton.addEventListener("click", async () => {
+          if (logoutButton.hasAttribute("disabled")) return;
+          logoutButton.setAttribute("disabled", "");
+          try {
+            await fetch("/api/admin/session", { method: "DELETE" });
+          } catch {
+            // Even if the request fails, send them to the login page.
+          }
+          window.location.assign("/admin/login");
         });
       }
 
