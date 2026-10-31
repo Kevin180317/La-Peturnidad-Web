@@ -2,30 +2,80 @@
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const terms = [
+
+const CONTACT_EMAIL = "contact@prometheustij.com";
+const [emailUser, emailDomain] = CONTACT_EMAIL.split("@");
+
+const sections = [
   {
+    Id: "responsable",
     Title: t("policy.items.t1"),
     Description: t("policy.items.p1"),
   },
   {
+    Id: "datos",
     Title: t("policy.items.t2"),
     Description: t("policy.items.p2"),
   },
   {
+    Id: "finalidades",
     Title: t("policy.items.t3"),
     Description: t("policy.items.p3"),
   },
   {
+    Id: "alertas",
     Title: t("policy.items.t4"),
     Description: t("policy.items.p4"),
   },
   {
+    Id: "visibilidad",
     Title: t("policy.items.t5"),
     Description: t("policy.items.p5"),
   },
   {
+    Id: "proveedores",
     Title: t("policy.items.t6"),
     Description: t("policy.items.p6"),
+  },
+  {
+    Id: "no-hacemos",
+    Title: t("policy.items.t7"),
+    Description: t("policy.items.p7"),
+  },
+  {
+    Id: "retencion",
+    Title: t("policy.items.t8"),
+    Description: t("policy.items.p8"),
+  },
+  {
+    Id: "eliminar-cuenta",
+    Title: t("policy.items.t9"),
+    Description: t("policy.items.p9"),
+  },
+  {
+    Id: "derechos-arco",
+    Title: t("policy.items.t10"),
+    Description: t("policy.items.p10"),
+  },
+  {
+    Id: "menores",
+    Title: t("policy.items.t11"),
+    Description: t("policy.items.p11"),
+  },
+  {
+    Id: "seguridad",
+    Title: t("policy.items.t12"),
+    Description: t("policy.items.p12"),
+  },
+  {
+    Id: "cambios",
+    Title: t("policy.items.t13"),
+    Description: t("policy.items.p13"),
+  },
+  {
+    Id: "contacto",
+    Title: t("policy.items.t14"),
+    Description: t("policy.items.p14"),
   },
 ];
 ---
@@ -42,16 +92,58 @@ const terms = [
   </div>
   <div>
     <div
-      class="max-w-[1200px] mx-auto px-6 flex flex-col justify-center pb-10 mt-10 lg:mt-24 space-y-6"
+      class="max-w-[1200px] mx-auto px-6 flex flex-col justify-center pb-10 mt-10 lg:mt-24 space-y-8"
     >
+      <p class="text-sm font-medium text-neutral-500">
+        {t("policy.lastUpdated")}
+      </p>
+
       {
-        terms.map((term) => (
-          <div>
-            <h2 class="text-2xl font-semibold mb-2 text-principal">
-              {term.Title}
+        sections.map((section) => (
+          <section
+            id={section.Id}
+            class:list={[
+              "scroll-mt-28",
+              section.Id === "eliminar-cuenta" &&
+                "relative overflow-hidden rounded-2xl border-2 border-principal/40 bg-fondo px-6 py-8 shadow-lg md:px-10 md:py-10",
+            ]}
+          >
+            {section.Id === "eliminar-cuenta" && (
+              <>
+                <div
+                  class="absolute inset-x-0 top-0 h-1.5 bg-principal"
+                  aria-hidden="true"
+                />
+                <span class="mb-4 inline-flex rounded-full bg-principal px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                  {t("policy.deletion.badge")}
+                </span>
+              </>
+            )}
+            <h2
+              class:list={[
+                "mb-3 font-semibold text-principal",
+                section.Id === "eliminar-cuenta"
+                  ? "text-3xl md:text-4xl"
+                  : "text-2xl",
+              ]}
+            >
+              {section.Title}
             </h2>
-            <p class="text-texto leading-relaxed">{term.Description}</p>
-          </div>
+            <div class="space-y-4">
+              {section.Description.split("\n\n").map((paragraph) => (
+                <p class="text-texto leading-relaxed whitespace-pre-line">
+                  {paragraph.split("{email}").map((part, index, parts) => (
+                    <>
+                      {part}
+                      {index < parts.length - 1 && (
+                        <span class="whitespace-nowrap">{emailUser}<span>@</span>{emailDomain}</span>
+                      )}
+                    </>
+                  ))}
+                </p>
+              ))}
+            </div>
+          </section>
         ))
       }
     </div>

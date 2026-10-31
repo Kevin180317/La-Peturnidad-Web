@@ -107,6 +107,12 @@ const year = new Date().getFullYear();
           href={lang === "en" ? "/en/policy" : "/policy"}
           class="hover:underline">{t("footer.Privacy")}</a
         >
+        <span class="mx-2">•</span>
+        <a
+          href={`${lang === "en" ? "/en/policy" : "/policy"}#eliminar-cuenta`}
+          class="font-semibold text-principal hover:underline"
+          >{t("footer.deleteAccount")}</a
+        >
       </p>
 
     </div>
