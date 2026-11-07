@@ -1,41 +1,9 @@
 ---
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { termsContent } from "../../i18n/legal";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const terms = [
-  {
-    Title: t("terms.items.t1"),
-    Description: t("terms.items.p1"),
-  },
-  {
-    Title: t("terms.items.t2"),
-    Description: t("terms.items.p2"),
-  },
-  {
-    Title: t("terms.items.t3"),
-    Description: t("terms.items.p3"),
-  },
-  {
-    Title: t("terms.items.t4"),
-    Description: t("terms.items.p4"),
-  },
-  {
-    Title: t("terms.items.t5"),
-    Description: t("terms.items.p5"),
-  },
-  {
-    Title: t("terms.items.t6"),
-    Description: t("terms.items.p6"),
-  },
-  {
-    Title: t("terms.items.t7"),
-    Description: t("terms.items.p7"),
-  },
-  {
-    Title: t("terms.items.t8"),
-    Description: t("terms.items.p8"),
-  },
-];
+const content = termsContent[lang] ?? termsContent.es;
 ---
 
 <section class="pt-20">
@@ -50,15 +18,52 @@ const terms = [
   </div>
   <div>
     <div
-      class="max-w-[1200px] mx-auto px-6 flex flex-col justify-center pb-10 mt-10 lg:mt-24 space-y-6"
+      class="max-w-[1200px] mx-auto px-6 flex flex-col justify-center pb-10 mt-10 lg:mt-24 space-y-8"
     >
+      <p class="text-sm md:text-base text-texto/70">{content.updated}</p>
       {
-        terms.map((term) => (
+        content.sections.map((section) => (
           <div>
             <h2 class="text-2xl font-semibold mb-2 text-principal">
-              {term.Title}
+              {section.title}
             </h2>
-            <p class="text-texto leading-relaxed">{term.Description}</p>
+            <div class="space-y-3">
+              {section.blocks.map((block) =>
+                block.type === "p" ? (
+                  <p class="text-texto leading-relaxed" set:html={block.html} />
+                ) : block.type === "ul" ? (
+                  <ul class="list-disc pl-6 space-y-2 text-texto leading-relaxed">
+                    {block.items.map((item) => (
+                      <li set:html={item} />
+                    ))}
+                  </ul>
+                ) : (
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse text-sm md:text-base text-texto leading-relaxed">
+                      <thead>
+                        <tr class="border-b-2 border-gray-200 text-left">
+                          {block.head.map((cell) => (
+                            <th
+                              class="py-2 pr-4 align-top font-semibold text-principal"
+                              set:html={cell}
+                            />
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {block.rows.map((row) => (
+                          <tr class="border-b border-gray-200">
+                            {row.map((cell) => (
+                              <td class="py-3 pr-4 align-top" set:html={cell} />
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )
+              )}
+            </div>
           </div>
         ))
       }
