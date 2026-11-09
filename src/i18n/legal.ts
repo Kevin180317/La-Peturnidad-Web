@@ -150,7 +150,7 @@ export const termsContent: Record<"es" | "en", LegalContent> = {
         blocks: [
           {
             type: "p",
-            html: `<a class="${linkClass}" href="mailto:contact@luckytracker.com.mx">contact@luckytracker.com.mx</a>`,
+            html: `<!--email_off--><a class="${linkClass}" href="mailto:contact@prometheustij.com">contact@prometheustij.com</a><!--/email_off-->`,
           },
         ],
       },
@@ -289,7 +289,7 @@ export const termsContent: Record<"es" | "en", LegalContent> = {
         blocks: [
           {
             type: "p",
-            html: `<a class="${linkClass}" href="mailto:contact@luckytracker.com.mx">contact@luckytracker.com.mx</a>`,
+            html: `<!--email_off--><a class="${linkClass}" href="mailto:contact@prometheustij.com">contact@prometheustij.com</a><!--/email_off-->`,
           },
         ],
       },
@@ -297,7 +297,7 @@ export const termsContent: Record<"es" | "en", LegalContent> = {
   },
 };
 
-const email = `<a class="${linkClass}" href="mailto:contact@luckytracker.com.mx">contact@luckytracker.com.mx</a>`;
+const email = `<!--email_off--><a class="${linkClass}" href="mailto:contact@prometheustij.com">contact@prometheustij.com</a><!--/email_off-->`;
 const address = "Fresnos 18, Ramirez, 22115 Tijuana, B.C.";
 
 export const policyContent: Record<"es" | "en", LegalContent> = {

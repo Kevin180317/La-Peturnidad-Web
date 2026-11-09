@@ -46,7 +46,7 @@
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://luckytracker.com.mx/en/</loc>
+    <loc>https://luckytracker.com.mx/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
