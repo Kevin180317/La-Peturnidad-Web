@@ -4,6 +4,13 @@ export const PER_PAGE_DEFAULT = 25;
 export const PER_PAGE_MAX = 100;
 export const SEARCH_MAX_LENGTH = 120;
 
+export const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function isUuid(value: string): boolean {
+  return UUID_PATTERN.test(value);
+}
+
 /**
  * Prepares a user supplied text for use inside a PostgREST filter.
  *
@@ -35,9 +42,10 @@ export function toLikePattern(term: string): string {
  * Builds the PostgREST `or()` filter for the search box, or null when there is
  * nothing to search.
  *
- * `searchColumns` are matched with ILIKE and wildcards; `exactSearchColumns` are
- * matched with `eq`, which is what uuid / foreign-key columns need because
- * Postgres has no `uuid ILIKE text` operator and would reject the whole clause.
+ * `searchColumns` are matched with ILIKE and wildcards; `uuidSearchColumns` are
+ * matched with `eq`, which is what uuid columns need because Postgres has no
+ * `uuid ILIKE text` operator. They are only added for a valid uuid: comparing a
+ * uuid column to arbitrary text with `eq` raises 22P02 and fails the whole or().
  *
  * `term` must already be sanitized with sanitizeSearch(), so no caller-supplied
  * metacharacter can reshape the filter; the column names come from the reviewed
@@ -51,7 +59,9 @@ export function buildSearchFilter(
     ...config.searchColumns.map(
       (column) => `${column}.ilike.${toLikePattern(term)}`
     ),
-    ...(config.exactSearchColumns ?? []).map((column) => `${column}.eq.${term}`),
+    ...(isUuid(term)
+      ? (config.uuidSearchColumns ?? []).map((column) => `${column}.eq.${term}`)
+      : []),
   ];
   return clauses.length > 0 ? clauses.join(",") : null;
 }

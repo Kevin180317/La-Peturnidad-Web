@@ -116,7 +116,7 @@ describe("admin sections", () => {
     // so it must not travel through the ILIKE search columns: doing so made
     // every search in the users section fail with 42883.
     expect(USERS_TABLE_CONFIG.searchColumns).not.toContain("user_id");
-    expect(USERS_TABLE_CONFIG.exactSearchColumns).toContain("user_id");
+    expect(USERS_TABLE_CONFIG.uuidSearchColumns).toContain("user_id");
   });
 });
 

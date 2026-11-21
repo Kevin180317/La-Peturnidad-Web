@@ -49,6 +49,7 @@ export interface SectionSpec {
   columns: ColumnSpec[];
   /** Whether to render the search box. */
   searchable: boolean;
+  searchPlaceholder?: string;
   defaultOrder: string;
   orderOptions?: { value: string; label: string }[];
   filters?: FilterSpec[];
@@ -105,11 +106,12 @@ export const ADMIN_SECTIONS: SectionSpec[] = [
     slug: "usuarios",
     title: "Usuarios",
     description:
-      "Cuentas registradas. El correo viene de auth.users y se une por user_id.",
+      "Cuentas registradas. Busca por nombre, correo, teléfono, ciudad o UUID; el correo viene de auth.users y se une por user_id.",
     group: "Personas",
     icon: "users",
     endpoint: "/api/admin/users",
     searchable: true,
+    searchPlaceholder: "Nombre, correo, teléfono, ciudad o UUID…",
     defaultOrder: "created_at",
     columns: [
       { key: "first_name", label: "Nombre" },

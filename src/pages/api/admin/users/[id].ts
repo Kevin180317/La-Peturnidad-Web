@@ -1,11 +1,9 @@
 import type { APIRoute } from "astro";
 import { requireAdmin } from "../../../../lib/admin/auth";
+import { isUuid } from "../../../../lib/admin/params";
 import { getUserDetail } from "../../../../lib/admin/queries";
 
 export const prerender = false;
-
-const UUID_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function json(body: unknown, status: number): Response {
   return new Response(JSON.stringify(body), {
@@ -23,7 +21,7 @@ export const GET: APIRoute = async ({ request, params, cookies }) => {
   if (!guard.ok) return json({ error: guard.error }, guard.status);
 
   const userId = params.id ?? "";
-  if (!UUID_PATTERN.test(userId)) return json({ error: "Not found." }, 404);
+  if (!isUuid(userId)) return json({ error: "Not found." }, 404);
 
   try {
     const detail = await getUserDetail(userId);

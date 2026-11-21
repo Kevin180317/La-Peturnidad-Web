@@ -28,6 +28,7 @@ interface Props {
   endpoint: string;
   columns: ColumnSpec[];
   searchable: boolean;
+  searchPlaceholder?: string;
   defaultOrder: string;
   orderOptions?: { value: string; label: string }[];
   filters?: FilterSpec[];
@@ -61,6 +62,7 @@ export default function DataTable({
   endpoint,
   columns,
   searchable,
+  searchPlaceholder = "Escribe para filtrar…",
   defaultOrder,
   orderOptions,
   filters = [],
@@ -219,7 +221,7 @@ export default function DataTable({
                 type="search"
                 value={searchInput}
                 onChange={(event) => setSearchInput(event.target.value)}
-                placeholder="Escribe para filtrar…"
+                placeholder={searchPlaceholder}
                 className="w-full rounded-xl border border-texto/15 bg-panel px-3 py-2.5 text-sm text-texto outline-none transition-all placeholder:text-texto/40 focus:border-principal focus:ring-2 focus:ring-principal/20"
               />
             </div>

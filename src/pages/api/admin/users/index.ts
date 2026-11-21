@@ -1,7 +1,10 @@
 import type { APIRoute } from "astro";
 import { requireAdmin } from "../../../../lib/admin/auth";
-import { getAuthUserIndex } from "../../../../lib/admin/emails";
-import { listRows } from "../../../../lib/admin/queries";
+import {
+  findAuthUserIdsByEmail,
+  getAuthUserIndex,
+} from "../../../../lib/admin/emails";
+import { listRows, searchUsers } from "../../../../lib/admin/queries";
 import { USERS_TABLE_CONFIG } from "../../../../lib/admin/tables";
 
 export const prerender = false;
@@ -21,13 +24,17 @@ export const GET: APIRoute = async ({ request, cookies }) => {
   if (!guard.ok) return json({ error: guard.error }, guard.status);
 
   try {
-    const result = await listRows(
-      "user_profiles",
-      new URL(request.url),
-      USERS_TABLE_CONFIG
-    );
-
+    const url = new URL(request.url);
     const index = await getAuthUserIndex();
+    const term = url.searchParams.get("q")?.trim() ?? "";
+    const result = term
+      ? await searchUsers(
+          "user_profiles",
+          url,
+          USERS_TABLE_CONFIG,
+          findAuthUserIdsByEmail(index, term)
+        )
+      : await listRows("user_profiles", url, USERS_TABLE_CONFIG);
 
     const rows = result.rows.map((row) => {
       const userId = String(row.user_id);

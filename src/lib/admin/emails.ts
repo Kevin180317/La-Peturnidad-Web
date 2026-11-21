@@ -72,6 +72,19 @@ export async function getAuthUserIndex(
   return index;
 }
 
+export function findAuthUserIdsByEmail(
+  index: Map<string, AuthUserInfo>,
+  term: string
+): string[] {
+  const needle = term.trim().toLowerCase();
+  if (!needle) return [];
+  const ids: string[] = [];
+  for (const [id, info] of index) {
+    if (info.email?.toLowerCase().includes(needle)) ids.push(id);
+  }
+  return ids;
+}
+
 export function clearAuthUserIndex(): void {
   cache = null;
 }

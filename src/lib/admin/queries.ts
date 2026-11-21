@@ -67,7 +67,98 @@ export async function listRows(
 
   const total = count ?? 0;
   return {
-    rows: (data as Record<string, unknown>[]) ?? [],
+    rows: (data as unknown as Record<string, unknown>[]) ?? [],
+    count: total,
+    page,
+    perPage,
+    pageCount: Math.max(1, Math.ceil(total / perPage)),
+  };
+}
+
+const SEARCH_ROW_CAP = 10_000;
+const EMAIL_ID_CAP = 1_000;
+
+export function mergeListRows(
+  groups: Record<string, unknown>[][],
+  order: { column: string; ascending: boolean }
+): Record<string, unknown>[] {
+  const byId = new Map<string, Record<string, unknown>>();
+  for (const group of groups) {
+    group.forEach((row, index) => {
+      const key = String(row.user_id ?? row.id ?? `__${index}`);
+      if (!byId.has(key)) byId.set(key, row);
+    });
+  }
+
+  return [...byId.values()].sort((left, right) => {
+    const a = left[order.column];
+    const b = right[order.column];
+    let result =
+      typeof a === "number" && typeof b === "number"
+        ? a - b
+        : String(a ?? "").localeCompare(String(b ?? ""));
+    if (result === 0) {
+      result = String(left.user_id ?? left.id ?? "").localeCompare(
+        String(right.user_id ?? right.id ?? "")
+      );
+    }
+    return order.ascending ? result : -result;
+  });
+}
+
+export async function searchUsers(
+  table: string,
+  url: URL,
+  config: TableConfig,
+  emailUserIds: string[]
+): Promise<ListResult> {
+  const page = clampPage(url.searchParams.get("page"));
+  const perPage = clampPerPage(url.searchParams.get("per_page"));
+  const from = (page - 1) * perPage;
+  const term = sanitizeSearch(url.searchParams.get("q"));
+  const clauses = term ? buildSearchFilter(config, term) : null;
+  const order = resolveOrder(url, config);
+  const client = getAdminClient();
+
+  const base = () => {
+    let query = client.from(table).select(config.select, { count: "exact" });
+    for (const [column, value] of Object.entries(resolveFilters(url, config))) {
+      query = query.eq(column, value);
+    }
+    return query;
+  };
+
+  const pageOptions = { ascending: order.ascending };
+  const textResult = clauses
+    ? await base()
+        .or(clauses)
+        .order(order.column, pageOptions)
+        .limit(SEARCH_ROW_CAP)
+    : null;
+  if (textResult?.error) {
+    throw new Error(`Failed to read ${table}: ${textResult.error.message}`);
+  }
+
+  const emailResult = emailUserIds.length
+    ? await base()
+        .in("user_id", emailUserIds.slice(0, EMAIL_ID_CAP))
+        .order(order.column, pageOptions)
+        .limit(SEARCH_ROW_CAP)
+    : null;
+  if (emailResult?.error) {
+    throw new Error(`Failed to read ${table}: ${emailResult.error.message}`);
+  }
+
+  const rows = mergeListRows(
+    [
+      (textResult?.data as unknown as Record<string, unknown>[] | null) ?? [],
+      (emailResult?.data as unknown as Record<string, unknown>[] | null) ?? [],
+    ],
+    order
+  );
+  const total = rows.length;
+  return {
+    rows: rows.slice(from, from + perPage),
     count: total,
     page,
     perPage,

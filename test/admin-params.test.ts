@@ -16,6 +16,7 @@ import {
   buildSearchFilter,
   clampPage,
   clampPerPage,
+  isUuid,
   resolveFilters,
   resolveOrder,
   sanitizeSearch,
@@ -68,6 +69,19 @@ describe("sanitizeSearch", () => {
   });
 });
 
+describe("isUuid", () => {
+  test("accepts canonical uuids case-insensitively", () => {
+    expect(isUuid("0a5c0000-0000-4000-8000-000000000000")).toBe(true);
+    expect(isUuid("0A5C0000-0000-4000-8000-000000000000")).toBe(true);
+  });
+
+  test("rejects text and partial uuids", () => {
+    expect(isUuid("Kevin")).toBe(false);
+    expect(isUuid("0a5c0000")).toBe(false);
+    expect(isUuid("juan@example.com")).toBe(false);
+  });
+});
+
 describe("toLikePattern", () => {
   test("wraps the term in wildcards", () => {
     expect(toLikePattern("luna")).toBe("%luna%");
@@ -90,6 +104,16 @@ describe("buildSearchFilter", () => {
     expect(filter).not.toContain("user_id.ilike");
     // The text columns still use ILIKE in the same clause.
     expect(filter).toContain("first_name.ilike.%0a5c0000-0000-0000-0000-000000000000%");
+  });
+
+  test("does not compare uuid columns to non-uuid text", () => {
+    // eq with arbitrary text raises 22P02 and fails the whole search.
+    const filter = buildSearchFilter(USERS_TABLE_CONFIG, "Kevin");
+    expect(filter).not.toContain("user_id.eq.");
+    expect(filter).toContain("first_name.ilike.%Kevin%");
+    expect(buildSearchFilter(USERS_TABLE_CONFIG, "0a5c0000")).not.toContain(
+      "user_id.eq."
+    );
   });
 
   test("returns null when the table has nothing to search", () => {
